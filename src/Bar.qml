@@ -15,11 +15,17 @@ Scope {
                 bottom: true
             }
 
-            width: 20
+            width: 30
 
             // the ClockWidget type we just created
             // TODO: on click open a calendar view
             ClockWidget {
+                id: clock
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            AudioOutput {
+                anchors.top: clock.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
             }
         }
