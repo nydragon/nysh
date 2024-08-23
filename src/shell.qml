@@ -1,5 +1,6 @@
-import Quickshell // for ShellRoot and PanelWindow
+import Quickshell
 
+// for ShellRoot and PanelWindow
 ShellRoot {
-  Bar {}
+    Bar {}
 }

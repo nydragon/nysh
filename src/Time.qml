@@ -8,10 +8,10 @@ Singleton {
     property var date: new Date()
     property string time: date.toLocaleString(Qt.locale())
 
-  Timer {
-    interval: 1000
-    running: true
-    repeat: true
-    onTriggered: date = new Date()
-  }
+    Timer {
+        interval: 1000
+        running: true
+        repeat: true
+        onTriggered: date = new Date()
+    }
 }
