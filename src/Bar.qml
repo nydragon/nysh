@@ -14,11 +14,13 @@ Scope {
                 left: true
                 bottom: true
             }
+
             width: 20
 
             // the ClockWidget type we just created
+            // TODO: on click open a calendar view
             ClockWidget {
-                anchors.centerIn: parent
+                anchors.horizontalCenter: parent.horizontalCenter
             }
         }
     }
