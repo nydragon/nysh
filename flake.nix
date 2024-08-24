@@ -12,27 +12,18 @@
   };
 
   outputs =
-    {
-      nixpkgs,
-      utils,
-      quickshell,
-      ...
-    }:
+    { nixpkgs, utils, ... }@inputs:
     utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
+        quickshell = inputs.quickshell.packages.${system}.default;
       in
       {
-        devShell = pkgs.mkShell {
-          buildInputs = [
-            quickshell.packages.${system}.default
-            pkgs.kdePackages.qtdeclarative
-          ];
-        };
+        devShell = pkgs.mkShell { buildInputs = [ quickshell ]; };
         defaultPackage = import ./nix/package.nix {
           inherit (pkgs) stdenv;
-          quickshell = quickshell.packages.${system}.default;
+          inherit quickshell;
         };
       }
     );
