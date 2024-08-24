@@ -9,33 +9,65 @@ import Quickshell.Services.Pipewire
 // - adjust sink & source volume
 // - mute sinks & sources
 
-MouseArea {
+// BUG: When controlling audio from outside of QS, the change is reflected, but if audio in pavucontrol is not 100%
+// QS can only change from 0 to whatever is set in pavucontrol
+Rectangle {
+    id: test
+    width: parent.width
+    height: (icon.height + slider.height) * 1.5
+    anchors.bottomMargin: 5
+    anchors.topMargin: 5
+    border.color: "black"
+    border.width: 2
+    radius: 5
+
     property PwNode sink: Pipewire.defaultAudioSink
 
-    PwObjectTracker {
-        objects: [sink]
-    }
+    MouseArea {
+        id: audio_area
 
-    ColumnLayout {
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.fill: parent
 
-        Text {
-            id: label
-            text: `${Math.round(sink.audio.volume * 100)}%`
+        onClicked: {}
 
-            Layout.alignment: Qt.AlignHCenter
+        onWheel: {
+            const newVal = sink.audio.volume + (wheel.angleDelta.y / 12000);
+            sink.audio.volume = newVal < 1.0 ? (newVal > 0 ? newVal : 0.0) : 1.0;
         }
-        Slider {
-            id: slider
 
-            // BUG: For some reason need to hardcode the width as it is overflowing otherwise
-            Layout.maximumWidth: 25
+        PwObjectTracker {
+            objects: [sink]
+        }
 
-            value: sink.audio.volume
-            stepSize: 0.01
-            wheelEnabled: true
-            handle: Rectangle {}
-            onMoved: sink.audio.volume = value
+        Rectangle {
+            width: parent.width
+            color: "#00000000"
+
+            height: icon.height + slider.height
+            anchors.verticalCenter: parent.verticalCenter
+
+            // TODO: Make icon depend on sink type and volume level
+            Image {
+                id: icon
+                source: "speaker.png"
+                width: parent.width * (2 / 3)
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                fillMode: Image.PreserveAspectFit
+            }
+            Slider {
+                id: slider
+                anchors.top: icon.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                width: parent.width - 5
+
+                value: sink.audio.volume
+                stepSize: 0.01
+                wheelEnabled: true
+                handle: Rectangle {}
+                onMoved: sink.audio.volume = value
+            }
         }
     }
 }
