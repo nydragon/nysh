@@ -16,6 +16,7 @@ Scope {
             }
 
             width: 30
+            color: "#00000000"
 
             // the ClockWidget type we just created
             // TODO: on click open a calendar view
