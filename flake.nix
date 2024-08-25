@@ -6,7 +6,8 @@
     utils.url = "github:numtide/flake-utils";
 
     quickshell = {
-      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+      #url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+      url = "github:Nydragon/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -17,10 +18,15 @@
       system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        quickshell = inputs.quickshell.packages.${system}.default;
+        quickshell = inputs.quickshell.packages.${system}.default.override { withQMLLib = true; };
       in
       {
-        devShell = pkgs.mkShell { buildInputs = [ quickshell ]; };
+        devShell = pkgs.mkShell {
+          buildInputs = [
+            quickshell
+            pkgs.kdePackages.qtdeclarative
+          ];
+        };
         defaultPackage = import ./nix/package.nix {
           inherit (pkgs) stdenv;
           inherit quickshell;
