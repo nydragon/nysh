@@ -23,20 +23,19 @@ Rectangle {
 
     property PwNode sink: Pipewire.defaultAudioSink
 
+    PwObjectTracker {
+        objects: [sink]
+    }
+
     MouseArea {
         id: audio_area
 
         anchors.fill: parent
 
         onClicked: {}
-
-        onWheel: {
+        onWheel: wheel => {
             const newVal = sink.audio.volume + (wheel.angleDelta.y / 12000);
             sink.audio.volume = newVal < 1.0 ? (newVal > 0 ? newVal : 0.0) : 1.0;
-        }
-
-        PwObjectTracker {
-            objects: [sink]
         }
 
         Rectangle {
@@ -59,12 +58,28 @@ Rectangle {
                 id: slider
                 anchors.top: icon.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
-
-                width: parent.width - 5
-
+                height: background.height
+                width: parent.width * 0.75
+                enabled: false
                 value: sink.audio.volume
                 stepSize: 0.01
                 wheelEnabled: true
+
+                contentItem: Rectangle {
+                    color: "#3191CD" // Change color based on value
+                    radius: 5
+                    width: slider.width * (slider.value / slider.to)
+                    height: parent.height
+                }
+
+                background: Rectangle {
+                    color: "#C4C4C4"
+                    radius: 5
+                    height: 4
+                    anchors.bottomMargin: 5
+                    anchors.topMargin: 5
+                }
+
                 handle: Rectangle {}
                 onMoved: sink.audio.volume = value
             }
