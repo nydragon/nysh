@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Services.Pipewire
+import "windows"
 
 // TODO: on click open detailed sink options:
 // - select default sink
@@ -32,7 +33,10 @@ Rectangle {
 
         anchors.fill: parent
 
-        onClicked: {}
+        onClicked: {
+            AudioManager.visible = !AudioManager.visible;
+        }
+
         onWheel: wheel => {
             const newVal = sink.audio.volume + (wheel.angleDelta.y / 12000);
             sink.audio.volume = newVal < 1.0 ? (newVal > 0 ? newVal : 0.0) : 1.0;
@@ -40,7 +44,7 @@ Rectangle {
 
         Rectangle {
             width: parent.width
-            color: "#00000000"
+            color: "transparent"
 
             height: icon.height + slider.height
             anchors.verticalCenter: parent.verticalCenter

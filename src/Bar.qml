@@ -14,6 +14,7 @@ Scope {
                 left: true
                 bottom: true
             }
+            margins.left: 2
 
             width: 30
             color: "#00000000"
