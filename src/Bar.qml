@@ -2,6 +2,8 @@ import Quickshell // for ShellRoot and PanelWindow
 import QtQuick // for Text
 import Quickshell.Io // for process
 import "windows"
+import QtQuick.Layouts
+import "systray"
 
 Scope {
     Variants {
@@ -26,13 +28,19 @@ Scope {
             // TODO: on click open a calendar view
             ClockWidget {
                 id: clock
-                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.alignment: Qt.AlignTop
             }
 
             AudioOutput {
+                id: audio
                 popupAnchor: root
                 anchors.top: clock.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.alignment: Qt.AlignTop
+            }
+
+            SysTray {
+                anchors.top: audio.bottom
+                Layout.alignment: Qt.AlignTop
             }
         }
     }

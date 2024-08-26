@@ -32,7 +32,6 @@ RowLayout {
 
     ColumnLayout {
         RowLayout {
-            id: b
             spacing: 6
             Layout.preferredHeight: 30
 
