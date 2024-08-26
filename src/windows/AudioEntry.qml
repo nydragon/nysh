@@ -15,15 +15,10 @@ RowLayout {
 
     Image {
         source: {
-            const hasIcon = !!node.properties["application.icon-name"] ?? false;
-            console.log(hasIcon);
             const getFallback = () => node.isStream ? "root:/../assets/folder-music.svg" : "root:/../assets/audio-volume-high.svg";
-            const icon = hasIcon ? `image://icon/${node.properties["application.icon-name"]}` : getFallback();
-            icon;
+            node.properties["application.icon-name"] ? `image://icon/${node.properties["application.icon-name"]}` : getFallback();
         }
 
-        //sourceSize.width: 40
-        //sourceSize.height: 40
         fillMode: Image.PreserveAspectFit
 
         Layout.fillHeight: true
@@ -33,9 +28,6 @@ RowLayout {
 
         sourceSize.width: 40
         sourceSize.height: 40
-        //width: 40
-        //height: 40
-        Component.onCompleted: console.log(`width: ${paintedWidth}, height: ${paintedHeight}`)
     }
 
     ColumnLayout {
@@ -45,7 +37,15 @@ RowLayout {
             Layout.preferredHeight: 30
 
             Text {
-                text: node.properties["media.name"] ?? node.description
+                text: {
+                    const app = node.isStream ? `[${node.properties["application.name"]}] ` : "";
+                    return app + (node.properties["media.name"] ?? node.description);
+                }
+            }
+
+            Item {
+                // Padding to move the buttons to the right
+                Layout.fillWidth: true
             }
 
             Button {
@@ -53,7 +53,7 @@ RowLayout {
                 width: 10
                 checkable: true
                 Image {
-                    source: node.audio.muted ? "root:/../assets/mute.png" : "root:/../assets/speaker.png"
+                    source: node.audio.muted ? "root:/../assets/audio-volume-muted.svg" : "root:/../assets/audio-volume-high.svg"
                     height: parent.height * (2 / 3)
 
                     anchors.centerIn: parent
