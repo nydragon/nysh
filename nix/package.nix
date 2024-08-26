@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
   buildPhase = ''
     cat > ${name} <<EOF
     #! $SHELL
-    ${quickshell}/bin/quickshell -p ${../src}
+    ${quickshell}/bin/quickshell -p ${./..}/src
     EOF
     chmod +x ${name}
   '';
