@@ -13,7 +13,7 @@ import "windows"
 // BUG: When controlling audio from outside of QS, the change is reflected, but if audio in pavucontrol is not 100%
 // QS can only change from 0 to whatever is set in pavucontrol
 Rectangle {
-    id: test
+    id: aoutput
     width: parent.width
     height: (icon.height + slider.height) * 1.5
     anchors.bottomMargin: 5
@@ -28,13 +28,20 @@ Rectangle {
         objects: [sink]
     }
 
+    required property var popupAnchor
+
+    AudioManager {
+        id: audioman
+        anchor.window: popupAnchor
+    }
+
     MouseArea {
         id: audio_area
 
         anchors.fill: parent
 
         onClicked: {
-            AudioManager.visible = !AudioManager.visible;
+            audioman.visible = !audioman.visible;
         }
 
         onWheel: wheel => {
@@ -52,7 +59,7 @@ Rectangle {
             // TODO: Make icon depend on sink type and volume level
             Image {
                 id: icon
-                source: "speaker.png"
+                source: "root:/../assets/speaker.png"
                 width: parent.width * (2 / 3)
 
                 anchors.horizontalCenter: parent.horizontalCenter

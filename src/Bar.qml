@@ -1,14 +1,17 @@
 import Quickshell // for ShellRoot and PanelWindow
 import QtQuick // for Text
 import Quickshell.Io // for process
+import "windows"
 
 Scope {
     Variants {
         model: Quickshell.screens
         // the screen from the screens list will be injected into this property
         PanelWindow {
+            id: root
             property var modelData
             screen: modelData
+
             anchors {
                 top: true
                 left: true
@@ -17,7 +20,7 @@ Scope {
             margins.left: 2
 
             width: 30
-            color: "#00000000"
+            color: "transparent"
 
             // the ClockWidget type we just created
             // TODO: on click open a calendar view
@@ -27,6 +30,7 @@ Scope {
             }
 
             AudioOutput {
+                popupAnchor: root
                 anchors.top: clock.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
             }
