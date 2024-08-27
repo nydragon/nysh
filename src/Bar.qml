@@ -4,6 +4,7 @@ import Quickshell.Io // for process
 import "windows"
 import QtQuick.Layouts
 import "systray"
+import "widgets/workspaces"
 
 Scope {
     Variants {
@@ -35,6 +36,8 @@ Scope {
                 }
 
                 SysTray {}
+
+                Workspaces {}
 
                 Item {
                     Layout.fillHeight: true
