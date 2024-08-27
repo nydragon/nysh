@@ -24,23 +24,21 @@ Scope {
             width: 30
             color: "transparent"
 
-            // the ClockWidget type we just created
-            // TODO: on click open a calendar view
-            ClockWidget {
-                id: clock
-                Layout.alignment: Qt.AlignTop
-            }
+            ColumnLayout {
+                anchors.fill: parent
 
-            AudioOutput {
-                id: audio
-                popupAnchor: root
-                anchors.top: clock.bottom
-                Layout.alignment: Qt.AlignTop
-            }
+                // TODO: on click open a calendar view
+                ClockWidget {}
 
-            SysTray {
-                anchors.top: audio.bottom
-                Layout.alignment: Qt.AlignTop
+                AudioOutput {
+                    popupAnchor: root
+                }
+
+                SysTray {}
+
+                Item {
+                    Layout.fillHeight: true
+                }
             }
         }
     }
