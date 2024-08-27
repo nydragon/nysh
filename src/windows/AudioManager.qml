@@ -26,16 +26,17 @@ PopupWindow {
             contentWidth: availableWidth
 
             ColumnLayout {
+                // BUG: We access nodes before they are initialized
                 anchors.fill: parent
                 anchors.margins: 10
 
-                PwNodeLinkTracker {
-                    id: linkTracker
-                    node: Pipewire.defaultAudioSink
-                }
+                Repeater {
+                    model: Pipewire.nodes.values.filter(e => e.isSink)
 
-                AudioEntry {
-                    node: Pipewire.defaultAudioSink
+                    AudioEntry {
+                        required property PwNode modelData
+                        node: modelData
+                    }
                 }
 
                 Rectangle {
@@ -46,12 +47,11 @@ PopupWindow {
                 }
 
                 Repeater {
-                    // Show all sources, regardless of what sink they are assigned to
-                    model: Pipewire.linkGroups
+                    model: Pipewire.nodes.values.filter(e => e.isStream)
 
                     AudioEntry {
-                        required property PwLinkGroup modelData
-                        node: modelData.source
+                        required property PwNode modelData
+                        node: modelData
                     }
                 }
             }

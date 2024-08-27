@@ -10,8 +10,6 @@ import "windows"
 // - adjust sink & source volume
 // - mute sinks & sources
 
-// BUG: When controlling audio from outside of QS, the change is reflected, but if audio in pavucontrol is not 100%
-// QS can only change from 0 to whatever is set in pavucontrol
 Rectangle {
     id: aoutput
     width: parent.width
@@ -65,6 +63,7 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
                 fillMode: Image.PreserveAspectFit
             }
+
             Slider {
                 id: slider
                 anchors.top: icon.bottom
@@ -72,9 +71,8 @@ Rectangle {
                 height: background.height
                 width: parent.width * 0.75
                 enabled: false
-                value: sink.audio.volume
+                value: sink?.audio.volume ?? 0
                 stepSize: 0.01
-                wheelEnabled: true
 
                 contentItem: Rectangle {
                     color: "#3191CD" // Change color based on value
@@ -92,7 +90,6 @@ Rectangle {
                 }
 
                 handle: Rectangle {}
-                onMoved: sink.audio.volume = value
             }
         }
     }

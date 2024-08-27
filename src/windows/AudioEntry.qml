@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell.Services.Pipewire
+import Quickshell
 
 RowLayout {
     required property PwNode node
@@ -33,11 +34,14 @@ RowLayout {
             spacing: 6
             Layout.preferredHeight: 30
 
-            Text {
+            Label {
+                id: name
                 text: {
                     const app = node.isStream ? `[${node.properties["application.name"]}] ` : "";
                     return app + (node.properties["media.name"] ?? node.description);
                 }
+                // Cede space to other elements -> don't have stupidly long names detroying the layout
+                Layout.maximumWidth: 0
             }
 
             Item {
@@ -61,6 +65,7 @@ RowLayout {
             }
 
             Button {
+                // TODO: setting a default sink is not implemented yet in QS
                 visible: node.isSink
                 text: "default"
             }
