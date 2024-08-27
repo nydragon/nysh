@@ -5,7 +5,6 @@ import Quickshell
 import Quickshell.Services.SystemTray
 
 Rectangle {
-    id: aoutput
     width: parent.width
     height: 100
     anchors.bottomMargin: 5
@@ -27,7 +26,6 @@ Rectangle {
             anchors.margins: 4
 
             Repeater {
-                // Show all sources, regardless of what sink they are assigned to
                 model: SystemTray.items
 
                 SysTrayItem {
