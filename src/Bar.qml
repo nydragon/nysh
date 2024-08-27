@@ -3,7 +3,7 @@ import QtQuick // for Text
 import Quickshell.Io // for process
 import "windows"
 import QtQuick.Layouts
-import "systray"
+import "widgets/systray"
 import "widgets/workspaces"
 
 Scope {

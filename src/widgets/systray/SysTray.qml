@@ -3,15 +3,10 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Services.SystemTray
+import "root:base"
 
-Rectangle {
-    width: parent.width
+BRectangle {
     height: 100
-    anchors.bottomMargin: 5
-    anchors.topMargin: 5
-    border.color: "black"
-    border.width: 2
-    radius: 5
 
     ScrollView {
         anchors.fill: parent

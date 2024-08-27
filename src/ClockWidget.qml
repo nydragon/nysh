@@ -1,15 +1,10 @@
 import QtQuick
 import QtQuick.Layouts
 import "provider"
+import "base"
 
-Rectangle {
-    width: parent.width
+BRectangle {
     height: clock.height * 1.5
-    anchors.bottomMargin: 5
-    anchors.topMargin: 5
-    border.color: "black"
-    border.width: 2
-    radius: 5
 
     Rectangle {
         id: clock

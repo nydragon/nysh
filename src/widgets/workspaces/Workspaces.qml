@@ -2,18 +2,13 @@ import Quickshell
 import QtQuick
 import QtQuick.Layouts
 import Quickshell.Io // for Process
+import "root:base"
 
-Rectangle {
+BRectangle {
     id: workspaces
     property int workspaceN: 10
-    width: parent.width
+    property int activeN: 1
     height: 100 + col.spacing * (workspaceN - 1)
-    anchors.bottomMargin: 5
-    anchors.topMargin: 5
-    border.color: "black"
-
-    border.width: 2
-    radius: 5
 
     ColumnLayout {
         id: col
@@ -33,21 +28,19 @@ Rectangle {
                 onRead: data => {
                     const parsed = JSON.parse(data);
                     if (parsed.change == "focus") {
-                        col.work = parsed.current.num;
+                        workspaces.activeN = parsed.current.num;
                     }
                 }
             }
         }
-
-        property int work: 1
 
         Repeater {
             model: workspaceN
 
             WorkspaceElem {
                 required property int modelData
-                workspaceNum: modelData + 1
-                activeWorkspaceNum: col.work
+                wnum: modelData + 1
+                focused: activeN === (modelData + 1)
             }
         }
     }

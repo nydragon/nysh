@@ -3,22 +3,17 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Services.Pipewire
-import "windows"
+import "windows/audioman"
+import "base"
 
 // TODO: on click open detailed sink options:
 // - select default sink
 // - adjust sink & source volume
 // - mute sinks & sources
 
-Rectangle {
+BRectangle {
     id: aoutput
-    width: parent.width
     height: (icon.height + slider.height) * 1.5
-    anchors.bottomMargin: 5
-    anchors.topMargin: 5
-    border.color: "black"
-    border.width: 2
-    radius: 5
 
     property PwNode sink: Pipewire.defaultAudioSink
 
