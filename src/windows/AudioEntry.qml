@@ -11,8 +11,6 @@ RowLayout {
         objects: [node]
     }
 
-    //Component.onCompleted: console.log(JSON.stringify(node.properties, null, 2))
-
     Image {
         source: {
             const getFallback = () => node.isStream ? "root:/../assets/folder-music.svg" : "root:/../assets/audio-volume-high.svg";
