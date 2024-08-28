@@ -21,6 +21,8 @@ Scope {
                 bottom: true
             }
             margins.left: 2
+            margins.top: 2
+            margins.bottom: 2
 
             width: 30
             color: "transparent"
