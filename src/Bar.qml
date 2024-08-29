@@ -3,6 +3,7 @@ import QtQuick // for Text
 import QtQuick.Layouts
 import "widgets/systray"
 import "widgets/workspaces"
+import "widgets/privacy"
 import "widgets/battery"
 
 Scope {
@@ -41,6 +42,8 @@ Scope {
                 Workspaces {}
 
                 Battery {}
+                Privacy {}
+
                 Item {
                     Layout.fillHeight: true
                 }
