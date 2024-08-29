@@ -3,6 +3,7 @@ import QtQuick // for Text
 import QtQuick.Layouts
 import "widgets/systray"
 import "widgets/workspaces"
+import "widgets/battery"
 
 Scope {
     Variants {
@@ -39,6 +40,7 @@ Scope {
 
                 Workspaces {}
 
+                Battery {}
                 Item {
                     Layout.fillHeight: true
                 }
