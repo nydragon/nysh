@@ -1,10 +1,11 @@
-import Quickshell
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
-import Quickshell.Io // for Process
-import "root:base"
+import "../../base"
 
 BRectangle {
+    id: root
     height: 100 + layout.spacing * (workspace.amount - 1)
 
     WorkspaceIPC {

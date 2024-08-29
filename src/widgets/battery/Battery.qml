@@ -1,4 +1,4 @@
-import "root:base"
+import "../../base"
 import Quickshell.Services.UPower
 import QtQuick
 import QtQuick.Layouts

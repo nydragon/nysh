@@ -4,7 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 
 Rectangle {
-    id: elem
+    id: root
 
     required property bool focused
     required property int wnum
@@ -27,11 +27,11 @@ Rectangle {
         hoverEnabled: true
 
         onEntered: () => {
-            elem.hovered = true;
+            root.hovered = true;
         }
 
         onExited: () => {
-            elem.hovered = false;
+            root.hovered = false;
         }
         onClicked: () => {
             switcher.running = true;
@@ -40,14 +40,14 @@ Rectangle {
 
     Process {
         id: switcher
-        command: ["swaymsg", "workspace", `${wnum}`]
+        command: ["swaymsg", "workspace", `${root.wnum}`]
     }
 
     states: State {
         name: "focused"
-        when: active
+        when: root.active
         PropertyChanges {
-            target: elem
+            target: root
             Layout.rightMargin: activeMargin
             Layout.leftMargin: activeMargin
         }

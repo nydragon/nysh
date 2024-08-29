@@ -3,7 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Services.SystemTray
-import "root:base"
+import "../../base"
 
 BRectangle {
     height: 112

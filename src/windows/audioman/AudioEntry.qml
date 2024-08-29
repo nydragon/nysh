@@ -2,20 +2,20 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell.Services.Pipewire
-import Quickshell
 
 RowLayout {
+    id: root
     required property PwNode node
 
     // bind the node so we can read its properties
     PwObjectTracker {
-        objects: [node]
+        objects: [root.node]
     }
 
     Image {
         source: {
             const getFallback = () => node.isStream ? "root:/../assets/folder-music.svg" : "root:/../assets/audio-volume-high.svg";
-            node.properties["application.icon-name"] ? `image://icon/${node.properties["application.icon-name"]}` : getFallback();
+            root.node.properties["application.icon-name"] ? `image://icon/${root.node.properties["application.icon-name"]}` : getFallback();
         }
 
         fillMode: Image.PreserveAspectFit
@@ -37,8 +37,8 @@ RowLayout {
             Label {
                 id: name
                 text: {
-                    const app = node.isStream ? `[${node.properties["application.name"]}] ` : "";
-                    return app + (node.properties["media.name"] ?? node.description);
+                    const app = root.node.isStream ? `[${root.node.properties["application.name"]}] ` : "";
+                    return app + (root.node.properties["media.name"] ?? root.node.description);
                 }
                 // Cede space to other elements -> don't have stupidly long names detroying the layout
                 Layout.maximumWidth: 0
@@ -50,7 +50,7 @@ RowLayout {
             }
 
             Button {
-                visible: node.isSink
+                visible: root.node.isSink
                 width: 10
                 checkable: true
                 Image {
@@ -61,25 +61,27 @@ RowLayout {
 
                     fillMode: Image.PreserveAspectFit
                 }
-                onClicked: node.audio.muted = !node.audio.muted
+                onClicked: root.node.audio.muted = !root.node.audio.muted
             }
 
             Button {
-                // TODO: setting a default sink is not implemented yet in QS
-                visible: node.isSink
-                text: "default"
+                property bool isDefault: root.node.id === Pipewire.defaultAudioSink.id
+                checked: isDefault
+                checkable: false
+                visible: root.node.isSink
+                text: isDefault ? "default" : "not default"
             }
         }
         RowLayout {
             Label {
                 Layout.preferredWidth: 50
-                text: `${Math.floor(node.audio.volume * 100)}%`
+                text: `${Math.floor(root.node.audio.volume * 100)}%`
             }
 
             Slider {
                 Layout.fillWidth: true
-                value: node.audio.volume
-                onValueChanged: node.audio.volume = value
+                value: root.node.audio.volume
+                onValueChanged: root.node.audio.volume = value
             }
         }
     }

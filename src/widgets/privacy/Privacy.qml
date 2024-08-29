@@ -1,4 +1,4 @@
-import "root:base"
+import "../../base"
 import QtQuick.Layouts
 
 BRectangle {
