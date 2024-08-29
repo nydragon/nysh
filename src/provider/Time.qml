@@ -1,7 +1,6 @@
 pragma Singleton
 
 import Quickshell
-import Quickshell.Io
 import QtQuick
 
 Singleton {
@@ -12,6 +11,8 @@ Singleton {
         interval: 1000
         running: true
         repeat: true
-        onTriggered: date = new Date()
+        onTriggered: {
+            parent.date = new Date();
+        }
     }
 }

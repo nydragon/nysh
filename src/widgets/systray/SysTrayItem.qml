@@ -1,9 +1,9 @@
 import Quickshell.Services.SystemTray
 import QtQuick
 import QtQuick.Layouts
-import Quickshell
 
 MouseArea {
+    id: root
     required property SystemTrayItem item
     Layout.fillWidth: true
     Layout.preferredHeight: parent.width
@@ -29,7 +29,7 @@ MouseArea {
         width: parent.width
 
         Image {
-            source: item.icon
+            source: root.item.icon
 
             width: parent.width
             height: parent.height

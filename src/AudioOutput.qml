@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Services.Pipewire
@@ -12,20 +11,20 @@ import "base"
 // - mute sinks & sources
 
 BRectangle {
-    id: aoutput
+    id: audiow
     height: (icon.height + slider.height) * 1.5
 
     property PwNode sink: Pipewire.defaultAudioSink
 
     PwObjectTracker {
-        objects: [sink]
+        objects: [audiow.sink]
     }
 
     required property var popupAnchor
 
     AudioManager {
         id: audioman
-        anchor.window: popupAnchor
+        anchor.window: audiow.popupAnchor
     }
 
     MouseArea {
@@ -38,7 +37,7 @@ BRectangle {
         }
 
         onWheel: wheel => {
-            const newVal = sink.audio.volume + (wheel.angleDelta.y / 12000);
+            const newVal = audiow.sink.audio.volume + (wheel.angleDelta.y / 12000);
             sink.audio.volume = newVal < 1.0 ? (newVal > 0 ? newVal : 0.0) : 1.0;
         }
 
@@ -66,7 +65,7 @@ BRectangle {
                 height: background.height
                 width: parent.width * 0.75
                 enabled: false
-                value: sink?.audio.volume ?? 0
+                value: audiow.sink?.audio.volume ?? 0
                 stepSize: 0.01
 
                 contentItem: Rectangle {

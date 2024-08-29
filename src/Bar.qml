@@ -1,7 +1,5 @@
 import Quickshell // for ShellRoot and PanelWindow
 import QtQuick // for Text
-import Quickshell.Io // for process
-import "windows"
 import QtQuick.Layouts
 import "widgets/systray"
 import "widgets/workspaces"
