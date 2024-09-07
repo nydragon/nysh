@@ -11,7 +11,7 @@ Scope {
         model: Quickshell.screens
         // the screen from the screens list will be injected into this property
         PanelWindow {
-            id: root
+            id: lbar
             property var modelData
             screen: modelData
 
@@ -33,9 +33,7 @@ Scope {
                 // TODO: on click open a calendar view
                 ClockWidget {}
 
-                AudioOutput {
-                    popupAnchor: root
-                }
+                AudioOutput {}
 
                 SysTray {}
 

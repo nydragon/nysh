@@ -8,6 +8,7 @@ PopupWindow {
     anchor {
         rect.x: 30
         rect.y: 20
+        window: lbar
     }
 
     color: "transparent"

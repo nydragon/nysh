@@ -65,7 +65,7 @@ RowLayout {
             }
 
             Button {
-                property bool isDefault: root.node.id === Pipewire.defaultAudioSink.id
+                property bool isDefault: root.node?.id === Pipewire.defaultAudioSink?.id
                 checked: isDefault
                 checkable: false
                 visible: root.node.isSink

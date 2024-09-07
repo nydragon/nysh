@@ -20,11 +20,8 @@ BRectangle {
         objects: [audiow.sink]
     }
 
-    required property var popupAnchor
-
     AudioManager {
         id: audioman
-        anchor.window: audiow.popupAnchor
     }
 
     MouseArea {
