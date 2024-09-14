@@ -1,12 +1,28 @@
 import QtQuick
 import Quickshell.Io
+import Quickshell.Hyprland
+import "root:provider"
 
 Item {
     id: root
 
     property int active: 1 // currently active workspace
     property int amount: 10 // amount of workspaces
-    property string name: "" // name of the current desktop
+    property string name: "unknown" // name of the current desktop
+
+    property var switchWorkspace: w => {
+        console.log(`We are switching from workspace ${active} to ${w}`);
+        switch (root.name) {
+        case "sway":
+            Sway.dispatch(["workspace", w]);
+            break;
+        case "Hyprland":
+            Hyprland.dispatch(`workspace ${w}`);
+            break;
+        default:
+            console.log("unhandled");
+        }
+    }
 
     Process {
         command: ["env"]
@@ -14,21 +30,18 @@ Item {
 
         stdout: SplitParser {
             onRead: data => {
-                if (data.startsWith("XDG_CURRENT_DESKTOP="))
+                if (data.startsWith("XDG_CURRENT_DESKTOP=")) {
                     root.name = data.slice(20);
-            }
-        }
-    }
-
-    Process {
-        command: ["swaymsg", "-mtsubscribe", "[\"workspace\"]"]
-        running: root.name === "sway"
-
-        stdout: SplitParser {
-            onRead: data => {
-                const parsed = JSON.parse(data);
-                if (parsed.change == "focus") {
-                    root.active = parsed.current.num;
+                    switch (root.name) {
+                    case "sway":
+                        root.active = Qt.binding(() => Sway.activeWorkspace ?? root.active);
+                        break;
+                    case "Hyprland":
+                        root.active = Qt.binding(() => Hyprland.focusedMonitor?.activeWorkspace?.id ?? root.active);
+                        break;
+                    default:
+                        console.log("This desktop is unhandled:", root.name);
+                    }
                 }
             }
         }

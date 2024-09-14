@@ -6,10 +6,10 @@ import "../../base"
 
 BRectangle {
     id: root
-    height: 100 + layout.spacing * (workspace.amount - 1)
+    height: 100 + layout.spacing * (workspaces.amount - 1)
 
     WorkspaceIPC {
-        id: workspace
+        id: workspaces
     }
 
     ColumnLayout {
@@ -21,12 +21,11 @@ BRectangle {
         spacing: 1
 
         Repeater {
-            model: workspace.amount
+            model: workspaces.amount
 
             WorkspaceElem {
                 required property int modelData
                 wnum: modelData + 1
-                focused: workspace.active === (modelData + 1)
             }
         }
     }

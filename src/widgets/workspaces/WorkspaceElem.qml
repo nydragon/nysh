@@ -6,11 +6,10 @@ import QtQuick.Layouts
 Rectangle {
     id: root
 
-    required property bool focused
     required property int wnum
 
     property bool hovered: false
-    property bool active: focused || hovered
+    property bool active: workspaces.active === wnum || hovered
     property int activeMargin: 3
     property int inactiveMargin: 5
 
@@ -29,18 +28,12 @@ Rectangle {
         onEntered: () => {
             root.hovered = true;
         }
-
         onExited: () => {
             root.hovered = false;
         }
         onClicked: () => {
-            switcher.running = true;
+            workspaces.switchWorkspace(wnum);
         }
-    }
-
-    Process {
-        id: switcher
-        command: ["swaymsg", "workspace", `${root.wnum}`]
     }
 
     states: State {
