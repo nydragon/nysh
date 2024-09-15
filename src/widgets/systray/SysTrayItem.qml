@@ -16,9 +16,7 @@ MouseArea {
             item.activate();
             break;
         case Qt.RightButton:
-            if (!item.hasMenu)
-                return;
-            menu.open();
+            item.hasMenu && menu.open();
             break;
         default:
             console.log("Buttonevent unhandled");
