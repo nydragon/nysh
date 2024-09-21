@@ -3,6 +3,7 @@ import Quickshell.Services.Pipewire
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import "root:base"
 
 PopupWindow {
     anchor {
@@ -16,12 +17,9 @@ PopupWindow {
     height: 300
     visible: false
 
-    Rectangle {
+    BRectangle {
         anchors.fill: parent
-        border.color: "black"
-        border.width: 2
-        radius: 5
-        color: "white"
+
         ScrollView {
             anchors.fill: parent
             contentWidth: availableWidth

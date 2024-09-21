@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell.Services.Pipewire
+import Quickshell.Io
 
 RowLayout {
     id: root
@@ -70,6 +71,14 @@ RowLayout {
                 checkable: false
                 visible: root.node.isSink
                 text: isDefault ? "default" : "not default"
+
+                onClicked: makeDefault.running = true
+
+                Process {
+                    id: makeDefault
+                    command: ["pactl", "set-default-sink", root.node?.name]
+                    running: false
+                }
             }
         }
         RowLayout {
