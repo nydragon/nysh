@@ -22,9 +22,6 @@ BRectangle {
             id: gui
             running: false
             command: ["swaync-client", "-t"]
-            stdout: SplitParser {
-                onRead: data => console.log(`line read: ${data}`)
-            }
         }
     }
 }

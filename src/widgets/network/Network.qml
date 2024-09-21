@@ -15,7 +15,7 @@ BRectangle {
         }
 
         onClicked: () => {
-            gui.running = true;
+            gui.running = !gui.running;
         }
 
         Process {
