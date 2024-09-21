@@ -2,6 +2,7 @@ import Quickshell.Services.SystemTray
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Widgets
 
 MouseArea {
     id: root
@@ -29,22 +30,10 @@ MouseArea {
         anchor.window: lbar
     }
 
-    Rectangle {
-        Layout.fillWidth: true
-        Layout.preferredHeight: parent.width
-        Layout.alignment: Qt.AlignHCenter
+    IconImage {
+        source: root.item.icon
 
-        color: "black"
-        radius: 3
-        height: width
         width: parent.width
-
-        Image {
-            source: root.item.icon
-
-            width: parent.width
-            height: parent.height
-            fillMode: Image.Stretch
-        }
+        height: parent.height
     }
 }

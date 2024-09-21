@@ -14,7 +14,7 @@ RowLayout {
 
     Image {
         source: {
-            const getFallback = () => node.isStream ? "root:/../assets/folder-music.svg" : "root:/../assets/audio-volume-high.svg";
+            const getFallback = () => node.isStream ? "root:/assets/folder-music.svg" : "root:/assets/audio-volume-high.svg";
             root.node.properties["application.icon-name"] ? `image://icon/${root.node.properties["application.icon-name"]}` : getFallback();
         }
 
@@ -40,7 +40,7 @@ RowLayout {
                     const app = root.node.isStream ? `[${root.node.properties["application.name"]}] ` : "";
                     return app + (root.node.properties["media.name"] ?? root.node.description);
                 }
-                // Cede space to other elements -> don't have stupidly long names detroying the layout
+                // Cede space to other elements -> don't have stupidly long names destroying the layout
                 Layout.maximumWidth: 0
             }
 
@@ -54,7 +54,7 @@ RowLayout {
                 width: 10
                 checkable: true
                 Image {
-                    source: node.audio.muted ? "root:/../assets/audio-volume-muted.svg" : "root:/../assets/audio-volume-high.svg"
+                    source: node.audio.muted ? "root:/assets/audio-volume-muted.svg" : "root:/assets/audio-volume-high.svg"
                     height: parent.height * (2 / 3)
 
                     anchors.centerIn: parent

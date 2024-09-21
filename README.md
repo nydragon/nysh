@@ -15,9 +15,9 @@ Nysh is written in QML using [Quickshell].
 
 ## Work in Progress Showcase
 
-![Main Bar](./assets/2024-08-28-main-bar.png)
+![Main Bar](./screenshots/2024-08-28-main-bar.png)
 
-![Audio Manager](./assets/2024-08-28-audio-manager.png)
+![Audio Manager](./screenshots/2024-08-28-audio-manager.png)
 
 ## Launching the shell
 

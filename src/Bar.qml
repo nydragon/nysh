@@ -5,6 +5,9 @@ import "widgets/systray"
 import "widgets/workspaces"
 import "widgets/privacy"
 import "widgets/battery"
+import "widgets/network"
+import "widgets/notifcenter"
+import "widgets/caffeine"
 
 Scope {
     Variants {
@@ -40,7 +43,14 @@ Scope {
                 Workspaces {}
 
                 Battery {}
-                Privacy {}
+
+                //Privacy {}
+
+                Network {}
+
+                Notifcenter {}
+
+                Caffeine {}
 
                 Item {
                     Layout.fillHeight: true
