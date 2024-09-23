@@ -12,6 +12,6 @@ Singleton {
 
     Process {
         running: inhibitor.active
-        command: ["systemd-inhibit", "sleep", "infinity"]
+        command: ["systemd-inhibit", "--what", "idle", "sleep", "infinity"]
     }
 }

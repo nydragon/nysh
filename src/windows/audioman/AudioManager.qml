@@ -7,8 +7,8 @@ import "root:base"
 
 PopupWindow {
     anchor {
-        rect.x: 30
-        rect.y: 20
+        rect.x: lbar.width * 1.2
+        rect.y: lbar.width * 0.2
         window: lbar
     }
 
