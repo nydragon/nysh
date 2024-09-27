@@ -41,6 +41,7 @@ RowLayout {
                     const app = root.node.isStream ? `[${root.node.properties["application.name"]}] ` : "";
                     return app + (root.node.properties["media.name"] ?? root.node.description);
                 }
+                color: "white"
                 // Cede space to other elements -> don't have stupidly long names destroying the layout
                 Layout.maximumWidth: 0
             }
@@ -64,27 +65,13 @@ RowLayout {
                 }
                 onClicked: root.node.audio.muted = !root.node.audio.muted
             }
-
-            Button {
-                property bool isDefault: root.node?.id === Pipewire.defaultAudioSink?.id
-                checked: isDefault
-                checkable: false
-                visible: root.node.isSink
-                text: isDefault ? "default" : "not default"
-
-                onClicked: makeDefault.running = true
-
-                Process {
-                    id: makeDefault
-                    command: ["pactl", "set-default-sink", root.node?.name]
-                    running: false
-                }
-            }
         }
+
         RowLayout {
             Label {
                 Layout.preferredWidth: 50
                 text: `${Math.floor(root.node.audio.volume * 100)}%`
+                color: "white"
             }
 
             Slider {
