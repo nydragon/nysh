@@ -5,7 +5,9 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell.Services.Mpris
 import "root:base"
+import "root:provider"
 import QtQuick.Effects
+import "root:widgets/MprisBig"
 
 PopupWindow {
     id: audioman
@@ -14,21 +16,14 @@ PopupWindow {
         window: lbar
     }
 
-    //gravity: Edges.Bottom | Edges.Right
-
     color: "transparent"
     width: screen?.width ?? display.width
     height: screen?.height ?? display.height
     visible: false
 
-    property var player: Mpris.players.values.find(p => p.playbackState == MprisPlaybackState.Playing) ?? Mpris.players.values[0]
-
     MouseArea {
         anchors.fill: parent
-        onClicked: () => {
-            console.log("clicked");
-            audioman.visible = false;
-        }
+        onClicked: audioman.visible = false
 
         BRectangle {
             id: display
@@ -41,9 +36,8 @@ PopupWindow {
 
             Image {
                 id: background
-                //anchors.margins: parent.border.width
                 anchors.fill: parent
-                source: audioman.player?.trackArtUrl
+                source: Player.current?.trackArtUrl ?? ""
                 Layout.alignment: Qt.AlignHCenter
                 visible: true
             }
@@ -70,21 +64,7 @@ PopupWindow {
                     anchors.fill: parent
                     anchors.margins: 10
 
-                    ColumnLayout {
-                        Layout.alignment: Qt.AlignHCenter
-                        Label {
-                            text: audioman.player.trackTitle
-                            Layout.alignment: Qt.AlignHCenter
-                            color: "white"
-                        }
-
-                        Image {
-                            source: audioman.player.trackArtUrl
-                            sourceSize.width: 300
-                            sourceSize.height: 300
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-                    }
+                    MprisWidget {}
 
                     OutputSelector {}
 
