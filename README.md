@@ -5,19 +5,25 @@ Nysh is written in QML using [Quickshell].
 ## Todo
 
 - [ ] Control Panel
-- [ ] Notification Center & Popups
-- [ ] Wifi, Ethernet & VPN indicator
-- [ ] Battery indicator
+- [-] Notification Center & Popups
+- [-] Wifi, Ethernet & VPN indicator
+- [x] Battery indicator
+  - Simple battery indicator
 - [ ] Brightness indicator
-- [ ] DnD indicator
-- [ ] Mpris media manager
+- [x] DnD indicator
+  - Toggle DnD on and off
+- [-] Mpris media manager
 - [ ] Microphone, Screen Sharing & Audio Indicator
 
 ## Work in Progress Showcase
 
-![Main Bar](./screenshots/2024-08-28-main-bar.png)
+![Main Bar](./screenshots/2024-09-28-main-bar.png)
 
-![Audio Manager](./screenshots/2024-08-28-audio-manager.png)
+> previous iteration: [2024-08-28](./screenshots/2024-08-28-main-bar.png)
+
+![Audio Manager](./screenshots/2024-09-28-audio-and-music-window.png)
+
+> previous iteration: [2024-08-28](./screenshots/2024-08-28-audio-manager.png)
 
 ## Launching the shell
 
