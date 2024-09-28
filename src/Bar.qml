@@ -8,6 +8,7 @@ import "widgets/battery"
 import "widgets/network"
 import "widgets/notifcenter"
 import "widgets/caffeine"
+import "windows/notificationtoast"
 
 Scope {
     Variants {
@@ -29,7 +30,9 @@ Scope {
 
             width: 30
             color: "transparent"
-
+            NotificationToasts {
+                win: lbar
+            }
             ColumnLayout {
                 anchors.fill: parent
 
