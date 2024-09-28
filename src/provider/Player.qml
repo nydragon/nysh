@@ -8,8 +8,10 @@ Singleton {
     id: player
     property MprisPlayer current: player.all[player.index]
     property var all: Mpris.players.values
-    property int index: Mpris.players.values.findIndex(p => p.playbackState === MprisPlaybackState.Playing)
-
+    property int index: {
+        const ind = Mpris.players.values.findIndex(p => p.playbackState === MprisPlaybackState.Playing);
+        return ind >= 0 ? ind : 0;
+    }
     property var next: () => {
         player.index = (player.index + 1) % all.length;
     }

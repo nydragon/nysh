@@ -67,17 +67,19 @@ ColumnLayout {
         Layout.alignment: Qt.AlignHCenter
 
         BIconButton {
+            id: loopButton
             property var map: [ //
                 ["media-repeat-none", MprisLoopState.None] //
                 , ["media-repeat-single", MprisLoopState.Track]//
                 , ["media-playlist-repeat", MprisLoopState.Playlist] //
             ]
             property int index: map.findIndex(e => e[1] === Player.current?.loopState)
-            source: Quickshell.iconPath(map[index][0])
+            source: visible ? Quickshell.iconPath(map[index][0]) : ""
             onClicked: {
                 const ind = (index + 1) % map.length;
                 Player.current.loopState = map[ind][1];
             }
+            visible: 0 <= loopButton.index <= (map.length - 1)
         }
         BIconButton {
             source: Quickshell.iconPath("media-seek-backward")

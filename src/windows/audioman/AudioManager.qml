@@ -29,7 +29,7 @@ PopupWindow {
             id: display
 
             x: lbar.width * 1.2
-            y: lbar.height * 0.2
+            y: lbar.width * 0.2
 
             width: 500
             height: 600
