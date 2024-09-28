@@ -6,6 +6,7 @@ import Quickshell.Widgets
 import "root:provider"
 import "root:base"
 import QtQuick.Effects
+import Quickshell.Services.Mpris
 
 ColumnLayout {
     Layout.alignment: Qt.AlignHCenter
@@ -57,19 +58,38 @@ ColumnLayout {
     }
 
     RowLayout {
+        // Mpris Player Controls
         Layout.alignment: Qt.AlignHCenter
 
+        BIconButton {
+            property var map: [ //
+                ["media-repeat-none", MprisLoopState.None] //
+                , ["media-repeat-single", MprisLoopState.Track]//
+                , ["media-playlist-repeat", MprisLoopState.Playlist] //
+            ]
+            property int index: map.findIndex(e => e[1] === Player.current?.loopState)
+            source: Quickshell.iconPath(map[index][0])
+            onClicked: {
+                const ind = (index + 1) % map.length;
+                Player.current.loopState = map[ind][1];
+            }
+        }
         BIconButton {
             source: Quickshell.iconPath("media-seek-backward")
             onClicked: Player.current.previous()
         }
         BIconButton {
-            source: Quickshell.iconPath(Player.isPlaying ? "media-playback-start" : "media-playback-pause")
+            source: Quickshell.iconPath(Player.isPlaying ? "media-playback-pause" : "media-playback-start")
             onClicked: Player.current.togglePlaying()
         }
         BIconButton {
             source: Quickshell.iconPath("media-seek-forward")
             onClicked: Player.current.next()
+        }
+        BIconButton {
+            visible: Player.current?.shuffleSupported ?? false
+            source: Quickshell.iconPath(Player.current?.shuffle ? "media-playlist-shuffle" : "media-playlist-normal")
+            onClicked: Player.current.shuffle = !Player.current?.shuffle
         }
     }
 }
