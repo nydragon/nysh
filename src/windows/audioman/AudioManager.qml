@@ -25,7 +25,7 @@ PopupWindow {
         anchors.fill: parent
         onClicked: audioman.visible = false
 
-        Rectangle {
+        BRectangle {
             id: display
 
             x: lbar.width * 1.2
@@ -33,13 +33,15 @@ PopupWindow {
 
             width: 500
             height: 600
-            color: "transparent"
+            radius: 10
+
             Image {
                 id: background
                 anchors.fill: parent
                 source: Player.current?.trackArtUrl ?? ""
                 Layout.alignment: Qt.AlignHCenter
                 visible: false
+                anchors.margins: display.border.width - 1
             }
 
             MultiEffect {
@@ -52,6 +54,7 @@ PopupWindow {
                 blurMultiplier: 2
                 blur: 1
                 brightness: -0.15
+                contrast: -0.35
                 maskEnabled: true
                 maskSource: mask
             }
@@ -66,7 +69,7 @@ PopupWindow {
                 Rectangle {
                     width: image.width
                     height: image.height
-                    radius: 10
+                    radius: display.radius
                     color: "black"
                 }
             }

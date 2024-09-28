@@ -9,6 +9,7 @@ import QtQuick.Effects
 import Quickshell.Services.Mpris
 
 ColumnLayout {
+    id: mprisWidget
     Layout.alignment: Qt.AlignHCenter
     Layout.fillWidth: true
     visible: Player.current ?? false
@@ -18,6 +19,7 @@ ColumnLayout {
         Layout.alignment: Qt.AlignHCenter
         color: "white"
         font.pixelSize: 18
+        Layout.maximumWidth: mprisWidget.width
     }
 
     Label {
@@ -25,6 +27,7 @@ ColumnLayout {
         Layout.alignment: Qt.AlignHCenter
         color: "white"
         font.pixelSize: 14
+        Layout.maximumWidth: mprisWidget.width
     }
 
     RowLayout {
@@ -34,6 +37,7 @@ ColumnLayout {
             Layout.alignment: Qt.AlignLeft
             Layout.fillHeight: true
             Layout.preferredWidth: 50
+            visible: Player.all.length > 1
         }
         Item {
             Layout.fillWidth: true
@@ -54,6 +58,7 @@ ColumnLayout {
             Layout.alignment: Qt.AlignRight
             Layout.fillHeight: true
             Layout.preferredWidth: 50
+            visible: Player.all.length > 1
         }
     }
 
