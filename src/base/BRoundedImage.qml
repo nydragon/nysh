@@ -15,6 +15,7 @@ Rectangle {
         anchors.centerIn: parent
         anchors.margins: roundedImage.border.width
         visible: false
+        fillMode: Image.PreserveAspectCrop
     }
 
     MultiEffect {

@@ -28,7 +28,6 @@ PopupWindow {
             Component.onCompleted: () => {
                 Notifications.d.notification.connect(e => {
                     data.insert(0, e);
-                    //data.append(e);
                 });
             }
         }
