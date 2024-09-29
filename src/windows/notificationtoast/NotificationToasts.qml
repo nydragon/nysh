@@ -54,7 +54,7 @@ PopupWindow {
                 }
                 NumberAnimation {
                     properties: "y"
-                    to: 100
+                    to: -100
                     duration: 300
                 }
             }

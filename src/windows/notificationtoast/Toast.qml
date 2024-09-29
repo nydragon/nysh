@@ -1,49 +1,99 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
 import Quickshell
 import "root:base"
+import Quickshell.Services.Notifications
 
-BRectangle {
+MouseArea {
     id: toast
-    color: "#BD93f910"
-    height: 50
-    width: 200
     property int lifetime: 10000
     property int countdownTime: lifetime
 
     required property string appName
     required property string summary
+    required property string body
+    required property string appIcon
+    required property NotificationUrgency urgency
     required property int index
-    MouseArea {
 
-        anchors.margins: 10
-        anchors.fill: parent
-        Text {
-            text: toast.appName + ": " + toast.summary
+    hoverEnabled: true
+    height: box.height
+    width: box.width
+
+    BRectangle {
+        id: box
+        height: 26
+        width: 200
+
+        BRectangle {
+            anchors.fill: parent
+
+            Column {
+                anchors.fill: parent
+                anchors.margins: 5
+                Row {
+                    IconImage {
+                        source: Quickshell.iconPath(toast.appIcon)
+                        height: 16
+                    }
+
+                    Text {
+                        text: toast.appName + ": " + toast.summary
+                    }
+                }
+                Text {
+                    text: toast.body
+                    visible: box.state === "expand"
+                }
+            }
         }
 
-        onEntered: () => {
-            timer.repeat = false;
+        states: State {
+            name: "expand"
+            when: toast.containsMouse
+            PropertyChanges {
+                target: box
+                width: 250
+                height: 140
+            }
         }
-        onExited: () => {
-            timer.repeat = true;
-        }
-    }
 
-    Rectangle {
-        anchors.margins: 2
-        anchors.bottom: toast.bottom
-        anchors.right: toast.right
-        width: (toast.width - toast.border.width - anchors.margins) * (toast.countdownTime / toast.lifetime)
-        height: 2
-        bottomLeftRadius: toast.radius
-        bottomRightRadius: toast.radius
+        transitions: Transition {
+            NumberAnimation {
+                properties: "width,height"
+                duration: 100
+                easing.type: Easing.InOutQuad
+            }
+        }
+
+        Rectangle {
+            anchors.margins: 2
+            anchors.bottom: box.bottom
+            anchors.right: box.right
+            width: (box.width - box.border.width - anchors.margins) * (toast.countdownTime / toast.lifetime)
+            height: 2
+            bottomLeftRadius: box.radius
+            bottomRightRadius: box.radius
+            color: {
+                switch (toast.urgency) {
+                case NotificationUrgency.Critical:
+                    return "red";
+                    break;
+                case NotificationUrgency.Normal:
+                    return "green";
+                    break;
+                default:
+                    return "white";
+                }
+            }
+        }
     }
 
     Timer {
         id: timer
         interval: 10
-        repeat: true
+        repeat: !toast.containsMouse
         onTriggered: () => {
             toast.countdownTime -= timer.interval;
             if (toast.countdownTime <= 0) {
@@ -52,6 +102,6 @@ BRectangle {
                 timer.running = false;
             }
         }
-        running: true
+        running: !toast.containsMouse
     }
 }
