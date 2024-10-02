@@ -12,13 +12,44 @@ PopupWindow {
         window: popups.win
     }
     mask: Region {
+        id: mask
         item: popupcol
         intersection: Intersection.Xor
+        Region {
+            item: popupcol.children[0]
+            intersection: Intersection.Xor
+        }
+
+        Region {
+            item: popupcol.children[1]
+            intersection: Intersection.Xor
+        }
+
+        Region {
+            item: popupcol.children[2]
+            intersection: Intersection.Xor
+        }
+
+        Region {
+            item: popupcol.children[3]
+            intersection: Intersection.Xor
+        }
+
+        Region {
+            item: popupcol.children[4]
+            intersection: Intersection.Xor
+        }
+
+        Region {
+            item: popupcol.children[5]
+            intersection: Intersection.Xor
+        }
     }
+
     visible: true
     color: "transparent"
     height: 500
-    width: 400
+    width: 300
     ListView {
         id: popupcol
         anchors.margins: lbar.width * 0.2

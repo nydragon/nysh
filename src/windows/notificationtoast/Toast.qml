@@ -14,6 +14,7 @@ MouseArea {
     required property string summary
     required property string body
     required property string appIcon
+    required property string image
     required property NotificationUrgency urgency
     required property int index
 
@@ -36,10 +37,11 @@ MouseArea {
                     IconImage {
                         source: Quickshell.iconPath(toast.appIcon)
                         height: 16
+                        visible: toast.appIcon
                     }
 
                     Text {
-                        text: toast.appName + ": " + toast.summary
+                        text: (toast.appIcon ? " " : toast.appName + ": ") + toast.summary
                     }
                 }
                 Text {
