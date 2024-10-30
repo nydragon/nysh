@@ -20,6 +20,7 @@ BRectangle {
             percentage: UPower.displayDevice?.healthPercentage ?? 0
             visible: UPower.displayDevice?.healthSupported ?? false
         }
+
         Pill {
             id: battery
             width: parent.width * (!UPower.displayDevice?.healthSupported || 3 / 5)
@@ -28,6 +29,20 @@ BRectangle {
 
             percentage: UPower.displayDevice?.percentage ?? 0
             color: 100 * percentage / 360
+        }
+
+        Text {
+            font.pointSize: 25
+            anchors.fill: parent
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+
+            text: if (UPower.displayDevice?.state === UPowerDeviceState.Charging)
+                return "󱐋"
+            else if (UPower.displayDevice?.state === UPowerDeviceState.PendingCharge && !UPower.onBattery)
+                return "󰚥"
+
+            visible: text
         }
     }
 }
