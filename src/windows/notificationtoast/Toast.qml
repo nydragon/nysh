@@ -18,36 +18,48 @@ MouseArea {
     required property NotificationUrgency urgency
     required property int index
 
+    property var close: () => {
+        toast.parent.parent.model.remove(toast.index, 1);
+    }
+
     hoverEnabled: true
-    height: box.height
-    width: box.width
+    height: 26
+    width: 200
 
     BRectangle {
         id: box
-        height: 26
-        width: 200
+        anchors.fill: parent
 
-        BRectangle {
+        Column {
             anchors.fill: parent
+            anchors.margins: 5
 
-            Column {
-                anchors.fill: parent
-                anchors.margins: 5
-                Row {
-                    IconImage {
-                        source: Quickshell.iconPath(toast.appIcon)
-                        height: 16
-                        visible: toast.appIcon
-                    }
+            Row {
+                Layout.fillWidth: true
 
-                    Text {
-                        text: (toast.appIcon ? " " : toast.appName + ": ") + toast.summary
-                    }
+                IconImage {
+                    source: Quickshell.iconPath(toast.appIcon)
+                    height: 16
+                    visible: toast.appIcon
                 }
+
                 Text {
-                    text: toast.body
-                    visible: box.state === "expand"
+                    text: (toast.appIcon ? " " : toast.appName + ": ") + toast.summary
                 }
+
+                Button {
+                    onClicked: toast.close()
+                    width: 16
+                    height: 16
+                }
+            }
+
+            Text {
+                text: toast.body
+                width: parent.width
+                visible: box.state === "expand"
+                wrapMode: Text.Wrap
+                Layout.fillWidth: true
             }
         }
 
@@ -55,7 +67,7 @@ MouseArea {
             name: "expand"
             when: toast.containsMouse
             PropertyChanges {
-                target: box
+                target: toast
                 width: 250
                 height: 140
             }
