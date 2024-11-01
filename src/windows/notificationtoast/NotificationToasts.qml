@@ -11,86 +11,79 @@ PopupWindow {
         rect.x: lbar.width * 1.2
         window: popups.win
     }
+
+    visible: true
+
     mask: Region {
-        id: mask
-        item: popupcol
-        intersection: Intersection.Xor
-        Region {
-            item: popupcol.children[0]
-            intersection: Intersection.Xor
-        }
+        item: popups
 
         Region {
-            item: popupcol.children[1]
-            intersection: Intersection.Xor
-        }
-
-        Region {
-            item: popupcol.children[2]
-            intersection: Intersection.Xor
-        }
-
-        Region {
-            item: popupcol.children[3]
-            intersection: Intersection.Xor
-        }
-
-        Region {
-            item: popupcol.children[4]
-            intersection: Intersection.Xor
-        }
-
-        Region {
-            item: popupcol.children[5]
-            intersection: Intersection.Xor
+            intersection: Intersection.Combine
+            height: popupcol.count * 26 + popupcol.count * popupcol.spacing + (mouseArea.containsMouse * 114)
+            width: 300
         }
     }
 
-    visible: true
     color: "transparent"
-    height: 500
+    height: popupcol.count * 26 + 300
     width: 300
-    ListView {
-        id: popupcol
-        anchors.margins: lbar.width * 0.2
+
+    MouseArea {
+        id: mouseArea
+        hoverEnabled: true
         anchors.fill: parent
-        model: ListModel {
-            id: data
-            Component.onCompleted: () => {
-                Notifications.d.notification.connect(e => {
-                    data.insert(0, e);
-                });
-            }
-        }
-        addDisplaced: Transition {
-            NumberAnimation {
-                properties: "x,y"
-                duration: 100
-            }
-        }
-        add: Transition {
-            NumberAnimation {
-                properties: "y"
-                from: -50
-                duration: 1000
-            }
-        }
-        remove: Transition {
-            ParallelAnimation {
-                NumberAnimation {
-                    property: "opacity"
-                    to: 0
-                    duration: 300
+
+        ListView {
+            id: popupcol
+            anchors.margins: lbar.width * 0.2
+            anchors.fill: parent
+            model: ListModel {
+                id: data
+                Component.onCompleted: () => {
+                    console.log(popupcol.count);
+                    Notifications.d.notification.connect(e => {
+                        data.insert(0, e);
+                    });
                 }
+            }
+            addDisplaced: Transition {
+                NumberAnimation {
+                    properties: "x,y"
+                    duration: 100
+                }
+            }
+            add: Transition {
                 NumberAnimation {
                     properties: "y"
-                    to: -100
-                    duration: 300
+                    from: -50
+                    duration: 1000
                 }
             }
-        }
+            remove: Transition {
+                PropertyAction {
+                    property: "ListView.delayRemove"
+                    value: true
+                }
+                ParallelAnimation {
+                    NumberAnimation {
+                        property: "opacity"
+                        to: 0
+                        duration: 300
+                    }
+                    NumberAnimation {
+                        properties: "y"
+                        to: -100
+                        duration: 300
+                    }
+                }
+                PropertyAction {
+                    property: "ListView.delayRemove"
+                    value: true
+                }
+            }
 
-        spacing: 10
-        delegate: Toast {}
+            spacing: 10
+            delegate: Toast {}
+        }
     }
 }

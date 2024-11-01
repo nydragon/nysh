@@ -25,7 +25,7 @@ MouseArea {
 
     hoverEnabled: true
     height: 26
-    width: 200
+    width: parent.width
 
     BRectangle {
         id: box
@@ -35,23 +35,29 @@ MouseArea {
             anchors.fill: parent
             anchors.margins: 5
 
-            Row {
-                Layout.fillWidth: true
+            RowLayout {
+                width: parent.width
 
                 IconImage {
-                    source: Quickshell.iconPath(toast.appIcon)
-                    height: 16
+                    source: toast.appIcon ? Quickshell.iconPath(toast.appIcon) : ""
+                    height: parent.height
+                    width: height
                     visible: toast.appIcon
                 }
 
                 Text {
                     text: (toast.appIcon ? " " : toast.appName + ": ") + toast.summary
+                    Layout.fillWidth: true
                 }
 
-                Button {
-                    onClicked: toast.close()
-                    width: 16
-                    height: 16
+                Item {
+                    Layout.fillHeight: true
+                    Layout.rightMargin: 16
+                    Button {
+                        onClicked: toast.close()
+                        height: 16
+                        width: 16
+                    }
                 }
             }
 
@@ -69,7 +75,6 @@ MouseArea {
             when: toast.containsMouse
             PropertyChanges {
                 target: toast
-                width: 250
                 height: 140
             }
         }
