@@ -15,13 +15,9 @@ PopupWindow {
     visible: true
 
     mask: Region {
-        item: popups
-
-        Region {
-            intersection: Intersection.Combine
-            height: popupcol.count * 26 + popupcol.count * popupcol.spacing + (mouseArea.containsMouse * 114)
-            width: 300
-        }
+        intersection: Intersection.Combine
+        height: popupcol.count * 26 + popupcol.count * popupcol.spacing + (mouseArea.containsMouse * 114)
+        width: 300
     }
 
     color: "transparent"
@@ -40,7 +36,6 @@ PopupWindow {
             model: ListModel {
                 id: data
                 Component.onCompleted: () => {
-                    console.log(popupcol.count);
                     Notifications.d.notification.connect(e => {
                         data.insert(0, e);
                     });

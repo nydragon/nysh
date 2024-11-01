@@ -41,8 +41,10 @@ BRectangle {
                 return "󱐋"
             else if (UPower.displayDevice?.state === UPowerDeviceState.PendingCharge && !UPower.onBattery)
                 return "󰚥"
+            else
+                return ""
 
-            visible: text
+            visible: text.length
         }
     }
 }
