@@ -23,17 +23,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1730157521,
-        "narHash": "sha256-xyodl47NDih2SEYbRkAvv6lPbjjA/E9B0TlCLnGIFa8=",
-        "ref": "refs/heads/master",
-        "rev": "4e48c6eefb399abfcdefbe046a6a642bdcfcc1a6",
-        "revCount": 358,
-        "type": "git",
-        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
+        "lastModified": 1730530038,
+        "narHash": "sha256-D3t7uwFNdgJNgSvoHAY+nX4azEkJFIIx7hntVAqihGU=",
+        "owner": "nydragon",
+        "repo": "quickshell",
+        "rev": "28f281952d93768ec664f3eeb2becba5abdddf0d",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
+        "owner": "nydragon",
+        "repo": "quickshell",
+        "type": "github"
       }
     },
     "root": {

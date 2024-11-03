@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell.Io
 import Quickshell.Hyprland
-import "root:provider"
+import Quickshell.Sway
 
 Item {
     id: root
@@ -14,7 +14,7 @@ Item {
         console.log(`We are switching from workspace ${active} to ${w}`);
         switch (root.name) {
         case "sway":
-            Sway.dispatch(["workspace", w]);
+            Sway.dispatch(`workspace ${w}`);
             break;
         case "Hyprland":
             Hyprland.dispatch(`workspace ${w}`);
@@ -34,7 +34,7 @@ Item {
                     root.name = data.slice(20);
                     switch (root.name) {
                     case "sway":
-                        root.active = Qt.binding(() => Sway.activeWorkspace ?? root.active);
+                        root.active = Qt.binding(() => Sway.focusedWorkspace?.num ?? root.active);
                         break;
                     case "Hyprland":
                         root.active = Qt.binding(() => Hyprland.focusedMonitor?.activeWorkspace?.id ?? root.active);
