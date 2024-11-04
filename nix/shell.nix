@@ -1,6 +1,6 @@
 { pkgs, quickshell, ... }:
 pkgs.mkShell {
-  buildInputs = [
+  packages = [
     quickshell
     pkgs.kdePackages.qtdeclarative
     pkgs.pre-commit
