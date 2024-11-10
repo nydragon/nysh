@@ -9,6 +9,7 @@ import "widgets/network"
 import "widgets/notifcenter"
 import "widgets/caffeine"
 import "windows/notificationtoast"
+import "windows/workspace-view"
 
 Scope {
     Variants {
@@ -33,6 +34,9 @@ Scope {
             NotificationToasts {
                 win: lbar
             }
+
+            WorkspaceView {}
+
             ColumnLayout {
                 anchors.fill: parent
 
