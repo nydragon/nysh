@@ -4,25 +4,27 @@ import QtQuick.Controls
 import "root:provider"
 import "root:base"
 
-PopupWindow {
+PanelWindow {
     id: popups
     required property var win
-    anchor {
-        rect.x: lbar.width * 1.2
-        window: popups.win
+    visible: true
+
+    anchors {
+        left: true
+        top: true
+        bottom: true
     }
 
-    visible: true
+    exclusionMode: ExclusionMode.Normal
 
     mask: Region {
         intersection: Intersection.Combine
-        height: popupcol.count * 26 + popupcol.count * popupcol.spacing + (mouseArea.containsMouse * 114)
-        width: 300
+        height: popupcol.contentHeight
+        width: popups.width
     }
 
     color: "transparent"
-    height: popupcol.count * 26 + 300
-    width: 300
+    width: 500
 
     MouseArea {
         id: mouseArea
@@ -33,10 +35,11 @@ PopupWindow {
             id: popupcol
             anchors.margins: lbar.width * 0.2
             anchors.fill: parent
+            focus: true
             model: ListModel {
                 id: data
                 Component.onCompleted: () => {
-                    Notifications.d.notification.connect(e => {
+                    Notifications._.notification.connect(e => {
                         data.insert(0, e);
                     });
                 }

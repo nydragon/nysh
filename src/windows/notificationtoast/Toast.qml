@@ -1,14 +1,15 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
-import "root:base"
+import "../../base"
 import Quickshell.Services.Notifications
 
 MouseArea {
     id: toast
-    property int lifetime: 10000
+    property int lifetime: 5000
     property int countdownTime: lifetime
 
     required property string appName
@@ -17,26 +18,34 @@ MouseArea {
     required property string appIcon
     required property string image
     required property NotificationUrgency urgency
+    required property bool hasActionIcons
+    required property var actions
     required property int index
 
-    property var close: () => {
-        toast.parent.parent.model.remove(toast.index, 1);
+    function close(): void {
+        popupcol.model.remove(toast.index, 1);
     }
 
     hoverEnabled: true
-    height: 26
-    width: parent.width
+    height: box.height
+    width: popupcol.width
 
     BRectangle {
         id: box
-        anchors.fill: parent
+        width: parent.width
+        height: header.height + actions.height + test.height + (5 * 3)
 
-        Column {
-            anchors.fill: parent
+        clip: true
+
+        Item {
+            id: inner
             anchors.margins: 5
+            anchors.fill: parent
 
             RowLayout {
+                id: header
                 width: parent.width
+                height: 25
 
                 IconImage {
                     source: toast.appIcon ? Quickshell.iconPath(toast.appIcon) : ""
@@ -48,6 +57,8 @@ MouseArea {
                 Text {
                     text: (toast.appIcon ? " " : toast.appName + ": ") + toast.summary
                     Layout.fillWidth: true
+                    elide: Text.ElideRight
+                    font.pointSize: 12.5
                 }
 
                 Item {
@@ -61,29 +72,96 @@ MouseArea {
                 }
             }
 
-            Text {
-                text: toast.body
+            Rectangle {
+                id: test
                 width: parent.width
-                visible: box.state === "expand"
-                wrapMode: Text.Wrap
-                Layout.fillWidth: true
-            }
-        }
+                anchors.top: header.bottom
+                height: 60
+                clip: true
+                property int maxHeight: 0
+                color: "transparent"
 
-        states: State {
-            name: "expand"
-            when: toast.containsMouse
-            PropertyChanges {
-                target: toast
-                height: 140
-            }
-        }
+                Text {
+                    id: text
+                    anchors.topMargin: 5
+                    text: toast.body
+                    width: parent.width
+                    height: parent.height
+                    wrapMode: Text.Wrap
+                    elide: Text.ElideRight
+                    font.pointSize: 12.5
+                    Component.onCompleted: () => {
+                        if (text.implicitHeight < test.height) {
+                            test.height = text.implicitHeight;
+                        }
+                        test.maxHeight = text.implicitHeight;
+                    }
+                }
 
-        transitions: Transition {
-            NumberAnimation {
-                properties: "width,height"
-                duration: 100
-                easing.type: Easing.InOutQuad
+                states: State {
+                    name: "expand"
+                    when: toast.containsMouse
+                    PropertyChanges {
+                        target: test
+                        height: test.maxHeight
+                    }
+                }
+
+                transitions: Transition {
+                    NumberAnimation {
+                        properties: "width,height"
+                        duration: 50
+                        easing.type: Easing.InOutQuad
+                    }
+                }
+            }
+
+            RowLayout {
+                id: actions
+                width: parent.width
+                anchors.top: test.bottom
+                anchors.topMargin: 5
+                anchors.bottomMargin: 5
+                Repeater {
+                    model: toast.actions
+
+                    delegate: Button {
+                        id: actionButton
+
+                        required property var modelData
+
+                        IconImage {
+                            visible: toast.hasActionIcons
+                            Component.onCompleted: () => {
+                                if (toast.hasActionIcons) {
+                                    source = actionButton.modelData.identifier;
+                                }
+                            }
+                        }
+
+                        text: modelData.text
+                        onClicked: () => modelData?.invoke()
+                    }
+                }
+
+                visible: toast?.actions ? true : false
+            }
+
+            states: State {
+                name: "expand"
+                when: toast.containsMouse
+                PropertyChanges {
+                    target: box
+                    height: test.height + header.height + actions.height + 15
+                }
+            }
+
+            transitions: Transition {
+                NumberAnimation {
+                    properties: "width,height"
+                    duration: 50
+                    easing.type: Easing.InOutQuad
+                }
             }
         }
 

@@ -2,10 +2,8 @@ import QtQuick.Layouts
 import QtQuick
 import Quickshell
 import QtQuick.Controls
-import Quickshell.Widgets
-import "root:provider"
-import "root:base"
-import QtQuick.Effects
+import "../../provider"
+import "../../base"
 import Quickshell.Services.Mpris
 
 ColumnLayout {
@@ -74,7 +72,7 @@ ColumnLayout {
                 , ["media-playlist-repeat", MprisLoopState.Playlist] //
             ]
             property int index: map.findIndex(e => e[1] === Player.current?.loopState)
-            source: visible ? Quickshell.iconPath(map[index][0]) : ""
+            source: loopButton.visible ? Quickshell.iconPath(map[index][0]) : ""
             onClicked: {
                 const ind = (index + 1) % map.length;
                 Player.current.loopState = map[ind][1];

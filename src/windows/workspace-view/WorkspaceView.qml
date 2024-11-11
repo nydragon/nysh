@@ -59,19 +59,13 @@ PanelWindow {
                 onClicked: () => I3.dispatch(`workspace ${rec.modelData + 1}`)
             }
         }
-
-        Component.onCompleted: () => {
-            const qs = "/nix/store/78nmm1gzgwfvqgj4pmzi4dgjjzyh8amn-quickshell-0.1.0/bin/quickshell";
-            const conf = "~/devel/projects/nysh/src/shell.qml";
-            I3.dispatch(`bindsym Mod4+M exec "${qs} -p ${conf} msg workspace-view toggle"`);
-        }
     }
 
     color: "transparent"
 
     width: content?.width ?? 500
     height: content?.height ?? 500
-    visible: true
+    visible: false
 
     Component.onCompleted: () => {
         I3.focusedWorkspaceChanged.connect(() => workspaceView.visible = false);
