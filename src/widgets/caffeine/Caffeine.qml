@@ -1,5 +1,5 @@
-import "root:base"
-import "root:provider"
+import "../../base"
+import "../../provider"
 
 import QtQuick
 import Quickshell.Widgets

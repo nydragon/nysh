@@ -9,11 +9,11 @@ import "root:provider"
 import QtQuick.Effects
 import "root:widgets/MprisBig"
 
-PopupWindow {
+PanelWindow {
     id: audioman
-    anchor {
-        rect.x: lbar.width * 1.2
-        window: lbar
+    anchors {
+        top: true
+        left: true
     }
 
     color: "transparent"
@@ -28,9 +28,8 @@ PopupWindow {
         BRectangle {
             id: display
 
-            x: lbar.width * 1.2
-            y: lbar.width * 0.2
-
+            x: 10
+            y: 10
             width: 500
             height: 600
             radius: 10

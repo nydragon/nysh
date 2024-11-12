@@ -1,4 +1,4 @@
-import "root:base"
+import "../../base"
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Io
