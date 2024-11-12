@@ -13,9 +13,9 @@ stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out/bin
-    cp ${quickshell}/bin/quickshell $out/bin
+    cp ${quickshell}/bin/quickshell $out/bin/nysh
 
-    wrapProgram $out/bin/quickshell \
+    wrapProgram $out/bin/nysh \
        --add-flags "-p ${./..}/src"
   '';
 }
