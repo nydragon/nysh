@@ -1,19 +1,21 @@
-{ stdenv, quickshell, ... }:
-stdenv.mkDerivation rec {
+{
+  stdenv,
+  quickshell,
+  makeWrapper,
+  ...
+}:
+stdenv.mkDerivation {
   name = "nysh";
 
   unpackPhase = ":";
 
-  buildPhase = ''
-    cat > ${name} <<EOF
-    #! $SHELL
-    ${quickshell}/bin/quickshell -p ${./..}/src
-    EOF
-    chmod +x ${name}
-  '';
+  nativeBuildInputs = [ makeWrapper ];
 
   installPhase = ''
     mkdir -p $out/bin
-    cp ${name} $out/bin/
+    cp ${quickshell}/bin/quickshell $out/bin
+
+    wrapProgram $out/bin/quickshell \
+       --add-flags "-p ${./..}/src"
   '';
 }
