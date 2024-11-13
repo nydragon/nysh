@@ -1,8 +1,15 @@
 //@ pragma UseQApplication
 import Quickshell
+import QtQuick
 
-// for ShellRoot and PanelWindow
 ShellRoot {
-    Bar {}
-    LinuxActivation {}
+    Scope {
+        Variants {
+            model: Quickshell.screens
+            delegate: Nysh {
+                required property var modelData
+                screen: modelData
+            }
+        }
+    }
 }
