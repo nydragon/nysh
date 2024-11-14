@@ -15,14 +15,13 @@ Singleton {
         bodyMarkupSupported: false
         bodySupported: true
         imageSupported: true
-    }
-    Item {
 
-        Component.onCompleted: () => {
-            notif._.notification.connect(n => {
-                list.push(n);
-            });
+        onNotification: n => {
+            n.tracked = true;
+            incoming.push(n);
         }
     }
-    property var list: []
+
+    property list<Notification> backlog: notif._.trackedNotifications
+    property list<Notification> incoming: []
 }

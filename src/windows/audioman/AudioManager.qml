@@ -3,11 +3,9 @@ import Quickshell.Services.Pipewire
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import Quickshell.Services.Mpris
-import "root:base"
-import "root:provider"
-import QtQuick.Effects
-import "root:widgets/MprisBig"
+import "../../base"
+import "../../provider"
+import "../../widgets/MprisBig"
 
 PanelWindow {
     id: audioman
@@ -25,53 +23,15 @@ PanelWindow {
         anchors.fill: parent
         onClicked: audioman.visible = false
 
-        BRectangle {
+        BlurredImage {
             id: display
-
             x: 10
             y: 10
             width: 500
             height: 600
             radius: 10
-
-            Image {
-                id: background
-                anchors.fill: parent
-                source: Player.current?.trackArtUrl ?? ""
-                Layout.alignment: Qt.AlignHCenter
-                visible: false
-                anchors.margins: display.border.width - 1
-            }
-
-            MultiEffect {
-                id: image
-                autoPaddingEnabled: false
-                source: background
-                anchors.fill: background
-                blurEnabled: true
-                blurMax: 64
-                blurMultiplier: 2
-                blur: 1
-                brightness: -0.15
-                contrast: -0.35
-                maskEnabled: true
-                maskSource: mask
-            }
-
-            Item {
-                id: mask
-                width: image.width
-                height: image.height
-                layer.enabled: true
-                visible: false
-
-                Rectangle {
-                    width: image.width
-                    height: image.height
-                    radius: display.radius
-                    color: "black"
-                }
-            }
+            source: Player.current?.trackArtUrl ?? ""
+            color: "#BD93F9"
 
             ScrollView {
                 id: test

@@ -25,18 +25,13 @@ Rectangle {
         maskSource: mask
     }
 
-    Item {
+    Rectangle {
         id: mask
         width: image.width
         height: image.height
         layer.enabled: true
         visible: false
-
-        Rectangle {
-            width: image.width
-            height: image.height
-            radius: roundedImage.radius
-            color: "black"
-        }
+        radius: roundedImage.radius
+        color: "black"
     }
 }

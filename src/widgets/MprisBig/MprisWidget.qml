@@ -72,7 +72,7 @@ ColumnLayout {
                 , ["media-playlist-repeat", MprisLoopState.Playlist] //
             ]
             property int index: map.findIndex(e => e[1] === Player.current?.loopState)
-            source: loopButton.visible ? Quickshell.iconPath(map[index][0]) : ""
+            source: loopButton.visible && map[index] && map[index][0] ? Quickshell.iconPath(map[index][0]) : ""
             onClicked: {
                 const ind = (index + 1) % map.length;
                 Player.current.loopState = map[ind][1];

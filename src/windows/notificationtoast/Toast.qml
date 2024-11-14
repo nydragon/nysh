@@ -9,7 +9,7 @@ import Quickshell.Services.Notifications
 
 MouseArea {
     id: toast
-    property int lifetime: 5000
+    readonly property int lifetime: 5000
     property int countdownTime: lifetime
 
     required property string appName
@@ -21,6 +21,7 @@ MouseArea {
     required property bool hasActionIcons
     required property var actions
     required property int index
+    Component.onCompleted: () => console.log(toast.actions.values)
 
     function close(): void {
         popupcol.model.remove(toast.index, 1);
@@ -125,22 +126,10 @@ MouseArea {
                 Repeater {
                     model: toast.actions
 
-                    delegate: Button {
-                        id: actionButton
-
+                    delegate: ToastAction {
                         required property var modelData
-
-                        IconImage {
-                            visible: toast.hasActionIcons
-                            Component.onCompleted: () => {
-                                if (toast.hasActionIcons) {
-                                    source = actionButton.modelData.identifier;
-                                }
-                            }
-                        }
-
-                        text: modelData.text
-                        onClicked: () => modelData?.invoke()
+                        notifAction: modelData
+                        hasIcons: toast.hasActionIcons
                     }
                 }
 

@@ -3,6 +3,8 @@ import QtQuick
 import QtQuick.Layouts
 import QtQml
 import "base"
+import "widgets/mpris"
+import "provider"
 
 PanelWindow {
     id: homeWindow
@@ -23,6 +25,7 @@ PanelWindow {
 
     MouseArea {
         id: mouse
+
         anchors.fill: parent
 
         onClicked: homeWindow.root.enabled = false
@@ -43,6 +46,23 @@ PanelWindow {
             }
 
             Component.onCompleted: () => maxSize = homeWindow.screen.width * (2 / 7)
+
+            ListView {
+                width: parent.width
+                height: parent.height
+                model: Notifications.incoming
+
+                delegate: Rectangle {
+                    required property var modelData
+                    width: 100
+                    height: 50
+                    Text {
+                        text: parent.modelData.appName
+                        width: parent.width
+                        height: parent.height
+                    }
+                }
+            }
 
             Behavior on width {
                 PropertyAnimation {
@@ -69,26 +89,7 @@ PanelWindow {
                     Layout.margins: 15
                     Layout.alignment: Qt.AlignBottom
 
-                    BRectangle {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 200
-                        radius: 15
-
-                        RowLayout {
-                            anchors.fill: parent
-                            clip: true
-                            Rectangle {
-                                Layout.margins: 20
-                                Layout.preferredWidth: parent.height - (Layout.margins * 2)
-                                Layout.preferredHeight: parent.height - (Layout.margins * 2)
-                                Layout.maximumWidth: {
-                                    const mWidth = parent.width - (Layout.margins * 2);
-                                    return mWidth > 0 ? mWidth : 0;
-                                }
-                                Layout.fillHeight: true
-                            }
-                        }
-                    }
+                    MprisSmall {}
                 }
             }
         }

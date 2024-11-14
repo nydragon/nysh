@@ -1,0 +1,5 @@
+module Provider
+singleton Player 0.1 Player.qml
+singleton Inhibitor 0.1 Inhibitor.qml
+singleton Notifications 0.1 Notifications.qml
+singleton Time 0.1 Time.qml
