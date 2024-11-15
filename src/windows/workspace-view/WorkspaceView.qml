@@ -1,21 +1,18 @@
 import Quickshell
 import QtQuick
-import Quickshell.Io
 import Quickshell.I3
 import QtQuick.Layouts
+import "../../provider"
 
 PanelWindow {
     id: workspaceView
 
-    IpcHandler {
-        target: "workspace-view"
-
-        function toggle() {
-            workspaceView.visible = !workspaceView.visible;
-        }
-    }
+    visible: NyshState.workspaceViewOpen
 
     focusable: true
+    color: "transparent"
+    width: content?.width ?? 500
+    height: content?.height ?? 500
 
     GridLayout {
         id: content
@@ -59,15 +56,5 @@ PanelWindow {
                 onClicked: () => I3.dispatch(`workspace ${rec.modelData + 1}`)
             }
         }
-    }
-
-    color: "transparent"
-
-    width: content?.width ?? 500
-    height: content?.height ?? 500
-    visible: false
-
-    Component.onCompleted: () => {
-        I3.focusedWorkspaceChanged.connect(() => workspaceView.visible = false);
     }
 }

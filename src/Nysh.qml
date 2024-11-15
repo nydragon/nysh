@@ -1,5 +1,7 @@
 import QtQuick
 import Quickshell
+import Quickshell.I3
+import "provider"
 
 Item {
     id: root
@@ -10,7 +12,14 @@ Item {
         screen: root.screen
     }
 
+    Component.onCompleted: {
+        I3.focusedMonitorChanged.connect(e => {
+            dash.focused = I3.monitorFor(root.screen).focused;
+        });
+    }
+
     property Dashboard dash: Dashboard {
         screen: root.screen
+        focused: I3.monitorFor(root.screen).focused
     }
 }
