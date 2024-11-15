@@ -11,7 +11,7 @@ Singleton {
         target: "dash"
 
         function toggle() {
-            state.toggleDash;
+            state.toggleDash();
         }
     }
 
