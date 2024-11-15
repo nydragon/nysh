@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1731688912,
-        "narHash": "sha256-qwxyHd+RGWIZ2LY1vr+jtUzHQOV1oJMHbtygCi0284M=",
+        "lastModified": 1731691072,
+        "narHash": "sha256-ltqP0INiEErk1BVrMyJoH/WEFLYzNG42tL/i5BOP2gw=",
         "owner": "nydragon",
         "repo": "quickshell",
-        "rev": "f6147a61d2713a9ab387de9f488c11755450fccb",
+        "rev": "b9a1a6090bc89e5a8214516cac2bd2c32a95d2f1",
         "type": "github"
       },
       "original": {
