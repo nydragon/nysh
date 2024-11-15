@@ -15,8 +15,6 @@ import QtQuick.Layouts
 PanelWindow {
     id: lbar
 
-    required property var root
-
     anchors {
         top: true
         left: Config.alignment === Config.BarAlignment.Left
@@ -74,7 +72,7 @@ PanelWindow {
 
         MouseArea {
             id: mouse
-            onClicked: lbar.root.enabled = !lbar.root.enabled
+            onClicked: NyshState.toggleDash()
             height: width
             width: 30
             anchors.bottom: parent.bottom

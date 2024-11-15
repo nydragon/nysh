@@ -1,5 +1,4 @@
 import Quickshell
-import Quickshell.Services.Notifications
 import QtQuick
 import QtQuick.Layouts
 import QtQml
@@ -11,11 +10,11 @@ import "provider"
 PanelWindow {
     id: homeWindow
 
-    required property var root
     property bool animRunning: false
 
     color: "transparent"
-    visible: animRunning || homeWindow.root.enabled
+    visible: animRunning || NyshState.dashOpen
+
     focusable: true
 
     anchors {
@@ -30,7 +29,7 @@ PanelWindow {
 
         anchors.fill: parent
 
-        onClicked: homeWindow.root.enabled = false
+        onClicked: NyshState.dashOpen = false
 
         BRectangle {
             id: home
@@ -41,7 +40,7 @@ PanelWindow {
             topRightRadius: 10
             border.color: "transparent"
             height: parent.height
-            width: homeWindow.root.enabled ? maxSize : 0
+            width: NyshState.dashOpen ? maxSize : 0
             clip: true
             MouseArea {
                 anchors.fill: parent

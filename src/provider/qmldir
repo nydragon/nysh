@@ -1,5 +1,6 @@
 module Provider
 singleton Config 0.1 Config.qml
+singleton NyshState 0.1 NyshState.qml
 singleton Player 0.1 Player.qml
 singleton Inhibitor 0.1 Inhibitor.qml
 singleton Notifications 0.1 Notifications.qml
