@@ -1,4 +1,5 @@
 import Quickshell
+import Quickshell.I3
 import QtQuick
 import QtQuick.Layouts
 import QtQml
@@ -11,10 +12,10 @@ PanelWindow {
     id: homeWindow
 
     property bool animRunning: false
+    property bool focused: I3.monitorFor(homeWindow.screen).focused
 
     color: "transparent"
-    visible: animRunning || NyshState.dashOpen
-
+    visible: (animRunning || NyshState.dashOpen) && focused
     focusable: true
 
     anchors {
