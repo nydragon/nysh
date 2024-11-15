@@ -3,11 +3,13 @@ pragma Singleton
 import Quickshell.Services.Notifications
 import Quickshell
 import QtQuick
+import "../utils/timer.mjs" as Timer
 
 Singleton {
     id: notif
 
     property var _: NotificationServer {
+        id: server
         actionIconsSupported: true
         actionsSupported: true
         bodyHyperlinksSupported: true
@@ -18,10 +20,17 @@ Singleton {
 
         onNotification: n => {
             n.tracked = true;
-            incoming.push(n);
+
+            notif.incomingAdded(n);
+
+            Timer.after(1000, notif, () => {
+                notif.incomingRemoved(n.id);
+            });
         }
     }
 
-    property list<Notification> backlog: notif._.trackedNotifications
-    property list<Notification> incoming: []
+    property alias list: server.trackedNotifications
+
+    signal incomingRemoved(id: int)
+    signal incomingAdded(id: Notification)
 }

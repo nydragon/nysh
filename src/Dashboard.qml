@@ -1,9 +1,11 @@
 import Quickshell
+import Quickshell.Services.Notifications
 import QtQuick
 import QtQuick.Layouts
 import QtQml
 import "base"
 import "widgets/mpris"
+import "widgets/notifications"
 import "provider"
 
 PanelWindow {
@@ -47,23 +49,6 @@ PanelWindow {
 
             Component.onCompleted: () => maxSize = homeWindow.screen.width * (2 / 7)
 
-            ListView {
-                width: parent.width
-                height: parent.height
-                model: Notifications.incoming
-
-                delegate: Rectangle {
-                    required property var modelData
-                    width: 100
-                    height: 50
-                    Text {
-                        text: parent.modelData.appName
-                        width: parent.width
-                        height: parent.height
-                    }
-                }
-            }
-
             Behavior on width {
                 PropertyAnimation {
                     id: anim
@@ -88,6 +73,32 @@ PanelWindow {
                     height: parent.height
                     Layout.margins: 15
                     Layout.alignment: Qt.AlignBottom
+
+                    ListView {
+                        id: popupcol
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 1000
+                        spacing: 10
+                        width: parent.width
+                        Component.onCompleted: () => {}
+
+                        model: Notifications.list
+
+                        delegate: NotificationToast {
+                            id: toast
+
+                            required property var modelData
+                            required property int index
+
+                            notif: modelData
+                            width: ListView.view.width
+
+                            onClose: {
+                                toast.notif.dismiss();
+                            }
+                        }
+                    }
 
                     MprisSmall {}
                 }

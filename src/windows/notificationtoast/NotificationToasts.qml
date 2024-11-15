@@ -3,6 +3,7 @@ import Quickshell
 import QtQuick.Controls
 import "root:provider"
 import "root:base"
+import "../../widgets/notifications"
 
 PanelWindow {
     id: popups
@@ -36,11 +37,15 @@ PanelWindow {
             anchors.margins: lbar.width * 0.2
             anchors.fill: parent
             focus: true
+            spacing: 10
+
             model: ListModel {
                 id: data
                 Component.onCompleted: () => {
-                    Notifications._.notification.connect(e => {
-                        data.insert(0, e);
+                    Notifications.incomingAdded.connect(n => {
+                        data.insert(0, {
+                            notif: n
+                        });
                     });
                 }
             }
@@ -80,8 +85,40 @@ PanelWindow {
                 }
             }
 
-            spacing: 10
-            delegate: Toast {}
+            delegate: NotificationToast {
+                id: toast
+
+                property int countdownTime: Config.notifications.toastDuration
+                required property int index
+
+                width: ListView.view.width
+                showTimeBar: true
+
+                Timer {
+                    id: timer
+                    interval: 100
+                    onTriggered: () => {
+                        toast.countdownTime -= interval;
+                        if (toast.countdownTime <= 0) {
+                            toast.close();
+                        }
+                    }
+                    repeat: true
+                    running: !toast.containsMouse && toast.countdownTime > 0
+                }
+
+                Component.onCompleted: notif.closed.connect(() => {
+                    if (!toast || toast.index < 0)
+                        return;
+                    ListView.view.model.remove(toast.index, 1);
+                })
+
+                onClose: {
+                    if (!toast || toast.index < 0)
+                        return;
+                    ListView.view.model.remove(toast.index, 1);
+                }
+            }
         }
     }
 }

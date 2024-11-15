@@ -7,6 +7,7 @@ import "widgets/caffeine"
 import "windows/notificationtoast"
 import "windows/workspace-view"
 import "base"
+import "provider"
 import Quickshell // for ShellRoot and PanelWindow
 import QtQuick
 import QtQuick.Layouts
@@ -18,9 +19,11 @@ PanelWindow {
 
     anchors {
         top: true
-        left: true
+        left: Config.alignment === Config.BarAlignment.Left
+        right: Config.alignment === Config.BarAlignment.Right
         bottom: true
     }
+
     margins.left: 2
     margins.top: 2
     margins.bottom: 2
@@ -68,6 +71,7 @@ PanelWindow {
                 Layout.fillHeight: true
             }
         }
+
         MouseArea {
             id: mouse
             onClicked: lbar.root.enabled = !lbar.root.enabled

@@ -1,4 +1,5 @@
 import QtQuick
+import "../provider"
 
 Rectangle {
     width: parent.width
@@ -6,5 +7,5 @@ Rectangle {
     border.color: "black"
     border.width: 1
     radius: 5
-    color: "#BD93F9"
+    color: Config.colours.main
 }
