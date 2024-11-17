@@ -12,4 +12,32 @@ ShellRoot {
             }
         }
     }
+
+    Component.onCompleted: {
+        Quickshell.reloadCompleted.connect(() => loader.active = false);
+        Quickshell.reloadFailed.connect(e => {
+            loader.active = true;
+            loader.message = e;
+        });
+    }
+
+    LazyLoader {
+        id: loader
+
+        property string message: ""
+
+        PanelWindow {
+            anchors {
+                top: true
+                left: true
+                right: true
+            }
+
+            Text {
+                anchors.centerIn: parent
+                anchors.fill: parent
+                text: loader.message
+            }
+        }
+    }
 }

@@ -1,4 +1,5 @@
 import QtQuick
+import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
 import Quickshell.I3
@@ -24,27 +25,19 @@ Item {
         }
     }
 
-    Process {
-        command: ["env"]
-        running: true
+    Component.onCompleted: {
+        root.name = Quickshell.env("XDG_CURRENT_DESKTOP");
 
-        stdout: SplitParser {
-            onRead: data => {
-                if (data.startsWith("XDG_CURRENT_DESKTOP=")) {
-                    root.name = data.slice(20);
-                    switch (root.name) {
-                    case "sway":
-                    case "none+i3":
-                        root.active = Qt.binding(() => I3.focusedWorkspace?.num ?? root.active);
-                        break;
-                    case "Hyprland":
-                        root.active = Qt.binding(() => Hyprland.focusedMonitor?.activeWorkspace?.id ?? root.active);
-                        break;
-                    default:
-                        console.log("This desktop is unhandled:", root.name);
-                    }
-                }
-            }
+        switch (root.name) {
+        case "sway":
+        case "none+i3":
+            root.active = Qt.binding(() => I3.focusedWorkspace?.num ?? root.active);
+            break;
+        case "Hyprland":
+            root.active = Qt.binding(() => Hyprland.focusedMonitor?.activeWorkspace?.id ?? root.active);
+            break;
+        default:
+            console.log("This desktop is unhandled:", root.name);
         }
     }
 }
