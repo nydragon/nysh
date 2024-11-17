@@ -2,13 +2,11 @@ import "widgets/systray"
 import "widgets/workspaces"
 import "widgets/battery"
 import "widgets/network"
-import "widgets/notifcenter"
 import "widgets/caffeine"
 import "windows/notificationtoast"
-import "windows/workspace-view"
 import "base"
 import "provider"
-import Quickshell // for ShellRoot and PanelWindow
+import Quickshell
 import QtQuick
 import QtQuick.Layouts
 
@@ -33,8 +31,6 @@ PanelWindow {
         win: lbar
     }
 
-    WorkspaceView {}
-
     Rectangle {
         color: "transparent"
         anchors.margins: 5
@@ -57,11 +53,7 @@ PanelWindow {
 
             Battery {}
 
-            //Privacy {}
-
             Network {}
-
-            Notifcenter {}
 
             Caffeine {}
 

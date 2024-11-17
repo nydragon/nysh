@@ -13,16 +13,16 @@ ShellRoot {
         }
     }
 
-    Component.onCompleted: {
-        Quickshell.reloadCompleted.connect(() => loader.active = false);
-        Quickshell.reloadFailed.connect(e => {
-            loader.active = true;
-            loader.message = e;
-        });
-    }
-
     LazyLoader {
         id: loader
+
+        Component.onCompleted: {
+            Quickshell.reloadCompleted.connect(() => loader.active = false);
+            Quickshell.reloadFailed.connect(e => {
+                loader.active = true;
+                loader.message = e;
+            });
+        }
 
         property string message: ""
 

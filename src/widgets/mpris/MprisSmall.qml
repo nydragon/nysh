@@ -26,17 +26,19 @@ BRectangle {
         orientation: Qt.Horizontal
         snapMode: ListView.SnapOneItem
         spacing: 10
-        delegate: Item {
+        delegate: BRectangle {
             id: card
             required property var modelData
             property MprisPlayer player: modelData
+
             width: mprisSmall.width
             height: mprisSmall.height
+            radius: 15
 
             BlurredImage {
                 source: card.player?.trackArtUrl ?? ""
                 anchors.fill: parent
-                radius: 15
+                radius: parent.radius
             }
 
             RowLayout {
@@ -104,7 +106,7 @@ BRectangle {
                             size: 20
                         }
                         BIconButton {
-                            source: Quickshell.iconPath(card.player.playbackState === MprisPlaybackState.Playing ? "media-playback-pause" : "media-playback-start")
+                            source: Quickshell.iconPath(card.player?.playbackState === MprisPlaybackState.Playing ? "media-playback-pause" : "media-playback-start")
                             onClicked: card.player?.togglePlaying()
                             size: 20
                         }
