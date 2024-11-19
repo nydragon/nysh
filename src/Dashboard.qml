@@ -1,10 +1,14 @@
 import Quickshell
+import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 import QtQml
 import "base"
 import "widgets/mpris"
 import "widgets/notifications"
+import "widgets/weather"
+import "widgets/wifi"
 import "provider"
 
 PanelWindow {
@@ -73,40 +77,85 @@ PanelWindow {
                     Layout.fillHeight: true
                 }
 
-                ColumnLayout {
+                StackView {
+                    id: stack
+                    initialItem: main
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     height: parent.height
                     Layout.margins: 15
-                    Layout.alignment: Qt.AlignBottom
+                    clip: true
 
-                    ListView {
-                        id: popupcol
+                    Component.onCompleted: NyshState.dashOpenChanged.connect(() => {
+                        if (!NyshState.dashOpen) {
+                            stack.clear();
+
+                            stack.push(stack.initialItem);
+                        }
+                    })
+                }
+
+                Component {
+                    id: main
+                    ColumnLayout {
                         Layout.fillHeight: true
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 1000
-                        spacing: 10
-                        width: parent.width
-                        Component.onCompleted: () => {}
+                        height: parent.height
+                        Layout.margins: 15
+                        Layout.alignment: Qt.AlignBottom
 
-                        model: Notifications.list
+                        NotificationInbox {
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+                        }
 
-                        delegate: NotificationToast {
-                            id: toast
+                        WeatherMedium {
+                            Layout.fillWidth: true
+                            height: 100
+                        }
 
-                            required property var modelData
-                            required property int index
+                        GridLayout {
 
-                            notif: modelData
-                            width: ListView.view.width
+                            rows: 2
+                            columns: 2
 
-                            onClose: {
-                                toast.notif.dismiss();
+                            Text {
+                                text: "brightness"
+                            }
+
+                            Slider {
+                                id: b
+                                from: 0
+                                to: 100
+                                stepSize: 1
+                                value: Brightness.value
+                                onMoved: Brightness.value = value
+                            }
+
+                            BButton {
+                                text: "Internet"
+                                onClicked: stack.push(internet)
+                                Layout.fillHeight: true
+                                Layout.fillWidth: true
+                                height: 30
+                            }
+
+                            BButton {
+                                text: "Bluetooth"
+                                Layout.fillHeight: true
+                                Layout.fillWidth: true
+                                height: 30
                             }
                         }
+                        MprisSmall {}
                     }
+                }
 
-                    MprisSmall {}
+                Component {
+                    id: internet
+                    BigWifiView {
+                        onNavigationReturn: stack.pop()
+                    }
                 }
             }
         }

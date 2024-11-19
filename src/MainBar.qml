@@ -62,22 +62,12 @@ PanelWindow {
             }
         }
 
-        MouseArea {
+        BButton {
             id: mouse
             onClicked: NyshState.toggleDash()
             height: width
             width: 30
             anchors.bottom: parent.bottom
-            cursorShape: Qt.PointingHandCursor
-            BRectangle {
-                anchors.fill: parent
-                Rectangle {
-                    visible: mouse.containsMouse
-                    anchors.fill: parent
-                    radius: parent.radius
-                    color: "#9F9F9FC8"
-                }
-            }
         }
     }
 }

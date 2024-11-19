@@ -16,7 +16,5 @@ Singleton {
 
     property int alignment: Config.BarAlignment.Left
 
-    property Item colours: Item {
-        property color main: "#BD93F9"
-    }
+    property color colourMain: "#BD93F9"
 }
