@@ -7,7 +7,6 @@ import "../../widgets/notifications"
 
 PanelWindow {
     id: popups
-    required property var win
     visible: true
 
     anchors {

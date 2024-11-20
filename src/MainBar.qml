@@ -28,7 +28,7 @@ PanelWindow {
     color: "transparent"
 
     NotificationToasts {
-        win: lbar
+        screen: lbar.screen
     }
 
     Rectangle {
