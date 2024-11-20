@@ -49,7 +49,7 @@ MouseArea {
             RowLayout {
                 id: header
                 width: parent.width
-                height: 25
+                height: 40
 
                 IconImage {
                     source: toast.appIcon ? Quickshell.iconPath(toast.appIcon) : ""
@@ -65,10 +65,14 @@ MouseArea {
                     font.pointSize: 12.5
                 }
 
-                Button {
+                BButton {
                     onClicked: toast.close()
-                    height: 16
-                    width: 16
+                    height: 30
+                    width: 30
+                    IconImage {
+                        anchors.fill: parent
+                        source: Quickshell.iconPath("window-close")
+                    }
                 }
             }
 
