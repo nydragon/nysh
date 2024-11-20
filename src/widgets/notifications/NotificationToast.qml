@@ -131,6 +131,7 @@ MouseArea {
                         notifAction: modelData
                         hasIcons: toast.notif?.hasActionIcons ?? false
                         height: toast.actionHeight
+                        Layout.fillWidth: true
                     }
                 }
                 visible: toast.notif?.actions.length ?? false

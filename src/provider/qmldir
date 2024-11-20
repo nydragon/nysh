@@ -1,4 +1,5 @@
 module Provider
+singleton Wifi 0.1 Wifi.qml
 singleton Config 0.1 Config.qml
 singleton NyshState 0.1 NyshState.qml
 singleton Player 0.1 Player.qml

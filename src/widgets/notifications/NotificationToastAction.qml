@@ -1,8 +1,9 @@
 import QtQuick.Controls
 import Quickshell.Widgets
 import QtQuick
+import "../../base"
 
-Button {
+BButton {
     id: actionButton
 
     required property var notifAction

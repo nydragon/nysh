@@ -35,7 +35,7 @@ BRectangle {
 
         onWheel: wheel => {
             const newVal = audiow.sink.audio.volume + (wheel.angleDelta.y / 12000);
-            sink.audio.volume = newVal < 1.0 ? (newVal > 0 ? newVal : 0.0) : 1.0;
+            audiow.sink.audio.volume = newVal < 1.0 ? (newVal > 0 ? newVal : 0.0) : 1.0;
         }
 
         Rectangle {

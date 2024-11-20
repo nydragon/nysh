@@ -1,8 +1,7 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
-import Quickshell.Io
 import "../../base"
+import "../../provider"
 
 ColumnLayout {
     id: wifi
@@ -11,19 +10,27 @@ ColumnLayout {
     Layout.fillWidth: true
     Layout.margins: 15
 
-    property ListModel networks: ListModel {}
+    property ListModel networks: ListModel {
+        id: list
+        Component.onCompleted: {
+            Wifi.list.forEach(e => list.append(e));
+            Wifi.added.connect(e => list?.append(e));
+            Wifi.removed.connect(e => {
+                for (let i = 0; i < list?.count; i++) {
+                    if (list.get(i).bssid === e.bssid) {
+                        list.remove(i);
+                        break;
+                    }
+                }
+            });
+        }
+    }
 
     signal navigationReturn
 
-    BRectangle {
-        width: 100
-        height: 100
-        visible: getter.running
-        Layout.alignment: Qt.AlignCenter
-    }
-
     ListView {
         id: re
+        visible: wifi.networks.count > 0
         model: wifi.networks
         Layout.fillHeight: true
         Layout.fillWidth: true
@@ -94,6 +101,10 @@ ColumnLayout {
         }
     }
 
+    Item {
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+    }
     RowLayout {
         Layout.fillWidth: true
         BButton {
@@ -107,46 +118,11 @@ ColumnLayout {
 
         BButton {
             text: "refresh"
-            onClicked: getter.running = true
+            onClicked: Wifi.refresh()
             Layout.alignment: Qt.AlignBottom | Qt.AlignRight
             Layout.fillWidth: true
             width: 30
             height: 30
-        }
-    }
-
-    Process {
-        id: getter
-        command: ["nmcli", "-t", "device", "wifi"]
-        running: true
-        stdout: SplitParser {
-            onRead: rawData => {
-                rawData = rawData.replace(/\\:/g, ":").split(":");
-
-                const data = {
-                    connected: rawData[0] === "*",
-                    bssid: rawData.slice(1, 7).join(":").replace(),
-                    ssid: rawData[7],
-                    mode: rawData[8],
-                    channel: rawData[9],
-                    rate: rawData[10],
-                    signal: rawData[11],
-                    bars: rawData[12],
-                    security: rawData[13]
-                };
-
-                for (let i = 0; i < networks.count; i++) {
-                    if (networks.get(i).bssid === data.bssid) {
-                        Object.entries(data).map(([key, value]) => {
-                            networks.setProperty(i, key, value);
-                        });
-
-                        return;
-                    }
-                }
-
-                networks.append(data);
-            }
         }
     }
 }

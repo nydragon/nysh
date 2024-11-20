@@ -53,9 +53,15 @@ PanelWindow {
 
             Battery {}
 
-            Network {}
+            Network {
+                width: parent.width
+                height: parent.width
+            }
 
-            Caffeine {}
+            Caffeine {
+                width: parent.width
+                height: parent.width
+            }
 
             Item {
                 Layout.fillHeight: true

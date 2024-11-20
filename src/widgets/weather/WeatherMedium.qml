@@ -2,6 +2,7 @@ import QtQuick.Layouts
 import QtQuick
 import Quickshell.Widgets
 import Quickshell
+import QtQml
 
 import "../../provider"
 import "../../base"
@@ -36,9 +37,41 @@ BRectangle {
             }
         }
 
-        Item {
-            Layout.fillWidth: true
-            height: 1
+        GridLayout {
+
+            Repeater {
+
+                model: Weather.lastFetch?.weather
+
+                delegate: Rectangle {
+                    id: forecastRect
+                    required property var modelData
+                    property string mintempC: modelData.mintempC
+                    property string maxtempC: modelData.maxtempC
+                    property string date: modelData.date
+
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    Layout.margins: 5
+
+                    ColumnLayout {
+                        anchors.fill: parent
+
+                        Text {
+                            text: {
+                                const day = (new Date(forecastRect.date)).getDay();
+                                const weekday = Qt.locale().dayName(day, Locale.LongFormat);
+                                return weekday;
+                            }
+                            Layout.alignment: Qt.AlignCenter
+                        }
+                        Text {
+                            text: `${forecastRect.mintempC}°C - ${forecastRect.maxtempC}°C`
+                            Layout.alignment: Qt.AlignCenter
+                        }
+                    }
+                }
+            }
         }
     }
 }

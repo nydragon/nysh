@@ -5,10 +5,12 @@ import Quickshell
 
 Singleton {
     id: inhibitor
-    property var toggle: () => {
+
+    property bool active: false
+
+    function toggle() {
         active = !active;
     }
-    property bool active: false
 
     Process {
         running: inhibitor.active

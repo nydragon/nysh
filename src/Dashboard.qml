@@ -155,6 +155,7 @@ PanelWindow {
                     id: internet
                     BigWifiView {
                         onNavigationReturn: stack.pop()
+                        Layout.fillHeight: true
                     }
                 }
             }

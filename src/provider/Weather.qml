@@ -41,6 +41,8 @@ Singleton {
             return day ? "weather-clear" : "weather-clear-night";
         case "116":
             return day ? "weather-few-clouds" : "weather-few-clouds-night";
+        case "122":
+            return "weather-overcast";
         default:
             return "weather-none-available";
         }
