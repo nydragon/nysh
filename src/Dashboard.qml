@@ -15,7 +15,7 @@ PanelWindow {
     id: homeWindow
 
     property bool animRunning: false
-    required property bool focused
+    property bool focused: false
     property bool focusLocked: false
 
     color: "transparent"
@@ -114,6 +114,7 @@ PanelWindow {
                             height: 100
                         }
 
+                        MprisSmall {}
                         GridLayout {
 
                             rows: 2
@@ -147,7 +148,6 @@ PanelWindow {
                                 height: 30
                             }
                         }
-                        MprisSmall {}
                     }
                 }
 

@@ -129,18 +129,10 @@ BRectangle {
                         enabled: (card.player?.canSeek && card.player?.positionSupported) ?? false
 
                         onMoved: {
-                            if (card.player)
+                            if (card.player) {
                                 card.player.position = value;
-                        }
-
-                        Component.onCompleted: {
-                            const con = () => card.player?.positionChanged.connect(() => {
-                                    slider.value = card.player?.position;
-                                });
-                            con();
-                            Player.currentChanged.connect(() => {
-                                con();
-                            });
+                                value = card.player.position;
+                            }
                         }
 
                         FrameAnimation {
