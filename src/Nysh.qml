@@ -13,7 +13,7 @@ Item {
 
     Component.onCompleted: {
         I3.focusedMonitorChanged.connect(e => {
-            dash.focused = I3.monitorFor(root.screen)?.focused ?? false;
+            dash.focused = I3.monitorFor(root.screen)?.focused ?? true;
         });
     }
 
