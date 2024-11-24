@@ -10,7 +10,7 @@ import "base"
 // - adjust sink & source volume
 // - mute sinks & sources
 
-BRectangle {
+BButton {
     id: audiow
     height: (icon.height + slider.height) * 1.5
 
@@ -20,68 +20,61 @@ BRectangle {
         objects: [audiow.sink]
     }
 
-    AudioManager {
-        id: audioman
+    property AudioManager audioman: AudioManager {}
+
+    onClicked: {
+        audioman.visible = !audioman.visible;
     }
 
-    MouseArea {
-        id: audio_area
+    onWheel: wheel => {
+        const newVal = audiow.sink.audio.volume + (wheel.angleDelta.y / 12000);
+        audiow.sink.audio.volume = newVal < 1.0 ? (newVal > 0 ? newVal : 0.0) : 1.0;
+    }
 
-        anchors.fill: parent
+    Rectangle {
+        width: parent.width
+        color: "transparent"
 
-        onClicked: {
-            audioman.visible = !audioman.visible;
+        height: icon.height + slider.height
+        anchors.verticalCenter: parent.verticalCenter
+
+        // TODO: Make icon depend on sink type and volume level
+        Image {
+            id: icon
+            source: "root:/assets/speaker.png"
+            width: parent.width * (2 / 3)
+
+            anchors.horizontalCenter: parent.horizontalCenter
+            fillMode: Image.PreserveAspectFit
         }
 
-        onWheel: wheel => {
-            const newVal = audiow.sink.audio.volume + (wheel.angleDelta.y / 12000);
-            audiow.sink.audio.volume = newVal < 1.0 ? (newVal > 0 ? newVal : 0.0) : 1.0;
-        }
+        Slider {
+            id: slider
+            anchors.top: icon.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: background.height
+            width: parent.width * 0.75
 
-        Rectangle {
-            width: parent.width
-            color: "transparent"
+            enabled: false
+            value: audiow.sink?.audio.volume ?? 0
+            stepSize: 0.01
 
-            height: icon.height + slider.height
-            anchors.verticalCenter: parent.verticalCenter
-
-            // TODO: Make icon depend on sink type and volume level
-            Image {
-                id: icon
-                source: "root:/assets/speaker.png"
-                width: parent.width * (2 / 3)
-
-                anchors.horizontalCenter: parent.horizontalCenter
-                fillMode: Image.PreserveAspectFit
+            contentItem: Rectangle {
+                color: "#3191CD" // Change color based on value
+                radius: 5
+                width: slider.width * (slider.value / slider.to)
+                height: parent.height
             }
 
-            Slider {
-                id: slider
-                anchors.top: icon.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-                height: background.height
-                width: parent.width * 0.75
-                enabled: false
-                value: audiow.sink?.audio.volume ?? 0
-                stepSize: 0.01
-
-                contentItem: Rectangle {
-                    color: "#3191CD" // Change color based on value
-                    radius: 5
-                    width: slider.width * (slider.value / slider.to)
-                    height: parent.height
-                }
-
-                background: Rectangle {
-                    color: "#C4C4C4"
-                    radius: 5
-                    height: 4
-                    anchors.bottomMargin: 5
-                    anchors.topMargin: 5
-                }
-
-                handle: Rectangle {}
+            background: Rectangle {
+                color: "#C4C4C4"
+                radius: 5
+                height: 4
+                anchors.bottomMargin: 5
+                anchors.topMargin: 5
             }
+
+            handle: Rectangle {}
         }
     }
 }

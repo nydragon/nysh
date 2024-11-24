@@ -57,13 +57,9 @@ Singleton {
                 weather.dataRaw += e;
             }
         }
-        onRunningChanged: {
-            if (running) {
-                weather.dataRaw = "";
-            }
-            if (!running) {
-                weather.lastFetch = JSON.parse(weather.dataRaw);
-            }
+        onExited: (code, status) => {
+            weather.lastFetch = JSON.parse(weather.dataRaw);
+            weather.dataRaw = "";
         }
     }
 

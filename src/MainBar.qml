@@ -45,7 +45,10 @@ PanelWindow {
             // TODO: on click open a calendar view
             ClockWidget {}
 
-            AudioOutput {}
+            AudioOutput {
+                width: parent.width
+                height: parent.width * 1.2
+            }
 
             SysTray {}
 
