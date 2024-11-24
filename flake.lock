@@ -25,15 +25,15 @@
       "locked": {
         "lastModified": 1732449022,
         "narHash": "sha256-cqjfBI0eUZw2CyKCa/Wzywbv7+ld6yKVdyOLbh0LMrE=",
-        "owner": "nydragon",
-        "repo": "quickshell",
+        "ref": "refs/heads/master",
         "rev": "31adcaac7662d6c7fbbc901ba11e0d95f0c7fc56",
-        "type": "github"
+        "revCount": 420,
+        "type": "git",
+        "url": "https://git.outfoxxed.me/quickshell/quickshell"
       },
       "original": {
-        "owner": "nydragon",
-        "repo": "quickshell",
-        "type": "github"
+        "type": "git",
+        "url": "https://git.outfoxxed.me/quickshell/quickshell"
       }
     },
     "root": {
