@@ -37,7 +37,7 @@ MouseArea {
     BRectangle {
         id: box
         width: parent.width
-        height: header.height + toast.actionHeight + bodyBox.height + (5 * 3)
+        height: header.height + actions.implicitHeight + bodyBox.height + (5 * 3)
 
         clip: true
 
@@ -120,12 +120,13 @@ MouseArea {
                     }
                 }
             }
-            RowLayout {
+            GridLayout {
                 id: actions
                 width: parent.width
                 anchors.top: bodyBox.bottom
                 anchors.topMargin: 5
                 anchors.bottomMargin: 5
+                columns: toast.notif?.actions.length < 6 ? toast.notif?.actions.length : 4
                 Repeater {
                     id: rep
                     model: toast.notif?.actions
