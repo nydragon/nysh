@@ -7,12 +7,11 @@ import QtQuick
 import Quickshell.Services.Mpris
 import Quickshell
 import "../../base"
-import "../../provider"
 
 BRectangle {
     id: mprisSmall
     Layout.fillWidth: true
-    Layout.preferredHeight: 200
+    height: 200
 
     radius: 15
     clip: true

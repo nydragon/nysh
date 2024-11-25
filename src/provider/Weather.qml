@@ -46,7 +46,7 @@ Singleton {
         case "296":
             return day ? "weather-showers-scattered" : "weather-showers-scattered-night";
         default:
-            console.log("Unknown weather code: ", weatherCode);
+            console.log("Unknown weather code:", weatherCode);
             return "weather-none-available";
         }
     }

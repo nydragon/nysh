@@ -34,6 +34,20 @@ MouseArea {
 
     signal close
 
+    TextEdit {
+        id: textEdit
+        visible: false
+    }
+
+    Shortcut {
+        sequences: [StandardKey.Copy]
+        onActivated: {
+            textEdit.text = toast.body;
+            textEdit.selectAll();
+            textEdit.copy();
+        }
+    }
+
     BRectangle {
         id: box
         width: parent.width
