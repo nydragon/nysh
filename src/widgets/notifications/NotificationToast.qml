@@ -95,11 +95,13 @@ MouseArea {
                     elide: Text.ElideRight
                     font.pointSize: 12.5
 
-                    Component.onCompleted: () => {
+                    onImplicitHeightChanged: {
                         if (text.implicitHeight < bodyBox.height) {
                             bodyBox.height = text.implicitHeight;
                         }
+                    }
 
+                    Component.onCompleted: () => {
                         bodyBox.maxHeight = Qt.binding(() => text.implicitHeight);
                     }
                 }

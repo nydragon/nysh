@@ -43,7 +43,10 @@ Singleton {
             return day ? "weather-few-clouds" : "weather-few-clouds-night";
         case "122":
             return "weather-overcast";
+        case "296":
+            return day ? "weather-showers-scattered" : "weather-showers-scattered-night";
         default:
+            console.log("Unknown weather code: ", weatherCode);
             return "weather-none-available";
         }
     }

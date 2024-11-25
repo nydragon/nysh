@@ -38,7 +38,7 @@ BRectangle {
         }
 
         GridLayout {
-
+            Layout.margins: 10
             Repeater {
 
                 model: Weather.lastFetch?.weather
@@ -50,9 +50,11 @@ BRectangle {
                     property string maxtempC: modelData.maxtempC
                     property string date: modelData.date
 
+                    color: "#D7B4F3"
+                    radius: 5
+
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    Layout.margins: 5
 
                     ColumnLayout {
                         anchors.fill: parent
