@@ -51,7 +51,7 @@ PanelWindow {
             topRightRadius: 10
             border.color: "transparent"
             height: parent.height
-            width: NyshState.dashOpen ? maxSize : 0
+            width: NyshState.dashOpen ? maxSize : 1
             clip: true
             MouseArea {
                 anchors.fill: parent
@@ -83,6 +83,7 @@ PanelWindow {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     height: parent.height
+                    width: parent.width
                     Layout.margins: 15
                     clip: true
 
@@ -101,6 +102,7 @@ PanelWindow {
                         Layout.fillHeight: true
                         Layout.fillWidth: true
                         height: parent.height
+                        width: parent.width
                         Layout.margins: 15
                         Layout.alignment: Qt.AlignBottom
 

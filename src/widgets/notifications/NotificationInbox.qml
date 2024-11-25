@@ -26,4 +26,28 @@ ListView {
             toast.notif.dismiss();
         }
     }
+
+    addDisplaced: Transition {
+        NumberAnimation {
+            properties: "x,y"
+            duration: 100
+        }
+    }
+    remove: Transition {
+        PropertyAction {
+            property: "ListView.delayRemove"
+            value: true
+        }
+        ParallelAnimation {
+            NumberAnimation {
+                property: "opacity"
+                to: 0
+                duration: 200
+            }
+        }
+        PropertyAction {
+            property: "ListView.delayRemove"
+            value: true
+        }
+    }
 }

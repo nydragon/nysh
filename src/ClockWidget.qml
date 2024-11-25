@@ -5,11 +5,13 @@ import "base"
 BRectangle {
     height: clock.height * 1.5
 
-    Rectangle {
+    Item {
         id: clock
         height: hours.height + minutes.height
+        width: parent.width
         anchors.centerIn: parent
         anchors.verticalCenter: parent.verticalCenter
+
         Text {
             id: hours
             anchors.horizontalCenter: parent.horizontalCenter
