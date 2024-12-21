@@ -136,6 +136,7 @@ MouseArea {
                     }
                 }
             }
+
             GridLayout {
                 id: actions
                 width: parent.width

@@ -43,6 +43,7 @@ Singleton {
             return day ? "weather-few-clouds" : "weather-few-clouds-night";
         case "122":
             return "weather-overcast";
+        case "176":
         case "296":
             return day ? "weather-showers-scattered" : "weather-showers-scattered-night";
         default:

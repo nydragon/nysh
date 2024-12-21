@@ -31,6 +31,13 @@ Singleton {
 
     property alias list: server.trackedNotifications
 
+    function clearAll() {
+        const len = server.trackedNotifications.values.length;
+        for (let i = 0; i < len; i++) {
+            list.values[0].dismiss();
+        }
+    }
+
     signal incomingRemoved(id: int)
     signal incomingAdded(id: Notification)
 }
