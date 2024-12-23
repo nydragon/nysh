@@ -27,15 +27,25 @@ BRectangle {
         spacing: 10
         delegate: BRectangle {
             id: card
+            required property int index
             required property var modelData
             property MprisPlayer player: modelData
+
+            visible: card.player?.trackTitle
 
             width: mprisSmall.width
             height: mprisSmall.height
             radius: 15
 
+            property string albumArt: {
+                if (card.player?.trackArtUrl?.length)
+                    card.player?.trackArtUrl;
+                else
+                    Quickshell.iconPath(DesktopEntries.byId(card.player?.desktopEntry).icon);
+            }
+
             BlurredImage {
-                source: card.player?.trackArtUrl ?? ""
+                source: albumArt
                 anchors.fill: parent
                 radius: parent.radius
             }
@@ -47,7 +57,7 @@ BRectangle {
                     id: im
                     color: "transparent"
                     visible: false
-                    source: card.player?.trackArtUrl ?? ""
+                    source: albumArt
                     radius: 15
                 }
 

@@ -7,6 +7,7 @@ import "windows/notificationtoast"
 import "base"
 import "provider"
 import Quickshell
+import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
 
@@ -74,6 +75,19 @@ PanelWindow {
         BButton {
             id: mouse
             onClicked: NyshState.toggleDash()
+            IconImage {
+                source: {
+                    if (NyshState.dndOn)
+                        Quickshell.iconPath("notifications-disabled");
+                    else if (Notifications.list.values.length)
+                        Quickshell.iconPath("notification-active-symbolic");
+                    else
+                        Quickshell.iconPath("notification-inactive-symbolic");
+                }
+                anchors.margins: 2
+                anchors.fill: parent
+            }
+
             height: width
             width: 30
             anchors.bottom: parent.bottom

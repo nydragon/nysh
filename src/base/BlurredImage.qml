@@ -12,6 +12,7 @@ Rectangle {
         anchors.fill: parent
         source: root.source
         Layout.alignment: Qt.AlignHCenter
+        fillMode: Image.PreserveAspectCrop
         visible: false
     }
 
@@ -33,8 +34,7 @@ Rectangle {
 
     Rectangle {
         id: mask
-        width: image.width
-        height: image.height
+        anchors.fill: parent
         layer.enabled: true
         visible: false
 

@@ -131,6 +131,7 @@ PanelWindow {
                                 from: 0
                                 to: 100
                                 stepSize: 1
+                                visible: NyshState.binBrightnessctl
                                 value: Brightness.value
                                 onMoved: Brightness.value = value
                             }

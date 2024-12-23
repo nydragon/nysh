@@ -8,7 +8,7 @@ Singleton {
     property int value: -1
     property bool first: true
     function refresh() {
-        get.running = true;
+        get.running = true && NyshState.binBrightnessctl;
     }
 
     onValueChanged: () => {
@@ -21,7 +21,7 @@ Singleton {
     Process {
         id: get
         command: ["brightnessctl", "i", "-m"]
-        running: true
+        running: true && NyshState.binBrightnessctl
         stdout: SplitParser {
             onRead: rawData => {
                 const value = Number(rawData.split(",")[3]?.replace("%", "") ?? "");

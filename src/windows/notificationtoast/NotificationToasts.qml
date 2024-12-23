@@ -1,13 +1,11 @@
 import QtQuick
 import Quickshell
-import QtQuick.Controls
-import "root:provider"
-import "root:base"
+import "../../provider"
 import "../../widgets/notifications"
 
 PanelWindow {
     id: popups
-    visible: true
+    visible: !NyshState.dndOn
 
     anchors {
         left: true
@@ -44,7 +42,7 @@ PanelWindow {
                 id: data
                 Component.onCompleted: () => {
                     Notifications.incomingAdded.connect(n => {
-                        data.insert(0, {
+                        !NyshState.dndOn && data.insert(0, {
                             notif: n
                         });
                     });
