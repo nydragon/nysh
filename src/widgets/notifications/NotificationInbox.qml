@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import Quickshell.Widgets
+import Quickshell
 
 import "../../provider"
 import "../../base"
@@ -14,14 +16,7 @@ ColumnLayout {
     width: parent.width
 
     RowLayout {
-        BButton {
-            width: 30
-            height: 30
-            onClicked: () => {
-                Notifications.clearAll();
-            }
-            Layout.alignment: Qt.AlignRight
-        }
+        Layout.alignment: Qt.AlignRight
 
         Switch {
             id: sw
@@ -31,6 +26,19 @@ ColumnLayout {
             }
             checked: NyshState.dndOn
         }
+
+        BButton {
+            width: 30
+            height: 30
+            onClicked: () => {
+                Notifications.clearAll();
+            }
+            Layout.alignment: Qt.AlignRight
+            IconImage {
+                anchors.fill: parent
+                source: Quickshell.iconPath("window-close")
+            }
+        }
     }
 
     ListView {
@@ -38,6 +46,7 @@ ColumnLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
 
+        clip: true
         spacing: 10
         width: parent.width
 

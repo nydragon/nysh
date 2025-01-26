@@ -39,15 +39,6 @@ MouseArea {
         visible: false
     }
 
-    Shortcut {
-        sequences: [StandardKey.Copy]
-        onActivated: {
-            textEdit.text = toast.body;
-            textEdit.selectAll();
-            textEdit.copy();
-        }
-    }
-
     BRectangle {
         id: box
         width: parent.width
@@ -77,6 +68,20 @@ MouseArea {
                     Layout.fillWidth: true
                     elide: Text.ElideRight
                     font.pointSize: 12.5
+                }
+
+                BButton {
+                    onClicked: () => {
+                        textEdit.text = toast.body;
+                        textEdit.selectAll();
+                        textEdit.copy();
+                    }
+                    height: 30
+                    width: 30
+                    IconImage {
+                        anchors.fill: parent
+                        source: Quickshell.iconPath("clipboard")
+                    }
                 }
 
                 BButton {
