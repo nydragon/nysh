@@ -41,7 +41,7 @@ BButton {
         // TODO: Make icon depend on sink type and volume level
         Image {
             id: icon
-            source: "root:/assets/speaker.png"
+            source: Quickshell.iconPath(audiow.sink?.audio.muted ? "audio-volume-muted" : "audio-volume-high")
             width: parent.width * (2 / 3)
 
             anchors.horizontalCenter: parent.horizontalCenter
