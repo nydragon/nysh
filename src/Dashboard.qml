@@ -85,7 +85,6 @@ PanelWindow {
                     height: parent.height
                     width: parent.width
                     Layout.margins: 15
-                    clip: true
 
                     Component.onCompleted: NyshState.dashOpenChanged.connect(() => {
                         if (!NyshState.dashOpen) {

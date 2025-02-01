@@ -8,37 +8,48 @@ MouseArea {
 
     cursorShape: Qt.PointingHandCursor
 
-    onClicked: {
-        click.color = "red";
-        b.start();
-    }
-
     hoverEnabled: true
 
     BRectangle {
-        id: click
-        anchors.fill: parent
-        color: Qt.darker(Config.colourMain, 1.1)
-
-        ColorAnimation on color {
-            id: b
-
-            to: Qt.darker(Config.colourMain, 1.1)
-            duration: 300
-        }
-
-        Rectangle {
-            id: hover
-            visible: mouse.containsMouse
-            anchors.fill: parent
-            radius: parent.radius
-            color: "#9F9F9FC8"
-        }
+        id: self
+        anchors.centerIn: parent
+        width: parent.width
+        height: parent.height
 
         Text {
             visible: mouse.text?.length > 0
             text: mouse.text
             anchors.centerIn: parent
+        }
+
+        states: [
+            State {
+                name: "moved"
+                when: mouse.containsMouse && !mouse.pressed
+                PropertyChanges {
+                    target: self
+                    width: mouse.width + 3
+                    height: mouse.height + 3
+                }
+            },
+            State {
+                name: "clicked"
+                when: mouse.pressed
+                PropertyChanges {
+                    target: self
+                    width: mouse.width - 3
+                    height: mouse.height - 3
+                }
+            }
+        ]
+
+        transitions: Transition {
+            NumberAnimation {
+                properties: "width,height"
+                easing.type: Easing.OutBack
+                easing.overshoot: 5
+                duration: 200
+            }
         }
     }
 }
