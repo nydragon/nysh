@@ -15,6 +15,7 @@ MouseArea {
         anchors.centerIn: parent
         width: parent.width
         height: parent.height
+        color: Qt.darker(Config.colourMain, 1.1)
 
         Text {
             visible: mouse.text?.length > 0
