@@ -46,6 +46,15 @@ PanelWindow {
                             notif: n
                         });
                     });
+                    Notifications.incomingRemoved.connect(n => {
+                        for (let i = 0; i < data.count; ++i) {
+                            let dat = data.get(i);
+                            if (data.id == n) {
+                                data.visible = false;
+                                return;
+                            }
+                        }
+                    });
                 }
             }
             addDisplaced: Transition {
