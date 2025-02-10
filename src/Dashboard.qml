@@ -123,6 +123,7 @@ PanelWindow {
 
                             Text {
                                 text: "brightness"
+                                visible: NyshState.binBrightnessctl
                             }
 
                             Slider {

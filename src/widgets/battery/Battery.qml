@@ -4,7 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 
 BRectangle {
-    visible: UPower.displayDevice != null
+    visible: UPower.displayDevice.ready
     height: width * 2
 
     Rectangle {
