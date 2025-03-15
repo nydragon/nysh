@@ -21,7 +21,7 @@ PanelWindow {
         bottom: true
     }
 
-    width: 40
+    width: 35
     color: "transparent"
 
     NotificationToasts {
@@ -29,18 +29,13 @@ PanelWindow {
     }
 
     Rectangle {
-        color: "transparent"
-        anchors.alignWhenCentered: true
-        anchors.centerIn: parent
+        color: "#282828"
+        anchors.fill: parent
 
-        height: parent.height
-        width: parent.width
-
-        ColumnLayout {
-            width: 30
-            anchors.horizontalCenter: parent.horizontalCenter
-
-            Layout.maximumWidth: 30
+        Column{
+            anchors.fill:parent
+            anchors.margins : 2
+            spacing: 2
 
             // TODO: on click open a calendar view
             ClockWidget {}
@@ -65,9 +60,13 @@ PanelWindow {
                 width: parent.width
                 height: parent.width
             }
-        }
 
-        BButton {
+
+            Item {
+
+            }
+
+            BButton {
             id: mouse
             onClicked: NyshState.toggleDash()
 
@@ -84,11 +83,11 @@ PanelWindow {
                 anchors.fill: parent
             }
 
-            anchors.horizontalCenter: parent.horizontalCenter
-
+            width: parent.width
             height: width
-            width: 30
-            anchors.bottom: parent.bottom
         }
+
+        }
+
     }
 }

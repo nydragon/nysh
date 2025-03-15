@@ -21,8 +21,6 @@ PanelWindow {
         width: popups.width
     }
 
-    focusable: true
-
     color: "transparent"
     width: 500
 

@@ -7,10 +7,13 @@ import Quickshell.Widgets
 MouseArea {
     id: root
     required property SystemTrayItem item
+    width: parent.width
+    height: parent.width
     Layout.fillWidth: true
     Layout.preferredHeight: parent.width
     acceptedButtons: Qt.LeftButton | Qt.RightButton
 
+    anchors.horizontalCenter: parent.horizontalCenter
     onClicked: event => {
         switch (event.button) {
         case Qt.LeftButton:
@@ -28,11 +31,15 @@ MouseArea {
         id: menu
         menu: root.item.menu
         anchor.window: lbar
+        anchor.rect.x: root.x + lbar.width
+        anchor.rect.y: root.y
+        anchor.rect.height: root.height * 3
+        anchor.edges: Edges.Left | Edges.Bottom
     }
 
     IconImage {
         source: root.item.icon
-
+        anchors.centerIn:parent
         width: parent.width
         height: parent.height
     }

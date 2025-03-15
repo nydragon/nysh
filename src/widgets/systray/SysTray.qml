@@ -1,31 +1,22 @@
+import "../../base"
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
-import Quickshell
 import Quickshell.Services.SystemTray
-import "../../base"
 
 BRectangle {
-    height: 112
+    width: parent.width
+    height: childrenRect.height + margins * 2
+    property int margins: 2;
 
-    ScrollView {
-        anchors.fill: parent
-        contentWidth: availableWidth
-        padding: parent.border.width * 2
-
-        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical.policy: ScrollBar.AlwaysOff
-
-        ColumnLayout {
-            anchors.fill: parent
-
-            Repeater {
-                model: SystemTray.items
-
-                SysTrayItem {
-                    required property SystemTrayItem modelData
-                    item: modelData
-                }
+    ColumnLayout {
+        anchors.centerIn: parent
+        anchors.margins: parent.margins
+        width: parent.width - anchors.margins * 2
+        Repeater {
+            model: SystemTray.items
+            SysTrayItem {
+                required property SystemTrayItem modelData
+                item: modelData
             }
         }
     }
