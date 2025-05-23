@@ -1,7 +1,6 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick.Effects
-import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick
 import Quickshell.Services.Mpris
@@ -21,7 +20,7 @@ BRectangle {
     ListView {
         id: list
         anchors.fill: parent
-        model: Mpris.players
+        model: Mpris.players.values.filter(player => player.length != 0)
         orientation: Qt.Horizontal
         snapMode: ListView.SnapOneItem
         spacing: 10
@@ -83,25 +82,22 @@ BRectangle {
                     Layout.fillWidth: true
                     clip: true
 
-                    Text {
+                    BText {
                         text: card.player?.trackTitle ?? "Unknown Track"
-                        color: "white"
                         Layout.alignment: Qt.AlignCenter
                         Layout.maximumWidth: parent.width
                         elide: Text.ElideRight
                     }
 
-                    Text {
+                    BText {
                         text: card.player?.trackAlbum ?? "Unknown Album"
-                        color: "white"
                         Layout.alignment: Qt.AlignCenter
                         Layout.maximumWidth: parent.width
                         elide: Text.ElideRight
                     }
 
-                    Text {
+                    BText {
                         text: card.player?.trackAlbumArtist ?? "Unknown Artist"
-                        color: "white"
                         Layout.alignment: Qt.AlignCenter
                         Layout.maximumWidth: parent.width
                         elide: Text.ElideRight
