@@ -12,13 +12,13 @@ BRectangle {
         anchors.centerIn: parent
         anchors.verticalCenter: parent.verticalCenter
 
-        Text {
+        BText {
             id: hours
             anchors.horizontalCenter: parent.horizontalCenter
             font.weight: Font.ExtraBold
             text: String(Time.date.getHours()).padStart(2, '0')
         }
-        Text {
+        BText {
             id: minutes
             anchors.top: hours.bottom
             anchors.horizontalCenter: parent.horizontalCenter

@@ -6,12 +6,13 @@ import Quickshell.Services.SystemTray
 BRectangle {
     width: parent.width
     height: childrenRect.height + margins * 2
-    property int margins: 2;
+    property int margins: 2
 
     ColumnLayout {
-        anchors.centerIn: parent
-        anchors.margins: parent.margins
-        width: parent.width - anchors.margins * 2
+        Layout.alignment: Qt.AlignCenter
+        Layout.margins: parent.margins
+        width: parent.width
+
         Repeater {
             model: SystemTray.items
             SysTrayItem {

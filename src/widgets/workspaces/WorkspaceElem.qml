@@ -1,7 +1,6 @@
-import Quickshell
-import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
+import "../../provider"
 
 Rectangle {
     id: root
@@ -18,8 +17,14 @@ Rectangle {
     Layout.rightMargin: inactiveMargin
     Layout.leftMargin: inactiveMargin
 
-    color: "black"
+    color: Colors.data.colors.dark.on_surface_variant
     radius: 10
+
+    Behavior on color {
+        ColorAnimation {
+            duration: 1000
+        }
+    }
 
     MouseArea {
         anchors.fill: parent
@@ -32,7 +37,7 @@ Rectangle {
             root.hovered = false;
         }
         onClicked: () => {
-            workspaces.switchWorkspace(wnum);
+            workspaces.switchWorkspace(parent.wnum);
         }
     }
 
@@ -41,8 +46,6 @@ Rectangle {
         when: root.active
         PropertyChanges {
             target: root
-            Layout.rightMargin: activeMargin
-            Layout.leftMargin: activeMargin
         }
     }
 

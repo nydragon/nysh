@@ -1,13 +1,12 @@
 import "widgets/systray"
 import "widgets/workspaces"
 import "widgets/battery"
-import "widgets/network"
 import "widgets/caffeine"
+import "widgets/mpris"
 import "windows/notificationtoast"
 import "base"
 import "provider"
 import Quickshell
-import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
 
@@ -21,20 +20,50 @@ PanelWindow {
         bottom: true
     }
 
-    width: 35
-    color: "transparent"
+    property int baseWidth: 35
+    property int expandedWidth: 400
+
+    width: layout.implicitWidth
+    color: Colors.data.colors.dark.surface
+
+    Behavior on color {
+        ColorAnimation {
+            duration: 1000
+        }
+    }
 
     NotificationToasts {
         screen: lbar.screen
     }
 
-    Rectangle {
-        color: "#282828"
-        anchors.fill: parent
+    RowLayout {
+        id: layout
+        height: parent.height
 
-        Column{
-            anchors.fill:parent
-            anchors.margins : 2
+        Column {
+            id: rect
+            visible: NyshState.dashOpen
+            Layout.preferredWidth: visible ? lbar.expandedWidth : 0
+            Layout.fillHeight: true
+            BSlider {
+                width: parent.width
+                height: 30
+                Layout.preferredHeight: 30
+            }
+
+            MprisSmall {
+                height: 150
+                //Layout.fillWidth: true
+                width: parent.width
+            }
+        }
+
+        Column {
+            Layout.preferredWidth: 35
+            Layout.fillHeight: true
+            Layout.topMargin: 2
+            Layout.bottomMargin: 2
+            Layout.rightMargin: 2
             spacing: 2
 
             // TODO: on click open a calendar view
@@ -49,45 +78,41 @@ PanelWindow {
 
             Workspaces {}
 
-            Battery {}
-
-            Network {
-                width: parent.width
-                height: parent.width
+            Battery {
+                width: 35
+                height: 35
             }
 
             Caffeine {
-                width: parent.width
-                height: parent.width
-            }
-
-
-            Item {
-
+                width: 35
+                height: 35
             }
 
             BButton {
-            id: mouse
-            onClicked: NyshState.toggleDash()
+                id: mouse
+                onClicked: NyshState.toggleDash()
 
-            IconImage {
-                source: {
-                    if (NyshState.dndOn)
-                        Quickshell.iconPath("notifications-disabled");
-                    else if (Notifications.list.values.length)
-                        Quickshell.iconPath("notification-active-symbolic");
-                    else
-                        Quickshell.iconPath("notification-inactive-symbolic");
+                BText {
+                    text: {
+                        if (NyshState.dndOn)
+                            "󰂛";
+                        else if (Notifications.list.values.length)
+                            "󱅫";
+                        else
+                            "󰂚";
+                    }
+
+                    fontSizeMode: Text.Fit
+                    height: parent.height
+                    width: parent.width
+                    Layout.alignment: Qt.AlignCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: 720
                 }
-                anchors.margins: 2
-                anchors.fill: parent
+
+                width: parent.width
+                height: width
             }
-
-            width: parent.width
-            height: width
         }
-
-        }
-
     }
 }

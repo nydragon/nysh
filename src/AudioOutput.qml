@@ -1,6 +1,4 @@
 import QtQuick
-import QtQuick.Controls
-import Quickshell
 import Quickshell.Services.Pipewire
 import "windows/audioman"
 import "base"
@@ -12,7 +10,9 @@ import "base"
 
 BButton {
     id: audiow
-    height: (icon.height + slider.height) * 1.5
+
+    width: parent.width
+    height: width
 
     property PwNode sink: Pipewire.defaultAudioSink
 
@@ -26,55 +26,23 @@ BButton {
         audioman.visible = !audioman.visible;
     }
 
-    onWheel: wheel => {
-        const newVal = audiow.sink.audio.volume + (wheel.angleDelta.y / 12000);
-        audiow.sink.audio.volume = newVal < 1.0 ? (newVal > 0 ? newVal : 0.0) : 1.0;
-    }
-
-    Rectangle {
-        width: parent.width
-        color: "transparent"
-
-        height: icon.height + slider.height
-        anchors.verticalCenter: parent.verticalCenter
-
-        // TODO: Make icon depend on sink type and volume level
-        Image {
-            id: icon
-            source: Quickshell.iconPath(audiow.sink?.audio.muted ? "audio-volume-muted" : "audio-volume-high")
-            width: parent.width * (2 / 3)
-
-            anchors.horizontalCenter: parent.horizontalCenter
-            fillMode: Image.PreserveAspectFit
+    BText {
+        text: {
+            if (audiow.sink?.audio.muted)
+                "";
+            else if (audiow.sink?.audio.volume >= 0.5)
+                "";
+            else if (audiow.sink?.audio.volume > 0)
+                "";
+            else
+                "";
         }
 
-        Slider {
-            id: slider
-            anchors.top: icon.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            height: background.height
-            width: parent.width * 0.75
-
-            enabled: false
-            value: audiow.sink?.audio.volume ?? 0
-            stepSize: 0.01
-
-            contentItem: Rectangle {
-                color: "#3191CD" // Change color based on value
-                radius: 5
-                width: slider.width * (slider.value / slider.to)
-                height: parent.height
-            }
-
-            background: Rectangle {
-                color: "#C4C4C4"
-                radius: 5
-                height: 4
-                anchors.bottomMargin: 5
-                anchors.topMargin: 5
-            }
-
-            handle: Rectangle {}
-        }
+        fontSizeMode: Text.Fit
+        anchors.centerIn: parent
+        anchors.fill: parent
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        font.pixelSize: 20
     }
 }

@@ -5,12 +5,20 @@ import Quickshell.Io
 
 Singleton {
     id: state
-    property bool dashOpen: false
+
+    property alias dashOpen: persist.dashOpen
     property bool workspaceViewOpen: false
 
     property bool binBrightnessctl: false
 
     property bool dndOn: false
+
+    property PersistentProperties persist: PersistentProperties {
+        id: persist
+        reloadableId: "persistedStates"
+
+        property bool dashOpen: false
+    }
 
     Process {
         command: ["which", "brightnessctl"]
@@ -57,6 +65,6 @@ Singleton {
     }
 
     function toggleDash() {
-        state.dashOpen = !state.dashOpen;
+        persist.dashOpen = !persist.dashOpen;
     }
 }

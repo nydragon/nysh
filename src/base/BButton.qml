@@ -11,11 +11,10 @@ MouseArea {
     hoverEnabled: true
 
     BRectangle {
-        id: self
+        id: rect
         anchors.centerIn: parent
         width: parent.width
         height: parent.height
-        color: Qt.darker(Config.colourMain, 1.1)
 
         Text {
             visible: mouse.text?.length > 0
@@ -28,18 +27,20 @@ MouseArea {
                 name: "moved"
                 when: mouse.containsMouse && !mouse.pressed
                 PropertyChanges {
-                    target: self
-                    width: mouse.width + 3
-                    height: mouse.height + 3
+                    rect {
+                        width: mouse.width + 3
+                        height: mouse.height + 3
+                    }
                 }
             },
             State {
                 name: "clicked"
                 when: mouse.pressed
                 PropertyChanges {
-                    target: self
-                    width: mouse.width - 3
-                    height: mouse.height - 3
+                    rect {
+                        width: mouse.width - 3
+                        height: mouse.height - 3
+                    }
                 }
             }
         ]

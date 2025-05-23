@@ -8,3 +8,4 @@ singleton Notifications 0.1 Notifications.qml
 singleton Time 0.1 Time.qml
 singleton Brightness 0.1 Brightness.qml
 singleton Weather 0.1 Weather.qml
+singleton Colors 0.1 Colors.qml

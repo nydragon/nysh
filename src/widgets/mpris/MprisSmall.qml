@@ -109,25 +109,29 @@ BRectangle {
 
                     RowLayout {
                         Layout.alignment: Qt.AlignCenter
-                        BIconButton {
-                            source: Quickshell.iconPath("media-seek-backward")
+                        BTextButton {
                             onClicked: card.player?.previous()
-                            size: 20
-                        }
-                        BIconButton {
-                            source: Quickshell.iconPath(card.player?.playbackState === MprisPlaybackState.Playing ? "media-playback-pause" : "media-playback-start")
-                            onClicked: card.player?.togglePlaying()
-                            size: 20
+                            Layout.preferredWidth: 30
+                            Layout.preferredHeight: 30
+                            text: ""
                         }
 
-                        BIconButton {
-                            source: Quickshell.iconPath("media-seek-forward")
+                        BTextButton {
+                            onClicked: card.player?.togglePlaying()
+                            Layout.preferredWidth: 30
+                            Layout.preferredHeight: 30
+                            text: card.player?.playbackState === MprisPlaybackState.Playing ? "" : ""
+                        }
+
+                        BTextButton {
                             onClicked: card.player?.next()
-                            size: 20
+                            Layout.preferredWidth: 30
+                            Layout.preferredHeight: 30
+                            text: ""
                         }
                     }
 
-                    Slider {
+                    BSlider {
                         id: slider
                         Layout.fillWidth: true
                         Layout.minimumWidth: 10
