@@ -2,6 +2,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell.Io
 import Quickshell.Services.Pipewire
+import "../../base"
 
 ColumnLayout {
     ComboBox {
@@ -31,7 +32,7 @@ ColumnLayout {
         }
     }
 
-    Slider {
+    BSlider {
         Layout.fillWidth: true
         value: select.model[select.currentIndex]?.node.audio.volume ?? 0
         onValueChanged: select.model[select.currentIndex].node.audio.volume = value

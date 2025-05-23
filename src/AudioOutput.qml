@@ -11,8 +11,8 @@ import "base"
 BButton {
     id: audiow
 
-    width: parent.width
-    height: width
+    implicitWidth: parent.width
+    implicitHeight: width
 
     property PwNode sink: Pipewire.defaultAudioSink
 

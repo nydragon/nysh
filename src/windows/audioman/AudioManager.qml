@@ -3,9 +3,7 @@ import Quickshell.Services.Pipewire
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import "../../base"
 import "../../provider"
-import "../../widgets/MprisBig"
 
 PanelWindow {
     id: audioman
@@ -14,54 +12,45 @@ PanelWindow {
         left: true
     }
 
-    color: "transparent"
-    width: screen?.width ?? display.width
-    height: screen?.height ?? display.height
+    color: Colors.data.colors.dark.surface
+
+    implicitWidth: 500
+    implicitHeight: 600
     visible: false
 
     MouseArea {
         anchors.fill: parent
         onClicked: audioman.visible = false
 
-        BlurredImage {
-            id: display
-            x: 10
-            y: 10
-            width: 500
-            height: 600
-            radius: 10
-            source: Player.current?.trackArtUrl ?? ""
-            color: "#BD93F9"
+        width: 500
+        height: 600
 
-            ScrollView {
-                id: test
+        ScrollView {
+            id: test
+            anchors.fill: parent
+            contentWidth: availableWidth
+
+            ColumnLayout {
+                id: p
+                // BUG: We access nodes before they are initialized
                 anchors.fill: parent
-                contentWidth: availableWidth
+                anchors.margins: 10
 
-                ColumnLayout {
-                    id: p
-                    // BUG: We access nodes before they are initialized
-                    anchors.fill: parent
-                    anchors.margins: 10
+                OutputSelector {}
 
-                    MprisWidget {}
+                Rectangle {
+                    height: 2
+                    color: "black"
+                    Layout.fillWidth: true
+                    radius: 10
+                }
 
-                    OutputSelector {}
+                Repeater {
+                    model: Pipewire.nodes.values.filter(e => e.isStream)
 
-                    Rectangle {
-                        height: 2
-                        color: "black"
-                        Layout.fillWidth: true
-                        radius: 10
-                    }
-
-                    Repeater {
-                        model: Pipewire.nodes.values.filter(e => e.isStream)
-
-                        AudioEntry {
-                            required property PwNode modelData
-                            node: modelData
-                        }
+                    AudioEntry {
+                        required property PwNode modelData
+                        node: modelData
                     }
                 }
             }

@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell.Services.Pipewire
-import Quickshell.Io
+import "../../base"
 
 RowLayout {
     id: root
@@ -53,10 +53,10 @@ RowLayout {
 
             Button {
                 visible: root.node.isSink
-                width: 10
+                Layout.preferredWidth: 10
                 checkable: true
                 Image {
-                    source: node.audio.muted ? "root:/assets/audio-volume-muted.svg" : "root:/assets/audio-volume-high.svg"
+                    source: root.node.audio.muted ? "root:/assets/audio-volume-muted.svg" : "root:/assets/audio-volume-high.svg"
                     height: parent.height * (2 / 3)
 
                     anchors.centerIn: parent
@@ -74,7 +74,7 @@ RowLayout {
                 color: "white"
             }
 
-            Slider {
+            BSlider {
                 Layout.fillWidth: true
                 value: root.node.audio.volume
                 onValueChanged: root.node.audio.volume = value

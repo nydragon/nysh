@@ -22,7 +22,7 @@ PanelWindow {
     }
 
     color: "transparent"
-    width: 500
+    implicitWidth: 500
 
     MouseArea {
         id: mouseArea
