@@ -35,7 +35,16 @@ MouseArea {
     }
 
     IconImage {
-        source: root.item.icon
+        source: {
+            let icon = root.item.icon;
+
+            if (icon.includes("?path=")) {
+                const [name, path] = icon.split("?path=");
+                icon = `file://${path}/${name.slice(name.lastIndexOf("/") + 1)}`;
+            }
+
+            return icon;
+        }
         anchors.centerIn: parent
         width: parent.width
         height: parent.height
