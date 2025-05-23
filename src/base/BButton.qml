@@ -5,10 +5,17 @@ MouseArea {
     id: mouse
 
     property string text: ""
-
+    property alias color: rect.color
     cursorShape: Qt.PointingHandCursor
-
     hoverEnabled: true
+
+    onContainsMouseChanged: () => {
+        if (containsMouse) {
+            rect.color = "#14" + Colors.data.colors.dark.on_secondary_container.replace("#", "");
+        } else {
+            rect.color = "transparent";
+        }
+    }
 
     BRectangle {
         id: rect
@@ -16,7 +23,7 @@ MouseArea {
         width: parent.width
         height: parent.height
 
-        Text {
+        BText {
             visible: mouse.text?.length > 0
             text: mouse.text
             anchors.centerIn: parent

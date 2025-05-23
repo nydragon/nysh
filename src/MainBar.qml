@@ -4,6 +4,7 @@ import "widgets/battery"
 import "widgets/caffeine"
 import "widgets/mpris"
 import "windows/notificationtoast"
+import "widgets/audio"
 import "base"
 import "provider"
 import Quickshell
@@ -15,8 +16,7 @@ PanelWindow {
 
     anchors {
         top: true
-        left: Config.alignment === Config.BarAlignment.Left
-        right: Config.alignment === Config.BarAlignment.Right
+        left: true
         bottom: true
     }
 
@@ -35,27 +35,33 @@ PanelWindow {
 
     NotificationToasts {
         screen: lbar.screen
+        contentX: lbar.width
     }
 
     RowLayout {
         id: layout
         height: parent.height
 
-        Column {
+        ColumnLayout {
             id: rect
             visible: NyshState.dashOpen
             Layout.preferredWidth: visible ? lbar.expandedWidth : 0
             Layout.fillHeight: true
-            BSlider {
-                width: parent.width
-                height: 30
-                Layout.preferredHeight: 30
-            }
+            Layout.alignment: Qt.AlignTop
+            Layout.margins: 10
 
             MprisSmall {
-                height: 150
-                //Layout.fillWidth: true
-                width: parent.width
+                Layout.preferredHeight: 150
+                Layout.fillWidth: true
+            }
+
+            BSection {
+                open: NyshState.audioOpen
+                Layout.fillWidth: true
+                Sinks {
+                    Layout.fillWidth: true
+                    visible: parent.open
+                }
             }
         }
 
@@ -73,6 +79,10 @@ PanelWindow {
             AudioOutput {
                 width: parent.width
                 height: parent.width * 1.2
+
+                onClicked: {
+                    NyshState.toggleAudio();
+                }
             }
 
             SysTray {}

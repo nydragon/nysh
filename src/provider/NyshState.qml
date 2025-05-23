@@ -7,15 +7,15 @@ Singleton {
     id: state
 
     property alias dashOpen: persist.dashOpen
+    property bool audioOpen: false
     property bool workspaceViewOpen: false
-
     property bool binBrightnessctl: false
-
     property bool dndOn: false
+    property string home: ""
 
     property PersistentProperties persist: PersistentProperties {
         id: persist
-        reloadableId: "persistedStates"
+        reloadableId: "persistedStatesNysh"
 
         property bool dashOpen: false
     }
@@ -23,8 +23,18 @@ Singleton {
     Process {
         command: ["which", "brightnessctl"]
         running: true
-        onExited: (code, status) => {
-            state.binBrightnessctl = !code;
+        stdout: SplitParser {
+            onRead: data => console.log(`line read: ${data}`)
+        }
+    }
+
+    Process {
+        command: ["printenv", "HOME"]
+        running: true
+        stdout: SplitParser {
+            onRead: data => {
+                state.home = data.trim();
+            }
         }
     }
 
@@ -66,5 +76,14 @@ Singleton {
 
     function toggleDash() {
         persist.dashOpen = !persist.dashOpen;
+    }
+
+    function toggleAudio() {
+        if (!persist.dashOpen) {
+            persist.dashOpen = true;
+            audioOpen = true;
+        } else {
+            audioOpen = !audioOpen;
+        }
     }
 }

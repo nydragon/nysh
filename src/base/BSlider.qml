@@ -6,6 +6,7 @@ Slider {
     id: sli
     property double innerRadius: height / 10
     property double outerRadius: height
+    property bool withAura: true
 
     handle: Rectangle {
         color: Colors.data.colors.dark.primary
@@ -28,7 +29,7 @@ Slider {
         color: "#000000"
         anchors.fill: parent
         radius: height
-
+        visible: parent.withAura
         Behavior on opacity {
             NumberAnimation {
                 duration: 100
@@ -47,8 +48,8 @@ Slider {
         anchors.verticalCenter: parent.verticalCenter
         height: parent.height / 3
         anchors.right: sli.handle.left
-        anchors.rightMargin: 5
-        anchors.leftMargin: 10
+        anchors.rightMargin: 3
+        anchors.leftMargin: parent.withAura ? 10 : 0
 
         Behavior on color {
             ColorAnimation {
@@ -67,8 +68,9 @@ Slider {
         anchors.verticalCenter: parent.verticalCenter
         height: parent.height / 3
         anchors.left: sli.handle.right
-        anchors.leftMargin: 5
-        anchors.rightMargin: 10
+        anchors.leftMargin: 3
+        anchors.rightMargin: parent.withAura ? 10 : 0
+
         Behavior on color {
             ColorAnimation {
                 duration: 1000
@@ -84,6 +86,7 @@ Slider {
             radius: height
             anchors.right: parent.right
             anchors.margins: 3
+
             Behavior on color {
                 ColorAnimation {
                     duration: 1000

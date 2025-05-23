@@ -1,7 +1,6 @@
 import QtQuick
 import Quickshell.Services.Pipewire
-import "windows/audioman"
-import "base"
+import "../../base"
 
 // TODO: on click open detailed sink options:
 // - select default sink
@@ -18,12 +17,6 @@ BButton {
 
     PwObjectTracker {
         objects: [audiow.sink]
-    }
-
-    property AudioManager audioman: AudioManager {}
-
-    onClicked: {
-        audioman.visible = !audioman.visible;
     }
 
     BText {

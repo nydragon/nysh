@@ -5,6 +5,9 @@ import "../../widgets/notifications"
 
 PanelWindow {
     id: popups
+
+    property int contentX: 0
+
     visible: !NyshState.dndOn
 
     anchors {
@@ -28,10 +31,11 @@ PanelWindow {
         id: mouseArea
         hoverEnabled: true
         anchors.fill: parent
+        x: popups.contentX
 
         ListView {
             id: popupcol
-            anchors.margins: lbar.width * 0.2
+            anchors.margins: 10
             anchors.fill: parent
             focus: true
             spacing: 10
@@ -94,7 +98,7 @@ PanelWindow {
             delegate: NotificationToast {
                 id: toast
 
-                property int countdownTime: Config.notifications.toastDuration
+                property int countdownTime: Config.data.notifications.toastDuration
                 required property int index
 
                 width: ListView.view.width

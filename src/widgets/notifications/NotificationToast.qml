@@ -1,7 +1,6 @@
 pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
 import Quickshell
 import Quickshell.Widgets
 import "../../base"
@@ -45,7 +44,7 @@ MouseArea {
         height: header.height + actions.implicitHeight + bodyBox.height + (5 * 3)
 
         clip: true
-
+        color: Colors.data.colors.dark.surface
         Item {
             id: inner
             anchors.margins: 5
@@ -63,35 +62,30 @@ MouseArea {
                     visible: toast.appIcon ?? false
                 }
 
-                Text {
+                BText {
                     text: `${toast.appIcon ? "" : `${toast.appName}:`} ${toast.summary}`
                     Layout.fillWidth: true
                     elide: Text.ElideRight
                     font.pointSize: 12.5
                 }
 
-                BButton {
+                BTextButton {
                     onClicked: () => {
                         textEdit.text = toast.body;
                         textEdit.selectAll();
                         textEdit.copy();
                     }
+                    text: ""
                     height: 30
                     width: 30
-                    IconImage {
-                        anchors.fill: parent
-                        source: Quickshell.iconPath("clipboard")
-                    }
                 }
 
-                BButton {
+                BTextButton {
+                    id: d
                     onClicked: toast.close()
                     height: 30
                     width: 30
-                    IconImage {
-                        anchors.fill: parent
-                        source: Quickshell.iconPath("window-close")
-                    }
+                    text: ""
                 }
             }
 
@@ -104,7 +98,7 @@ MouseArea {
                 property int maxHeight: 0
                 color: "transparent"
 
-                Text {
+                BText {
                     id: text
                     anchors.topMargin: 5
                     text: toast.body ?? ""

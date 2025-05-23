@@ -8,7 +8,7 @@ Singleton {
 
     FileView {
         id: file
-        path: "/home/ny/.config/nysh/colours.json"
+        path: NyshState.home ? `${NyshState.home}/.config/nysh/colours.json` : ""
 
         // when changes are made on disk, reload the file's content
         watchChanges: true
