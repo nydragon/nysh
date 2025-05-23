@@ -20,10 +20,11 @@ PanelWindow {
         bottom: true
     }
 
-    property int baseWidth: 35
-    property int expandedWidth: 400
+    readonly property int baseWidth: 35
+    readonly property int expandedWidth: 400
 
-    width: layout.implicitWidth
+    implicitWidth: layout.implicitWidth
+    exclusiveZone: implicitWidth
     color: Colors.data.colors.dark.surface
 
     Behavior on color {
