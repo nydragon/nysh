@@ -12,8 +12,8 @@ in
 
     unpackPhase = ":";
 
-    nativeBuildInputs = [makeWrapper get-image];
-
+    nativeBuildInputs = [makeWrapper];
+    buildInputs = [get-image];
     installPhase = ''
       mkdir -p $out/bin
       cp ${quickshell}/bin/quickshell $out/bin/nysh
