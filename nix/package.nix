@@ -2,20 +2,23 @@
   stdenv,
   quickshell,
   makeWrapper,
+  writeShellScriptBin,
   ...
-}:
-stdenv.mkDerivation {
-  name = "nysh";
+}: let
+  get-image = writeShellScriptBin "get-image" ./../scripts/get-image.sh;
+in
+  stdenv.mkDerivation {
+    name = "nysh";
 
-  unpackPhase = ":";
+    unpackPhase = ":";
 
-  nativeBuildInputs = [ makeWrapper ];
+    nativeBuildInputs = [makeWrapper get-image];
 
-  installPhase = ''
-    mkdir -p $out/bin
-    cp ${quickshell}/bin/quickshell $out/bin/nysh
+    installPhase = ''
+      mkdir -p $out/bin
+      cp ${quickshell}/bin/quickshell $out/bin/nysh
 
-    wrapProgram $out/bin/nysh \
-       --add-flags "-p ${./..}/src"
-  '';
-}
+      wrapProgram $out/bin/nysh \
+         --add-flags "-p ${./..}/src"
+    '';
+  }

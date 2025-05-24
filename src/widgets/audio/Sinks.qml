@@ -7,7 +7,7 @@ import "../../base"
 Column {
     id: root
 
-    property int defaultSinkId: Pipewire.defaultAudioSink.id
+    property int defaultSinkId: Pipewire.defaultAudioSink?.id ?? -1
     signal reset(id: int)
 
     PwObjectTracker {
@@ -69,11 +69,7 @@ Column {
     }
 
     Repeater {
-        model: {
-            const x = Pipewire.nodes.values.filter(e => e.isStream);
-            x.sort((a, b) => a.properties["application.name"] > b.properties["application.name"]);
-            return x;
-        }
+        model: Pipewire.nodes.values.filter(e => !e.isSink && e.isStream)
 
         Column {
             id: stream
@@ -87,6 +83,41 @@ Column {
 
             BText {
                 text: `[${parent.modelData.properties["application.name"]}] ` + (parent.modelData.properties["media.name"] ?? parent.modelData.description)
+                elide: Text.ElideRight
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: 10
+                anchors.rightMargin: 10
+            }
+
+            BSlider {
+                width: parent.width
+                value: parent.modelData.audio.volume
+                onValueChanged: parent.modelData.audio.volume = value
+            }
+        }
+    }
+
+    Item {
+        height: 20
+        width: parent.width
+    }
+
+    Repeater {
+        model: Pipewire.nodes.values.filter(e => !e.isSink && !e.isStream && e.audio)
+
+        Column {
+            id: source
+            required property PwNode modelData
+
+            width: root.width
+
+            PwObjectTracker {
+                objects: [source.modelData]
+            }
+
+            BText {
+                text: parent.modelData.properties["media.name"] ?? parent.modelData.description
                 elide: Text.ElideRight
                 anchors.left: parent.left
                 anchors.right: parent.right

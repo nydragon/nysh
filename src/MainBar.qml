@@ -3,6 +3,7 @@ import "widgets/workspaces"
 import "widgets/battery"
 import "widgets/caffeine"
 import "widgets/mpris"
+import "widgets"
 import "windows/notificationtoast"
 import "widgets/audio"
 import "base"
@@ -26,7 +27,7 @@ PanelWindow {
     implicitWidth: layout.implicitWidth
     exclusiveZone: implicitWidth
     color: Colors.data.colors.dark.surface
-
+    focusable: true
     Behavior on color {
         ColorAnimation {
             duration: 1000
@@ -56,10 +57,27 @@ PanelWindow {
             }
 
             BSection {
+                id: audioSection
                 open: NyshState.audioOpen
                 Layout.fillWidth: true
+                text: "Audio"
                 Sinks {
+                    id: sink
                     Layout.fillWidth: true
+                    visible: audioSection.open
+                }
+            }
+
+            BSection {
+                id: clipboardSection
+                Layout.fillWidth: true
+                text: "Clipboard"
+
+                Clipboard {
+                    Layout.leftMargin: 10
+                    Layout.rightMargin: 10
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignHCenter
                     visible: parent.open
                 }
             }

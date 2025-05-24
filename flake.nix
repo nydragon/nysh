@@ -9,25 +9,26 @@
     };
   };
 
-  outputs =
-    { self, nixpkgs, ... }@inputs:
-    let
-      systems = [ "x86_64-linux" ];
-      forEachSystem = nixpkgs.lib.genAttrs systems;
-      pkgsForEach = nixpkgs.legacyPackages;
-    in
-    {
-      packages = forEachSystem (system: {
-        default = self.packages.${system}.nysh;
-        nysh = pkgsForEach.${system}.callPackage ./nix/package.nix {
-          quickshell = inputs.quickshell.packages.${system}.default;
-        };
-      });
+  outputs = {
+    self,
+    nixpkgs,
+    ...
+  } @ inputs: let
+    systems = ["x86_64-linux"];
+    forEachSystem = nixpkgs.lib.genAttrs systems;
+    pkgsForEach = nixpkgs.legacyPackages;
+  in {
+    packages = forEachSystem (system: {
+      default = self.packages.${system}.nysh;
+      nysh = pkgsForEach.${system}.callPackage ./nix/package.nix {
+        quickshell = inputs.quickshell.packages.${system}.default;
+      };
+    });
 
-      devShells = forEachSystem (system: {
-        default = pkgsForEach.${system}.callPackage ./nix/shell.nix {
-          quickshell = inputs.quickshell.packages.${system}.default;
-        };
-      });
-    };
+    devShells = forEachSystem (system: {
+      default = pkgsForEach.${system}.callPackage ./nix/shell.nix {
+        quickshell = inputs.quickshell.packages.${system}.default;
+      };
+    });
+  };
 }
