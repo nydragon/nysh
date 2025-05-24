@@ -97,7 +97,7 @@ ColumnLayout {
             property bool expanded: false
 
             hoverEnabled: true
-            implicitWidth: parent.width
+            implicitWidth: listView.width
             implicitHeight: expanded ? (img.height > 100 ? img.height : 100) : 100
 
             Behavior on height {
