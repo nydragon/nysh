@@ -127,13 +127,21 @@ ColumnLayout {
                 })]
         }
 
-        populate: Transition {
+        property Transition animation: Transition {
             NumberAnimation {
                 properties: "x,y"
                 from: 0
                 duration: listView.animationSpeed
             }
+            NumberAnimation {
+                properties: "opacity"
+                to: 1
+                duration: listView.animationSpeed
+            }
         }
+
+        populate: animation
+        add: animation
 
         remove: Transition {
             NumberAnimation {
@@ -141,11 +149,9 @@ ColumnLayout {
                 to: 0
                 duration: listView.animationSpeed
             }
-        }
-
-        removeDisplaced: Transition {
             NumberAnimation {
-                properties: "x,y"
+                properties: "opacity"
+                to: 0
                 duration: listView.animationSpeed
             }
         }
