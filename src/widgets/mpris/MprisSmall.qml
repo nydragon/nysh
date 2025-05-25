@@ -20,7 +20,21 @@ BRectangle {
     ListView {
         id: list
         anchors.fill: parent
-        model: Mpris.players.values.filter(player => player.length != 0)
+        model: {
+            // TODO: fix this ugly shit
+            const x = [...Mpris.players.values.filter(player => player.length != 0 && player?.trackTitle != "")];
+            x.sort((a, b) => {
+                if (a.isPlaying && b.isPlaying) {
+                    return 0;
+                } else if (a.isPlaying && !b.isPlaying) {
+                    return -1;
+                } else if (!a.isPlaying && b.isPlaying) {
+                    return 1;
+                }
+            });
+
+            return x;
+        }
         orientation: Qt.Horizontal
         snapMode: ListView.SnapOneItem
         spacing: 10
@@ -30,21 +44,21 @@ BRectangle {
             required property var modelData
             property MprisPlayer player: modelData
 
-            visible: card.player?.trackTitle
-
             width: mprisSmall.width
             height: mprisSmall.height
             radius: 15
 
             property string albumArt: {
                 if (card.player?.trackArtUrl?.length)
-                    card.player?.trackArtUrl;
-                else
-                    Quickshell.iconPath(DesktopEntries.byId(card.player?.desktopEntry).icon);
+                    return card.player?.trackArtUrl;
+                else {
+                    const icon = DesktopEntries.byId(card.player?.desktopEntry).icon;
+                    return icon ? Quickshell.iconPath(icon) : "";
+                }
             }
 
             BlurredImage {
-                source: albumArt
+                source: card.albumArt
                 anchors.fill: parent
                 radius: parent.radius
             }
@@ -56,7 +70,7 @@ BRectangle {
                     id: im
                     color: "transparent"
                     visible: false
-                    source: albumArt
+                    source: card.albumArt
                     radius: 15
                 }
 
