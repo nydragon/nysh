@@ -1,11 +1,13 @@
 {
+  lib,
   stdenv,
   quickshell,
   makeWrapper,
   writeShellScriptBin,
+  coreutils,
   ...
 }: let
-  get-image = writeShellScriptBin "get-image" ./../scripts/get-image.sh;
+  get-image = writeShellScriptBin "get-image.sh" ./../scripts/get-image.sh;
 in
   stdenv.mkDerivation {
     name = "nysh";
@@ -19,6 +21,7 @@ in
       cp ${quickshell}/bin/quickshell $out/bin/nysh
 
       wrapProgram $out/bin/nysh \
-         --add-flags "-p ${./..}/src"
+         --add-flags "-p ${./..}/src" \
+         --prefix PATH : "${lib.makeBinPath [coreutils get-image]}"
     '';
   }
