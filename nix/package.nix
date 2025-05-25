@@ -8,7 +8,7 @@
   ...
 }: let
   get-image = writeShellScriptBin "get-image.sh" ./../scripts/get-image.sh;
-  copy-to-clip = writeShellScriptBin "copy-to-clip.sh" ./../scripts/ccopy-to-clip.sh;
+  copy-to-clip = writeShellScriptBin "copy-to-clip.sh" ./../scripts/copy-to-clip.sh;
 in
   stdenv.mkDerivation {
     name = "nysh";
