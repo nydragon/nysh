@@ -5,6 +5,7 @@ import "../provider"
 BRectangle {
     id: root
     property alias focused: area.containsMouse
+    property bool toggled: false
     readonly property string normalColor: Colors.data.colors.dark.surface_container
     readonly property string shadowColor: Colors.data.colors.dark.shadow
 
@@ -21,12 +22,12 @@ BRectangle {
     border.color: Colors.data.colors.dark.secondary
     border.width: focused ? 2 : 0
     color: normalColor
-    //anchors.margins: 4
 
     MouseArea {
         id: area
         anchors.fill: parent
         anchors.centerIn: parent
         hoverEnabled: true
+        onClicked: root.toggled = !root.toggled
     }
 }

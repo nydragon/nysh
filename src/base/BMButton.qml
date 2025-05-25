@@ -15,7 +15,7 @@ MouseArea {
     BRectangle {
         color: root.toggleable && !root.active ? root.colors.surface_container : root.colors.primary
 
-        radius: root.toggleable && root.active ? width / 6 : width
+        radius: root.toggleable && root.active ? Math.max(width, height) / 6 : Math.max(width, height)
         anchors.fill: parent
 
         Behavior on radius {

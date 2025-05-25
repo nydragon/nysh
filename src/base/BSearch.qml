@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Layouts
 import "../provider"
 
+// TODO: TextInput is stealing interaction from MouseArea, breaking ripple and on click events
+
 MouseArea {
     id: root
     property string text: text.text
