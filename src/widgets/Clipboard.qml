@@ -41,6 +41,9 @@ ColumnLayout {
         }
         onExited: root.entries = tmpEntries
         onStarted: tmpEntries = []
+        stderr: SplitParser {
+            onRead: data => console.error(data)
+        }
     }
 
     Process {
@@ -48,11 +51,17 @@ ColumnLayout {
         running: true
         command: ["get-image.sh"]
         stdinEnabled: true
+        stderr: SplitParser {
+            onRead: data => console.error(data)
+        }
     }
 
     Process {
         id: deleter
         command: ["cliphist", "wipe"]
+        stderr: SplitParser {
+            onRead: data => console.error(data)
+        }
     }
 
     Process {
@@ -62,6 +71,9 @@ ColumnLayout {
         stdinEnabled: true
         function copy(id: int) {
             copyToClip.write(`${id}\n`);
+        }
+        stderr: SplitParser {
+            onRead: data => console.error(data)
         }
     }
 
