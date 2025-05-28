@@ -1,25 +1,41 @@
 import "../../base"
+import "../../provider"
+import Quickshell.Services.Pipewire
 import QtQuick.Layouts
 
 BRectangle {
-    height: width
+    id: root
+    color: Colors.data.colors.dark.error
+    height: col.height + col.anchors.margins * 2
 
-    RowLayout {
-        anchors.fill: parent
+    readonly property bool shareVideo: Pipewire.nodes.values.find(node => node.type === PwNodeType.VideoSource) ?? false
+    readonly property bool shareAudio: Pipewire.nodes.values.find(node => node.type === PwNodeType.AudioInStream) ?? false
+
+    visible: shareAudio || shareVideo
+
+    ColumnLayout {
+        id: col
+        width: parent.width
         spacing: 1
         anchors.margins: 3
+        anchors.centerIn: parent
 
-        PrivacyPill {
-            active: "#FF7F50"
-            inactive: "#b1a4a0"
+        BIcon {
+            Layout.preferredWidth: 30
+            Layout.preferredHeight: 30
+            text: "󱒃"
+            bodyColor: "transparent"
+            textColor: Colors.data.colors.dark.on_error
+            visible: root.shareVideo
         }
-        PrivacyPill {
-            active: "#E0B0fF"
-            inactive: "#dad5dd"
-        }
-        PrivacyPill {
-            active: "#57ffcd"
-            inactive: "#a2b3ae"
+
+        BIcon {
+            Layout.preferredWidth: 30
+            Layout.preferredHeight: 30
+            text: ""
+            bodyColor: "transparent"
+            textColor: Colors.data.colors.dark.on_error
+            visible: root.shareAudio
         }
     }
 }

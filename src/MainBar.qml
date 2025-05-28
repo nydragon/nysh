@@ -4,6 +4,7 @@ import "widgets/battery"
 import "widgets/caffeine"
 import "widgets/mpris"
 import "widgets/notifications"
+import "widgets/privacy"
 import "widgets"
 import "windows/notificationtoast"
 import "widgets/audio"
@@ -29,6 +30,7 @@ PanelWindow {
     exclusiveZone: implicitWidth
     color: Colors.data.colors.dark.surface
     focusable: true
+
     Behavior on color {
         ColorAnimation {
             duration: 1000
@@ -122,6 +124,8 @@ PanelWindow {
                 width: 35
                 height: 35
             }
+
+            Privacy {}
 
             BButton {
                 id: mouse
