@@ -1,42 +1,30 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
-import Quickshell.Widgets
 import Quickshell
 
 import "../../provider"
 import "../../base"
 
 ColumnLayout {
-    Layout.preferredHeight: 1000
-
-    Layout.fillHeight: true
-    Layout.fillWidth: true
-
-    width: parent.width
-
     RowLayout {
         Layout.alignment: Qt.AlignRight
-
-        Switch {
+        BToggle {
             id: sw
-            text: qsTr("DnD")
             onClicked: () => {
-                NyshState.dndOn = checked;
+                NyshState.dndOn = active;
             }
-            checked: NyshState.dndOn
+            active: NyshState.dndOn
         }
 
-        BButton {
-            width: 30
-            height: 30
+        BMButton {
+            Layout.preferredWidth: 30
+            Layout.preferredHeight: 30
+            Layout.alignment: Qt.AlignRight
+            text: ""
             onClicked: () => {
                 Notifications.clearAll();
-            }
-            Layout.alignment: Qt.AlignRight
-            IconImage {
-                anchors.fill: parent
-                source: Quickshell.iconPath("window-close")
             }
         }
     }
@@ -45,49 +33,58 @@ ColumnLayout {
         id: popupcol
         Layout.fillHeight: true
         Layout.fillWidth: true
-
         clip: true
-        spacing: 10
-        width: parent.width
+        spacing: 2
 
-        model: Notifications.list
+        model: ScriptModel {
+            values: {
+                const sorted = {};
+                const icons = {};
 
-        delegate: NotificationToast {
-            id: toast
-
-            required property var modelData
-            required property int index
-
-            notif: modelData
-            width: ListView.view.width
-
-            onClose: {
-                toast.notif.dismiss();
+                Notifications.list.values.forEach(notif => {
+                    if (!sorted[notif.appName]) {
+                        sorted[notif.appName] = [];
+                    }
+                    sorted[notif.appName].push(notif);
+                    icons[notif.appName] = icons[notif.appName] ?? notif.appIcon;
+                });
+                const entries = Object.entries(sorted);
+                return entries.map(([appName, notifications], index) => {
+                    return {
+                        appName,
+                        appIcon: icons[appName],
+                        notifications,
+                        index,
+                        total: entries.length
+                    };
+                });
             }
         }
-
-        addDisplaced: Transition {
-            NumberAnimation {
-                properties: "x,y"
-                duration: 100
-            }
+        delegate: NotificationGroup {
+            width: popupcol.width
         }
-        remove: Transition {
-            PropertyAction {
-                property: "ListView.delayRemove"
-                value: true
-            }
-            ParallelAnimation {
-                NumberAnimation {
-                    property: "opacity"
-                    to: 0
-                    duration: 200
-                }
-            }
-            PropertyAction {
-                property: "ListView.delayRemove"
-                value: true
-            }
-        }
+        //        addDisplaced: Transition {
+        //NumberAnimation {
+        //properties: "x,y"
+        //duration: 100
+        //}
+        //}
+        //        remove: Transition {
+        //PropertyAction {
+        //property: "ListView.delayRemove"
+        //value: true
+        //}
+        //ParallelAnimation {
+        //NumberAnimation {
+        //property: "opacity"
+        //to: 0
+        //duration: 200
+        //}
+        //}
+        //PropertyAction {
+        //property: "ListView.delayRemove"
+        //value: true
+        //}
+        //}
     }
 }

@@ -3,6 +3,7 @@ import "widgets/workspaces"
 import "widgets/battery"
 import "widgets/caffeine"
 import "widgets/mpris"
+import "widgets/notifications"
 import "widgets"
 import "windows/notificationtoast"
 import "widgets/audio"
@@ -80,6 +81,11 @@ PanelWindow {
                     Layout.alignment: Qt.AlignHCenter
                     visible: parent.open
                 }
+            }
+
+            NotificationInbox {
+                Layout.preferredHeight: 1000
+                Layout.fillWidth: true
             }
         }
 
