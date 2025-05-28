@@ -8,7 +8,7 @@ MouseArea {
     property bool toggleable: false
     property bool active: false
     readonly property var colors: Colors.data.colors.dark
-    readonly property int animationDuration: Config.data.colourFadeSpeed
+    readonly property int animationDuration: 100
 
     onClicked: active = !active
 
