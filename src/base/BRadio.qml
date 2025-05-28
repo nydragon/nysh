@@ -24,6 +24,12 @@ MouseArea {
             visible: root.active
             Layout.alignment: Qt.AlignCenter
             color: Colors.data.colors.dark.primary
+
+            Behavior on color {
+                ColorAnimation {
+                    duration: Config.data.colourFadeSpeed
+                }
+            }
         }
     }
 }

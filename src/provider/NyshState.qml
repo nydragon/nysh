@@ -11,31 +11,13 @@ Singleton {
     property bool workspaceViewOpen: false
     property bool binBrightnessctl: false
     property bool dndOn: false
-    property string home: ""
+    property string home: Quickshell.env("HOME")
 
     property PersistentProperties persist: PersistentProperties {
         id: persist
         reloadableId: "persistedStatesNysh"
 
         property bool dashOpen: false
-    }
-
-    Process {
-        command: ["which", "brightnessctl"]
-        running: true
-        stdout: SplitParser {
-            onRead: data => console.log(`line read: ${data}`)
-        }
-    }
-
-    Process {
-        command: ["printenv", "HOME"]
-        running: true
-        stdout: SplitParser {
-            onRead: data => {
-                state.home = data.trim();
-            }
-        }
     }
 
     IpcHandler {

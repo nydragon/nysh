@@ -34,6 +34,7 @@ Singleton {
                     property string on_surface
                     property string shadow
                     property string surface_container_high
+                    property string outline
                 }
             }
         }

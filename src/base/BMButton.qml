@@ -8,7 +8,7 @@ MouseArea {
     property bool toggleable: false
     property bool active: false
     readonly property var colors: Colors.data.colors.dark
-    readonly property int animationDuration: 100
+    readonly property int animationDuration: Config.data.colourFadeSpeed
 
     onClicked: active = !active
 
@@ -41,6 +41,7 @@ MouseArea {
         height: parent.height
         width: parent.width
         horizontalAlignment: Text.AlignHCenter
+
         Behavior on color {
             ColorAnimation {
                 duration: root.animationDuration
@@ -54,5 +55,11 @@ MouseArea {
         radius: width
         anchors.fill: parent
         opacity: root.containsPress ? 0.18 : 0.08
+
+        Behavior on color {
+            ColorAnimation {
+                duration: root.animationDuration
+            }
+        }
     }
 }
