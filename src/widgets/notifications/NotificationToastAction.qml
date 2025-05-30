@@ -1,4 +1,3 @@
-import QtQuick.Controls
 import Quickshell.Widgets
 import QtQuick
 import "../../base"

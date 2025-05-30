@@ -6,6 +6,7 @@
 
     quickshell = {
       url = "git+https://github.com/nydragon/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
