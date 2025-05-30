@@ -15,7 +15,7 @@ Column {
     }
 
     Repeater {
-        model: Pipewire.nodes.values.filter(e => e.isSink && !e.isStream)
+        model: Pipewire.nodes.values.filter(e => e.type === PwNodeType.AudioSink)
 
         RowLayout {
             id: col
@@ -26,9 +26,10 @@ Column {
             }
 
             BRadio {
+                id: radio
                 Layout.alignment: Qt.AlignVCenter
                 Layout.leftMargin: 10
-                active: root.defaultSinkId == col.modelData.id
+                active: root.defaultSinkId === col.modelData.id
                 onClicked: {
                     if (active) {
                         root.reset(col.modelData.id);
@@ -36,7 +37,11 @@ Column {
                     }
                 }
                 Component.onCompleted: {
-                    root.onReset.connect(id => active = id == col.modelData.id);
+                    root.reset.connect(id => {
+                        if (!col)
+                            return;
+                        radio.active = id === col?.modelData?.id;
+                    });
                 }
             }
 
@@ -69,7 +74,7 @@ Column {
     }
 
     Repeater {
-        model: Pipewire.nodes.values.filter(e => !e.isSink && e.isStream)
+        model: Pipewire.nodes.values.filter(e => e.type === PwNodeType.AudioOutStream)
 
         Column {
             id: stream
@@ -104,7 +109,7 @@ Column {
     }
 
     Repeater {
-        model: Pipewire.nodes.values.filter(e => !e.isSink && !e.isStream && e.audio)
+        model: Pipewire.nodes.values.filter(e => e.type === PwNodeType.AudioSource)
 
         Column {
             id: source
