@@ -11,8 +11,9 @@ BRectangle {
     readonly property bool shareAudio: Pipewire.nodes.values.find(node => node.type === PwNodeType.AudioInStream) ?? false
 
     color: Colors.data.colors.dark.error
-    height: shareAudio || shareVideo ? col.height + col.anchors.margins * 2 : 0
+    height: shareAudio || shareVideo ? Math.max(width, col.height + col.margins * 2) : 0
     visible: height
+    radius: width
 
     Behavior on height {
         NumberAnimation {
@@ -22,10 +23,16 @@ BRectangle {
 
     Column {
         id: col
+        property int margins: 0
         width: parent.width
         spacing: 1
-        anchors.margins: 3
         anchors.centerIn: parent
+
+        Item {
+            visible: root.shareAudio && root.shareVideo
+            height: 3
+            width: parent.width
+        }
 
         BIcon {
             id: videoIcon
@@ -58,6 +65,12 @@ BRectangle {
                     duration: 100
                 }
             }
+        }
+
+        Item {
+            visible: root.shareAudio && root.shareVideo
+            height: 3
+            width: parent.width
         }
     }
 }
