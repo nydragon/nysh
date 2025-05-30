@@ -4,7 +4,7 @@ import QtQuick.Layouts
 import Quickshell.Services.SystemTray
 
 BRectangle {
-    width: parent.width
+    width: parent.width * 0.85
     height: childrenRect.height + margins * 2
     property int margins: 2
 

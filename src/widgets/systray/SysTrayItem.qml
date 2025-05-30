@@ -28,7 +28,7 @@ MouseArea {
         id: menu
         menu: root.item.menu
         anchor.window: root.QsWindow.window
-        anchor.rect.x: root.x + root.QsWindow.contentItem.width
+        anchor.rect.x: root.x + root.QsWindow.contentItem?.width
         anchor.rect.y: root.y
         anchor.rect.height: root.height * 3
     }

@@ -111,7 +111,9 @@ PanelWindow {
                 }
             }
 
-            SysTray {}
+            SysTray {
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
 
             Workspaces {}
 
