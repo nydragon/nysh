@@ -1,7 +1,6 @@
 import "../../base"
 import "../../provider"
 import Quickshell.Services.Pipewire
-import Quickshell
 import QtQuick
 
 BRectangle {

@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1748616245,
-        "narHash": "sha256-5vw73mnFrBqZZxB/yeip7BzcRohQygZQl/jluwgkHa0=",
+        "lastModified": 1748688666,
+        "narHash": "sha256-q3J/CCOMPwsTowR0WaJInRxqJOqy+8+3mh8x7huO8J8=",
         "ref": "refs/heads/master",
-        "rev": "462d2fc4e9d83a941d3b82526e9b0ed618abd4ca",
-        "revCount": 572,
+        "rev": "c149c6628911f8293b9a3211cc3d633fa78fdf1d",
+        "revCount": 573,
         "type": "git",
         "url": "https://github.com/nydragon/quickshell"
       },
