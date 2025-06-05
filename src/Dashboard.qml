@@ -1,167 +1,72 @@
-import Quickshell
-import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
 import QtQml
 import "base"
 import "widgets/mpris"
 import "widgets/notifications"
-import "widgets/weather"
-import "widgets/wifi"
+import "provider"
+import "widgets/mpris"
+import "widgets/notifications"
+import "widgets"
+import "widgets/audio"
+import "base"
 import "provider"
 
-PanelWindow {
-    id: homeWindow
+BRectangle {
+    id: root
 
-    property bool animRunning: false
-    property bool focused: false
-    property bool focusLocked: false
+    property bool shown: false
 
-    color: "transparent"
-    visible: (animRunning || NyshState.dashOpen) && focusLocked
+    color: Colors.data.colors.dark.surface
+    border.color: Colors.data.colors.dark.on_surface_variant
+    radius: 20
+    visible: opacity != 0
+    opacity: shown ? 1 : 0
 
-    Component.onCompleted: NyshState.dashOpenChanged.connect(() => {
-        if (NyshState.dashOpen)
-            focusLocked = focused;
-    })
-
-    focusable: true
-
-    anchors {
-        top: true
-        left: true
-        bottom: true
-        right: true
+    Behavior on opacity {
+        NumberAnimation {
+            duration: 100
+        }
     }
 
-    MouseArea {
-        id: mouse
-
+    ColumnLayout {
         anchors.fill: parent
+        anchors.margins: 10
 
-        onClicked: NyshState.dashOpen = false
+        MprisSmall {
+            Layout.preferredHeight: 150
+            Layout.fillWidth: true
+        }
 
-        BRectangle {
-            id: home
-
-            property var maxSize: 0
-
-            bottomRightRadius: 10
-            topRightRadius: 10
-            border.color: "transparent"
-            height: parent.height
-            width: NyshState.dashOpen ? maxSize : 1
-            clip: true
-            MouseArea {
-                anchors.fill: parent
+        BSection {
+            id: audioSection
+            open: NyshState.audioOpen
+            Layout.fillWidth: true
+            text: "Audio"
+            Sinks {
+                id: sink
+                Layout.fillWidth: true
+                visible: audioSection.open
             }
+        }
 
-            Component.onCompleted: () => maxSize = homeWindow.screen.width * (2 / 7)
+        BSection {
+            id: clipboardSection
+            Layout.fillWidth: true
+            text: "Clipboard"
 
-            Behavior on width {
-                PropertyAnimation {
-                    id: anim
-                    duration: 200
-                    Component.onCompleted: () => {
-                        homeWindow.animRunning = Qt.binding(() => anim.running);
-                    }
-                }
+            Clipboard {
+                Layout.leftMargin: 10
+                Layout.rightMargin: 10
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignHCenter
+                visible: parent.open
             }
+        }
 
-            RowLayout {
-                anchors.fill: parent
-
-                Item {
-                    width: 30
-                    Layout.fillHeight: true
-                }
-
-                StackView {
-                    id: stack
-                    initialItem: main
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                    height: parent.height
-                    width: parent.width
-                    Layout.margins: 15
-
-                    Component.onCompleted: NyshState.dashOpenChanged.connect(() => {
-                        if (!NyshState.dashOpen) {
-                            stack.clear();
-
-                            stack.push(stack.initialItem);
-                        }
-                    })
-                }
-
-                Component {
-                    id: main
-                    ColumnLayout {
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
-                        height: parent.height
-                        width: parent.width
-                        Layout.margins: 15
-                        Layout.alignment: Qt.AlignBottom
-
-                        NotificationInbox {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                        }
-
-                        WeatherMedium {
-                            Layout.fillWidth: true
-                            height: 100
-                        }
-
-                        MprisSmall {}
-                        GridLayout {
-
-                            rows: 2
-                            columns: 2
-
-                            Text {
-                                text: "brightness"
-                                visible: NyshState.binBrightnessctl
-                            }
-
-                            Slider {
-                                id: b
-                                from: 0
-                                to: 100
-                                stepSize: 1
-                                visible: NyshState.binBrightnessctl
-                                value: Brightness.value
-                                onMoved: Brightness.value = value
-                            }
-
-                            BButton {
-                                text: "Internet"
-                                onClicked: stack.push(internet)
-                                Layout.fillHeight: true
-                                Layout.fillWidth: true
-                                height: 30
-                            }
-
-                            BButton {
-                                text: "Bluetooth"
-                                Layout.fillHeight: true
-                                Layout.fillWidth: true
-                                height: 30
-                            }
-                        }
-                    }
-                }
-
-                Component {
-                    id: internet
-                    BigWifiView {
-                        onNavigationReturn: stack.pop()
-                        Layout.fillHeight: true
-                    }
-                }
-            }
+        NotificationInbox {
+            Layout.preferredHeight: 1000
+            Layout.fillWidth: true
         }
     }
 }

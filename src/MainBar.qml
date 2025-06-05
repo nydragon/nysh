@@ -2,10 +2,7 @@ import "widgets/systray"
 import "widgets/workspaces"
 import "widgets/battery"
 import "widgets/caffeine"
-import "widgets/mpris"
-import "widgets/notifications"
 import "widgets/privacy"
-import "widgets"
 import "windows/notificationtoast"
 import "widgets/audio"
 import "base"
@@ -15,7 +12,7 @@ import QtQuick
 import QtQuick.Layouts
 
 PanelWindow {
-    id: lbar
+    id: root
 
     anchors {
         top: true
@@ -27,9 +24,10 @@ PanelWindow {
     readonly property int expandedWidth: 400
 
     implicitWidth: layout.implicitWidth
-    exclusiveZone: implicitWidth
-    color: Colors.data.colors.dark.surface
+    exclusiveZone: baseWidth // implicitWidth
+    color: "transparent"
     focusable: true
+    aboveWindows: true
 
     Behavior on color {
         ColorAnimation {
@@ -38,102 +36,61 @@ PanelWindow {
     }
 
     NotificationToasts {
-        screen: lbar.screen
-        contentX: lbar.width
+        screen: root.screen
+        contentX: root.width
     }
 
     RowLayout {
         id: layout
         height: parent.height
 
-        ColumnLayout {
-            id: rect
-            visible: NyshState.dashOpen
-            Layout.preferredWidth: visible ? lbar.expandedWidth : 0
+        BRectangle {
+            color: Colors.data.colors.dark.surface
+
+            implicitWidth: 35
             Layout.fillHeight: true
-            Layout.alignment: Qt.AlignTop
-            Layout.margins: 10
 
-            MprisSmall {
-                Layout.preferredHeight: 150
+            Column {
                 Layout.fillWidth: true
-            }
+                Layout.fillHeight: true
+                Layout.topMargin: 2
+                Layout.bottomMargin: 2
+                Layout.rightMargin: 2
+                spacing: 2
 
-            BSection {
-                id: audioSection
-                open: NyshState.audioOpen
-                Layout.fillWidth: true
-                text: "Audio"
-                Sinks {
-                    id: sink
-                    Layout.fillWidth: true
-                    visible: audioSection.open
+                // TODO: on click open a calendar view
+                ClockWidget {}
+
+                AudioOutput {
+                    width: parent.width
+                    height: parent.width * 1.2
+
+                    onClicked: {
+                        NyshState.toggleAudio();
+                    }
                 }
-            }
 
-            BSection {
-                id: clipboardSection
-                Layout.fillWidth: true
-                text: "Clipboard"
-
-                Clipboard {
-                    Layout.leftMargin: 10
-                    Layout.rightMargin: 10
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignHCenter
-                    visible: parent.open
+                SysTray {
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
-            }
 
-            NotificationInbox {
-                Layout.preferredHeight: 1000
-                Layout.fillWidth: true
-            }
-        }
+                Workspaces {}
 
-        Column {
-            Layout.preferredWidth: 35
-            Layout.fillHeight: true
-            Layout.topMargin: 2
-            Layout.bottomMargin: 2
-            Layout.rightMargin: 2
-            spacing: 2
-
-            // TODO: on click open a calendar view
-            ClockWidget {}
-
-            AudioOutput {
-                width: parent.width
-                height: parent.width * 1.2
-
-                onClicked: {
-                    NyshState.toggleAudio();
+                Battery {
+                    width: 35
+                    height: 35
                 }
-            }
 
-            SysTray {
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
+                Caffeine {
+                    width: 35
+                    height: 35
+                }
 
-            Workspaces {}
+                Privacy {}
 
-            Battery {
-                width: 35
-                height: 35
-            }
-
-            Caffeine {
-                width: 35
-                height: 35
-            }
-
-            Privacy {}
-
-            BButton {
-                id: mouse
-                onClicked: NyshState.toggleDash()
-
-                BText {
+                BMButton {
+                    width: 35
+                    height: 35
                     text: {
                         if (NyshState.dndOn)
                             "󰂛";
@@ -142,18 +99,13 @@ PanelWindow {
                         else
                             "󰂚";
                     }
-
-                    fontSizeMode: Text.Fit
-                    height: parent.height
-                    width: parent.width
-                    Layout.alignment: Qt.AlignCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 720
+                    toggleable: true
+                    onClicked: NyshState.toggleDash()
+                    Component.onCompleted: NyshState.dashOpenChanged.connect(() => active = NyshState.dashOpen)
                 }
-
-                width: parent.width
-                height: width
             }
         }
+
+        Dashboard {}
     }
 }
