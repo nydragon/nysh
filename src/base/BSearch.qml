@@ -6,7 +6,9 @@ import "../provider"
 
 MouseArea {
     id: root
+
     property string text: text.text
+
     clip: true
     hoverEnabled: true
 

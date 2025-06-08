@@ -4,22 +4,16 @@ import Quickshell
 import Quickshell.Io
 
 Singleton {
-    property alias data: file.jsonAdapter
+    property alias data: file.adapter
 
     FileView {
         id: file
         path: NyshState.home ? `${NyshState.home}/.config/nysh/colours.json` : ""
-
-        // when changes are made on disk, reload the file's content
         watchChanges: true
         onFileChanged: reload()
-
-        // when changes are made to properties in the adapter, save them
         onAdapterUpdated: writeAdapter()
 
-        adapter: jsonAdapter
-
-        property JsonAdapter jsonAdapter: JsonAdapter {
+        property JsonAdapter adapter: JsonAdapter {
             property JsonObject colors: JsonObject {
                 property JsonObject dark: JsonObject {
                     property string on_primary

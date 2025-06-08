@@ -6,10 +6,10 @@ MouseArea {
 
     property string text: ""
     property alias color: rect.color
+
     cursorShape: Qt.PointingHandCursor
     hoverEnabled: true
-
-    onContainsMouseChanged: () => {
+    onContainsMouseChanged: {
         if (containsMouse) {
             rect.color = "#14" + Colors.data.colors.dark.on_secondary_container.replace("#", "");
         } else {

@@ -4,9 +4,11 @@ import "../provider"
 
 MouseArea {
     id: root
+
+    property bool active: false
+
     Layout.preferredHeight: 20
     Layout.preferredWidth: 20
-    property bool active: false
     onClicked: active = active || !active
 
     Rectangle {

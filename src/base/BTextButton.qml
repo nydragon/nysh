@@ -2,6 +2,7 @@ import QtQuick
 
 BButton {
     required property string text
+
     BText {
         text: parent.text
         fontSizeMode: Text.Fit

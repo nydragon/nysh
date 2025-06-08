@@ -7,6 +7,7 @@ BRectangle {
     required property string text
     readonly property var colors: Colors.data.colors.dark
     readonly property int animationDuration: Config.data.colourFadeSpeed
+
     property string textColor: Colors.data.colors.dark.on_primary
     property string bodyColor: Colors.data.colors.dark.primary
 

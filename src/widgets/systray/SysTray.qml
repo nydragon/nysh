@@ -4,9 +4,10 @@ import QtQuick.Layouts
 import Quickshell.Services.SystemTray
 
 BRectangle {
+    property int margins: 2
+
     width: parent.width * 0.85
     height: childrenRect.height + margins * 2
-    property int margins: 2
 
     ColumnLayout {
         Layout.alignment: Qt.AlignCenter

@@ -4,10 +4,14 @@ import "../provider"
 
 Slider {
     id: sli
+
     property double innerRadius: height / 10
     property double outerRadius: height
     property bool withAura: true
 
+    background: Item {}
+    padding: 10
+    hoverEnabled: true
     handle: Rectangle {
         color: Colors.data.colors.dark.primary
         height: parent.implicitHeight
@@ -16,13 +20,6 @@ Slider {
         x: sli.leftPadding + sli.visualPosition * (sli.availableWidth - implicitWidth)
         y: sli.availableHeight / 2
     }
-
-    background: Item {}
-    padding: 10
-
-    //    anchors.leftMargin: 10
-    //anchors.rightMargin: 10
-    hoverEnabled: true
 
     BRectangle {
         opacity: sli.hovered ? 0.2 : 0.1

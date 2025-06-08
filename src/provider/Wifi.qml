@@ -5,6 +5,7 @@ import Quickshell.Io
 
 Singleton {
     id: networks
+
     property list<var> list: []
     property list<string> lastBSSIDS: []
 
@@ -13,7 +14,6 @@ Singleton {
     }
 
     signal added(network: var)
-
     signal removed(network: var)
 
     Process {

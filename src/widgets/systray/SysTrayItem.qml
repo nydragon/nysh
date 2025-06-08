@@ -6,11 +6,13 @@ import Quickshell.Widgets
 
 MouseArea {
     id: root
+
     required property SystemTrayItem item
+
     Layout.fillWidth: true
     Layout.preferredHeight: parent.width - 4
-    acceptedButtons: Qt.LeftButton | Qt.RightButton
 
+    acceptedButtons: Qt.LeftButton | Qt.RightButton
     onClicked: event => {
         switch (event.button) {
         case Qt.LeftButton:

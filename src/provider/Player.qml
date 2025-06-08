@@ -8,9 +8,7 @@ Singleton {
     id: player
 
     property var current: player.all[player.index]
-
     property list<MprisPlayer> all: Mpris.players.values
-
     property int index: {
         const ind = Mpris.players.values.findIndex(p => p.playbackState === MprisPlaybackState.Playing);
         return ind >= 0 ? ind : 0;

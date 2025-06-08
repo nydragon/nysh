@@ -7,6 +7,7 @@ ColumnLayout {
     property bool open: false
     property alias color: button.color
     property alias text: button.text
+
     onOpenChanged: {
         if (open) {
             chevron.rotation = 90;

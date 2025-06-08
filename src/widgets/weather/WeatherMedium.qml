@@ -9,6 +9,7 @@ import "../../base"
 
 BRectangle {
     id: weather
+
     property var area: Weather.lastFetch?.nearest_area[0]
     property var condition: Weather.lastFetch?.current_condition[0]
 

@@ -8,6 +8,7 @@ Column {
     id: root
 
     property int defaultSinkId: Pipewire.defaultAudioSink?.id ?? -1
+
     signal reset(id: int)
 
     PwObjectTracker {
@@ -19,8 +20,11 @@ Column {
 
         RowLayout {
             id: col
+
             required property PwNode modelData
+
             width: parent.width
+
             PwObjectTracker {
                 objects: [col.modelData]
             }
@@ -36,20 +40,18 @@ Column {
                         Pipewire.preferredDefaultAudioSink = col.modelData;
                     }
                 }
-                Component.onCompleted: {
-                    root.reset.connect(id => {
-                        if (!col)
-                            return;
-                        radio.active = id === col?.modelData?.id;
-                    });
-                }
+                Component.onCompleted: root.reset.connect(id => {
+                    if (!col)
+                        return;
+                    radio.active = id === col?.modelData?.id;
+                })
             }
 
             Column {
                 Layout.fillWidth: true
-
                 Layout.leftMargin: 10
                 Layout.rightMargin: 10
+
                 BText {
                     text: col.modelData.description
                     elide: Text.ElideRight

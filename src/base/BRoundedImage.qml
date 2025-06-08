@@ -3,7 +3,9 @@ import QtQuick.Effects
 
 Rectangle {
     id: roundedImage
+
     required property var source
+
     height: 300
     width: 300
     color: "transparent"

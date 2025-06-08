@@ -3,11 +3,13 @@ import "../provider"
 
 MouseArea {
     id: root
-    hoverEnabled: true
-    property string text: ""
-    property bool active: false
+
     readonly property var colors: Colors.data.colors.dark
     readonly property int transitionSpeed: 100
+    property string text: ""
+    property bool active: false
+
+    hoverEnabled: true
     state: active ? "active" : "inactive"
     width: 52
     height: 32

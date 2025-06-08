@@ -4,7 +4,9 @@ import QtQuick.Effects
 
 Rectangle {
     id: root
+
     required property var source
+
     color: "transparent"
 
     Image {

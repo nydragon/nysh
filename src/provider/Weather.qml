@@ -9,7 +9,6 @@ Singleton {
 
     property var lastFetch: {}
     property string dataRaw: ""
-
     property int feltTemp: lastFetch?.current_condition[0]?.FeelsLikeC ?? 0
     property int actualTemp: lastFetch?.current_condition[0]?.temp_C ?? 0
     property string description: lastFetch?.current_condition[0]?.weatherDesc[0].value ?? ""

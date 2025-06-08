@@ -4,10 +4,12 @@ import "../provider"
 
 BRectangle {
     id: root
-    property alias focused: area.containsMouse
-    property bool toggled: false
+
     readonly property string normalColor: Colors.data.colors.dark.surface_container
     readonly property string shadowColor: Colors.data.colors.dark.shadow
+
+    property alias focused: area.containsMouse
+    property bool toggled: false
 
     layer.enabled: true
     layer.effect: MultiEffect {

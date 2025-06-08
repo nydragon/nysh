@@ -3,19 +3,21 @@ import "../provider"
 
 MouseArea {
     id: root
-    hoverEnabled: true
+
     required property string text
-    property bool toggleable: false
-    property bool active: false
     readonly property var colors: Colors.data.colors.dark
     readonly property int animationDuration: 100
+    readonly property int radius: root.toggleable && root.active ? Math.max(width, height) / 6 : Math.max(width, height)
+
+    property bool toggleable: false
+    property bool active: false
 
     onClicked: active = !active
+    hoverEnabled: true
 
     BRectangle {
         color: root.toggleable && !root.active ? root.colors.surface_container : root.colors.primary
-
-        radius: root.toggleable && root.active ? Math.max(width, height) / 6 : Math.max(width, height)
+        radius: root.radius
         anchors.fill: parent
 
         Behavior on radius {
@@ -36,7 +38,6 @@ MouseArea {
         anchors.centerIn: parent
         font.pixelSize: parent.height
         color: root.toggleable && !root.active ? root.colors.on_surface_variant : Colors.data.colors.dark.on_primary
-
         fontSizeMode: Text.Fit
         height: parent.height
         width: parent.width
@@ -52,7 +53,7 @@ MouseArea {
     BRectangle {
         color: root.toggleable && !root.active ? root.colors.on_surface_variant : root.colors.on_primary
         visible: root.containsMouse
-        radius: width
+        radius: root.radius
         anchors.fill: parent
         opacity: root.containsPress ? 0.18 : 0.08
 
