@@ -8,12 +8,11 @@ Singleton {
 
     FileView {
         id: file
-        path: NyshState.home ? `${NyshState.home}/.config/nysh/colours.json` : ""
+        path: Quickshell.env("HOME") ? `${Quickshell.env("HOME")}/.config/nysh/colours.json` : ""
         watchChanges: true
         onFileChanged: reload()
         onAdapterUpdated: writeAdapter()
-
-        property JsonAdapter adapter: JsonAdapter {
+        adapter: JsonAdapter {
             property JsonObject colors: JsonObject {
                 property JsonObject dark: JsonObject {
                     property string on_primary
