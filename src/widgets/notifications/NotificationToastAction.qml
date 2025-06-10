@@ -6,15 +6,10 @@ BButton {
     id: actionButton
 
     required property var notifAction
-    required property bool hasIcons
+    property bool hasIcons
 
     IconImage {
-        visible: parent.hasIcons
-        Component.onCompleted: () => {
-            if (parent.hasIcons) {
-                source = actionButton.notifAction?.identifier ?? "";
-            }
-        }
+        source: actionButton.notifAction?.identifier ?? ""
     }
 
     text: notifAction?.text ?? ""
