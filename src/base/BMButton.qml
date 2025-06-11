@@ -14,6 +14,8 @@ MouseArea {
 
     onClicked: active = !active
     hoverEnabled: true
+    cursorShape: Qt.PointingHandCursor
+    clip: true
 
     BRectangle {
         color: root.toggleable && !root.active ? root.colors.surface_container : root.colors.primary

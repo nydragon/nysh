@@ -3,7 +3,7 @@ pragma Singleton
 import Quickshell
 import Quickshell.Io
 import QtQuick
-import "StateObjects"
+import "state"
 
 Singleton {
     id: state
@@ -59,7 +59,7 @@ Singleton {
         }
 
         function open(open: bool) {
-            state.screenshot.set(open);
+            state.screenshot.setOpen(open);
         }
     }
 
