@@ -18,8 +18,6 @@ BRectangle {
         shadowBlur: 0.2
         shadowColor: shadowColor
         shadowEnabled: true
-        anchors.centerIn: parent
-        anchors.fill: parent
     }
     border.color: Colors.data.colors.dark.secondary
     border.width: focused ? 2 : 0

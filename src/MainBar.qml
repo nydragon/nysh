@@ -105,7 +105,5 @@ PanelWindow {
                 }
             }
         }
-
-        Dashboard {}
     }
 }

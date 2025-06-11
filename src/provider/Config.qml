@@ -14,7 +14,7 @@ Singleton {
         onFileChanged: reload()
         onAdapterUpdated: writeAdapter()
 
-        property JsonAdapter adapter: JsonAdapter {
+        adapter: JsonAdapter {
             property int colourFadeSpeed: 1000
             property JsonObject notifications: JsonObject {
                 property int toastDuration: 5000

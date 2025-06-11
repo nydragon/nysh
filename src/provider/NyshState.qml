@@ -2,18 +2,21 @@ pragma Singleton
 
 import Quickshell
 import Quickshell.Io
+import QtQuick
+import "StateObjects"
 
 Singleton {
     id: state
 
     property alias dashOpen: persist.dashOpen
     property bool audioOpen: false
+    property Screenshot screenshot: Screenshot {}
     property bool workspaceViewOpen: false
     property bool binBrightnessctl: false
     property bool dndOn: false
     property string home: Quickshell.env("HOME")
 
-    property PersistentProperties persist: PersistentProperties {
+    PersistentProperties {
         id: persist
         reloadableId: "persistedStatesNysh"
 
@@ -45,6 +48,18 @@ Singleton {
 
         function toggle() {
             state.toggleWorkspaceView();
+        }
+    }
+
+    IpcHandler {
+        target: "screenshot"
+
+        function toggle() {
+            state.screenshot.toggle();
+        }
+
+        function open(open: bool) {
+            state.screenshot.set(open);
         }
     }
 

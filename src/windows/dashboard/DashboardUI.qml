@@ -1,16 +1,17 @@
 import QtQuick
+import QtQuick
 import QtQuick.Layouts
 import QtQml
-import "base"
-import "widgets/mpris"
-import "widgets/notifications"
-import "provider"
-import "widgets/mpris"
-import "widgets/notifications"
-import "widgets"
-import "widgets/audio"
-import "base"
-import "provider"
+import "../../base"
+import "../../widgets/mpris"
+import "../../widgets/notifications"
+import "../../provider"
+import "../../widgets/mpris"
+import "../../widgets/notifications"
+import "../../widgets"
+import "../../widgets/audio"
+import "../../base"
+import "../../provider"
 
 BRectangle {
     id: root
@@ -19,6 +20,7 @@ BRectangle {
 
     color: Colors.data.colors.dark.surface
     border.color: Colors.data.colors.dark.on_surface_variant
+    border.width: 2
     radius: 20
     visible: opacity != 0
     opacity: shown ? 1 : 0

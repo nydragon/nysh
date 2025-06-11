@@ -4,15 +4,11 @@ import Quickshell
 import QtQuick
 
 Singleton {
-    property var date: new Date()
+    property var date: clock.date
     property string time: date.toLocaleString(Qt.locale())
 
-    Timer {
-        interval: 1000
-        running: true
-        repeat: true
-        onTriggered: {
-            parent.date = new Date();
-        }
+    SystemClock {
+        id: clock
+        precision: SystemClock.Seconds
     }
 }
