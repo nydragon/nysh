@@ -12,7 +12,7 @@ MouseArea {
 
     required property Notification notif
 
-    property int actionHeight: 30
+    property int actionHeight: 20
     property int expansionSpeed: 200
     property bool showTimeBar: false
 
@@ -188,7 +188,7 @@ MouseArea {
 
             NumberAnimation on width {
                 to: 0
-                duration: Config.data.notifications.toastDuration
+                duration: Config.notifications.toastDuration
                 paused: toast.containsMouse && timeBar.visible
                 running: timeBar.visible
             }

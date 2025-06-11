@@ -15,19 +15,43 @@ Item {
     LazyLoader {
         loading: true
 
-        PopupWindow {
-            anchor.window: root.mainBar
-            anchor.rect.x: root.mainBar.implicitWidth
-            anchor.rect.y: 0
-            implicitWidth: 500
-            implicitHeight: screen.height
+        PanelWindow {
+            anchors {
+                left: true
+                top: true
+                right: true
+                bottom: true
+            }
+
             visible: dashboard.opacity != 0
             color: "transparent"
+
+            MouseArea {
+                id: r
+                anchors.fill: parent
+                onClicked: NyshState.dashOpen = false
+
+                containmentMask: QtObject {
+                    function contains(point: point): bool {
+                        const {
+                            x,
+                            y,
+                            width,
+                            height
+                        } = dashboard;
+
+                        return !(x < point.x && point.x < (x + width) && y < point.y && point.y < (y + height));
+                    }
+                }
+            }
 
             Dashboard {
                 id: dashboard
                 shown: NyshState.dashOpen
-                anchors.fill: parent
+                width: 500
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
                 anchors.margins: shown ? 10 : 20
 
                 Behavior on anchors.margins {

@@ -100,8 +100,8 @@ BRectangle {
                     delegate: NotificationToastAction {
                         required property var modelData
                         notifAction: modelData
-                        height: 30
-                        width: 100
+                        height: 20
+                        Layout.fillWidth: true
                     }
                 }
             }
