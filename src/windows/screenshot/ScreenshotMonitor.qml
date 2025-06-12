@@ -6,10 +6,6 @@ MouseArea {
     id: root
     property bool active
 
-    signal save(x: int, y: int, width: int, height: int)
-
-    onClicked: root.save(x, y, width, height)
-
     Rectangle {
         anchors.fill: parent
         color: "black"

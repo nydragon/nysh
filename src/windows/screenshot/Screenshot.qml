@@ -1,5 +1,3 @@
-pragma ComponentBehavior: Bound
-
 import QtQuick
 import Quickshell
 import Quickshell.Io
@@ -13,6 +11,7 @@ PanelWindow {
 
     property bool isOnActiveMonitor: true
     property bool showUI: true
+    property HyprlandMonitor hyprlandMonitor: Hyprland.monitorFor(screen)
 
     function getFilename(): string {
         const timestamp = Qt.formatDateTime(new Date(), "yyyy-MM-dd-hh-mm-ss-zzz");
@@ -25,16 +24,6 @@ PanelWindow {
 
         root.showUI = false;
         saver.command = ["grim", "-g", geometry, filename];
-        saver.running = true;
-
-        print("Saved screenshot to", filename);
-    }
-
-    function saveMonitor() {
-        const filename = getFilename();
-
-        root.showUI = false;
-        saver.command = ["grim", "-o", screen.name, filename];
         saver.running = true;
 
         print("Saved screenshot to", filename);
@@ -90,11 +79,11 @@ PanelWindow {
         visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Monitor
         anchors.fill: parent
         active: Hyprland.monitorFor(root.screen).focused
-        onSave: () => root.saveMonitor()
+        onClicked: () => root.save(root.hyprlandMonitor.x, root.hyprlandMonitor.y, root.hyprlandMonitor.width, root.hyprlandMonitor.height)
     }
 
     ScreenshotRegion {
-        visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Region
+        visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Region && Hyprland.focusedMonitor.name === root.screen?.name
         onSave: (a, b, c, d) => root.save(a, b, c, d)
     }
 
