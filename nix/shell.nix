@@ -17,6 +17,5 @@ pkgs.mkShell {
     export PATH="$PWD/scripts:$PATH"
     export QML_IMPORT_PATH=$PWD/src
     ${pkgs.pre-commit}/bin/pre-commit install -f
-
   '';
 }

@@ -15,21 +15,33 @@
     nixpkgs,
     ...
   } @ inputs: let
-    systems = ["x86_64-linux"];
-    forEachSystem = nixpkgs.lib.genAttrs systems;
-    pkgsForEach = nixpkgs.legacyPackages;
+    supportedSystems = ["x86_64-linux"];
+
+    forAllSystems = function:
+      nixpkgs.lib.genAttrs
+      supportedSystems
+      (system: function nixpkgs.legacyPackages.${system});
   in {
-    packages = forEachSystem (system: {
-      default = self.packages.${system}.nysh;
-      nysh = pkgsForEach.${system}.callPackage ./nix/package.nix {
-        quickshell = inputs.quickshell.packages.${system}.default;
+    packages = forAllSystems (pkgs: {
+      default = self.packages.${pkgs.system}.nysh;
+      nysh = pkgs.callPackage ./nix/packages/nysh.nix {
+        inherit (inputs.quickshell.packages.${pkgs.system}) quickshell;
+        inherit (self.packages.${pkgs.system}) copy-to-clip get-image;
+      };
+
+      copy-to-clip = pkgs.callPackage ./nix/packages/copy-to-clip.nix {};
+      get-image = pkgs.callPackage ./nix/packages/get-image.nix {};
+    });
+
+    devShells = forAllSystems (pkgs: {
+      default = pkgs.callPackage ./nix/shell.nix {
+        inherit (inputs.quickshell.packages.${pkgs.system}) quickshell;
       };
     });
 
-    devShells = forEachSystem (system: {
-      default = pkgsForEach.${system}.callPackage ./nix/shell.nix {
-        quickshell = inputs.quickshell.packages.${system}.default;
-      };
-    });
+    nixosModules = {
+      nysh = import ./nix/module.nix;
+      default = self.nixosModules.nysh;
+    };
   };
 }
