@@ -8,7 +8,7 @@ import "../../base"
 // - mute sinks & sources
 
 BButton {
-    id: audiow
+    id: root
 
     implicitWidth: parent.width
     implicitHeight: width
@@ -16,16 +16,16 @@ BButton {
     property PwNode sink: Pipewire.defaultAudioSink
 
     PwObjectTracker {
-        objects: [audiow.sink]
+        objects: [root.sink]
     }
 
     BText {
         text: {
-            if (audiow.sink?.audio.muted)
+            if (root.sink?.audio.muted)
                 "";
-            else if (audiow.sink?.audio.volume >= 0.5)
+            else if (root.sink?.audio.volume >= 0.5)
                 "";
-            else if (audiow.sink?.audio.volume > 0)
+            else if (root.sink?.audio.volume > 0)
                 "";
             else
                 "";

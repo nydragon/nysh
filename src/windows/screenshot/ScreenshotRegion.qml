@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import "../../provider"
 
@@ -5,14 +7,30 @@ Canvas {
     id: root
 
     property var workspaceId
-    signal save(x: int, y: int, width: int, height: int)
     property color handleColor: Colors.data.colors.dark.primary
 
-    anchors.fill: parent
+    signal save(x: int, y: int, width: int, height: int)
 
+    onWidthChanged: {
+        rect.x = root.width / 2 - rect.width / 2;
+    }
+
+    onHeightChanged: {
+        rect.y = root.height / 2 - rect.height / 2;
+    }
+
+    component Handle: Rectangle {
+        height: 20
+        width: 20
+        radius: width
+        color: root.handleColor
+        anchors.margins: -(width / 2) + rect.border.width
+    }
+
+    anchors.fill: parent
     onPaint: {
         const ctx = getContext("2d");
-        ctx.fillStyle = Qt.rgba(0, 0, 0, 0.2);
+        ctx.fillStyle = Qt.rgba(0, 0, 0, 0.3);
         ctx.globalCompositeOperation = "copy";
 
         ctx.clearRect(0, 0, width, height);
@@ -23,19 +41,36 @@ Canvas {
         ctx.clearRect(rect.x, rect.y, rect.width, rect.height);
     }
 
+    MouseArea {
+        anchors.fill: parent
+        onPressed: {
+            rect.x = mouseX;
+            rect.y = mouseY;
+
+            rect.width = Qt.binding(() => Math.max(mouseX - rect.x, 30));
+            rect.height = Qt.binding(() => Math.max(mouseY - rect.y, 30));
+        }
+
+        onReleased: {
+            rect.width = Math.max(mouseX - rect.x, 30);
+            rect.height = Math.max(mouseY - rect.y, 30);
+        }
+    }
+
     Rectangle {
         id: rect
         width: 400
         height: 400
         color: "transparent"
-        border.color: "blue"
-        border.width: 3
+        border.color: root.handleColor
+        border.width: 2
         onXChanged: root.requestPaint()
         onYChanged: root.requestPaint()
         onWidthChanged: root.requestPaint()
         onHeightChanged: root.requestPaint()
 
         MouseArea {
+            id: d
             anchors.fill: parent
             onClicked: {
                 const p = mapToGlobal(x, y);
@@ -51,14 +86,9 @@ Canvas {
             }
         }
 
-        Rectangle {
-            height: 20
-            width: 20
-            radius: width
-            color: root.handleColor
+        Handle {
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.margins: -(width / 2)
 
             MouseArea {
                 anchors.fill: parent
@@ -81,14 +111,9 @@ Canvas {
             }
         }
 
-        Rectangle {
-            height: 20
-            width: 20
-            radius: width
-            color: root.handleColor
+        Handle {
             anchors.right: parent.right
             anchors.top: parent.top
-            anchors.margins: -(width / 2)
 
             MouseArea {
                 anchors.fill: parent
@@ -117,14 +142,9 @@ Canvas {
             }
         }
 
-        Rectangle {
-            height: 20
-            width: 20
-            radius: width
-            color: root.handleColor
+        Handle {
             anchors.left: parent.left
             anchors.bottom: parent.bottom
-            anchors.margins: -(width / 2)
 
             MouseArea {
                 anchors.fill: parent
@@ -151,14 +171,9 @@ Canvas {
             }
         }
 
-        Rectangle {
-            height: 20
-            width: 20
-            radius: width
-            color: root.handleColor
-            anchors.left: parent.right
+        Handle {
+            anchors.right: parent.right
             anchors.bottom: parent.bottom
-            anchors.margins: -(width / 2)
 
             MouseArea {
                 anchors.fill: parent

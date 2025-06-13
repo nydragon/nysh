@@ -29,12 +29,6 @@ PanelWindow {
     focusable: true
     aboveWindows: true
 
-    Behavior on color {
-        ColorAnimation {
-            duration: 1000
-        }
-    }
-
     NotificationToasts {
         screen: root.screen
         contentX: root.width
@@ -42,20 +36,19 @@ PanelWindow {
 
     RowLayout {
         id: layout
-        height: parent.height
+        anchors.fill: parent
 
         BRectangle {
             color: Colors.data.colors.dark.surface
-
             implicitWidth: 35
             Layout.fillHeight: true
+            topLeftRadius: 0
+            bottomLeftRadius: 0
 
             Column {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                Layout.topMargin: 2
-                Layout.bottomMargin: 2
-                Layout.rightMargin: 2
+                anchors.fill: parent
+                anchors.margins: 1
+                anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 2
 
                 // TODO: on click open a calendar view
@@ -63,7 +56,7 @@ PanelWindow {
 
                 AudioOutput {
                     width: parent.width
-                    height: parent.width * 1.2
+                    height: width * 1.2
 
                     onClicked: {
                         NyshState.toggleAudio();
@@ -77,20 +70,20 @@ PanelWindow {
                 Workspaces {}
 
                 Battery {
-                    width: 35
-                    height: 35
+                    width: parent.width
+                    height: width
                 }
 
                 Caffeine {
-                    width: 35
-                    height: 35
+                    width: parent.width
+                    height: width
                 }
 
                 Privacy {}
 
                 BMButton {
-                    width: 35
-                    height: 35
+                    width: parent.width
+                    height: width
                     text: {
                         if (NyshState.dndOn)
                             "󰂛";

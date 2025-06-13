@@ -23,7 +23,7 @@ PanelWindow {
         const filename = getFilename();
 
         root.showUI = false;
-        saver.command = ["grim", "-g", geometry, filename];
+        saver.command = ["screenshot.sh", geometry, filename];
         saver.running = true;
 
         print("Saved screenshot to", filename);
@@ -83,7 +83,8 @@ PanelWindow {
     }
 
     ScreenshotRegion {
-        visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Region && Hyprland.focusedMonitor.name === root.screen?.name
+        id: region
+        visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Region && Hyprland.focusedMonitor?.name === root.screen?.name
         onSave: (a, b, c, d) => root.save(a, b, c, d)
     }
 
