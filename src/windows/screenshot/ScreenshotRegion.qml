@@ -6,11 +6,13 @@ import "../../provider"
 Canvas {
     id: root
 
+    property bool active
     property var workspaceId
     property color handleColor: Colors.data.colors.dark.primary
 
     signal save(x: int, y: int, width: int, height: int)
 
+    onActiveChanged: requestPaint()
     onWidthChanged: {
         rect.x = root.width / 2 - rect.width / 2;
     }
@@ -38,7 +40,8 @@ Canvas {
         ctx.fillRect(0, 0, width, height);
         ctx.fill();
 
-        ctx.clearRect(rect.x, rect.y, rect.width, rect.height);
+        if (active)
+            ctx.clearRect(rect.x, rect.y, rect.width, rect.height);
     }
 
     MouseArea {
@@ -68,6 +71,7 @@ Canvas {
         onYChanged: root.requestPaint()
         onWidthChanged: root.requestPaint()
         onHeightChanged: root.requestPaint()
+        visible: root.active
 
         MouseArea {
             id: d

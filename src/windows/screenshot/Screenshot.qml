@@ -39,12 +39,10 @@ PanelWindow {
     WlrLayershell.layer: WlrLayer.Overlay
     visible: NyshState.screenshot.open
     onVisibleChanged: view.captureFrame()
-    Component.onCompleted: {
-        NyshState.screenshot.openChanged.connect(() => {
-            if (NyshState.screenshot.open)
-                isOnActiveMonitor = Hyprland.focusedMonitor.name === root.screen.name;
-        });
-    }
+    Component.onCompleted: NyshState.screenshot.openChanged.connect(() => {
+        if (NyshState.screenshot.open)
+            isOnActiveMonitor = Hyprland.focusedMonitor.name === root.screen.name;
+    })
 
     ScreencopyView {
         id: view
@@ -71,7 +69,7 @@ PanelWindow {
     ScreenshotWindow {
         visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Window
         anchors.fill: parent
-        workspaceId: Hyprland.monitorFor(root.screen)?.activeWorkspace?.id
+        monitor: Hyprland.monitorFor(root.screen)
         onSave: (a, b, c, d) => root.save(a, b, c, d)
     }
 
@@ -84,7 +82,8 @@ PanelWindow {
 
     ScreenshotRegion {
         id: region
-        visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Region && Hyprland.focusedMonitor?.name === root.screen?.name
+        visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Region
+        active: Hyprland.monitorFor(root.screen).focused
         onSave: (a, b, c, d) => root.save(a, b, c, d)
     }
 

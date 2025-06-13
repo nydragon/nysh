@@ -2,12 +2,15 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell.Io
+import Quickshell.Hyprland
 
 Canvas {
     id: root
 
-    property var workspaceId
+    property var workspaceId: monitor.activeWorkspace?.id
     property var selection: null
+    required property HyprlandMonitor monitor
+
     signal save(x: int, y: int, width: int, height: int)
 
     anchors.fill: parent
@@ -52,8 +55,8 @@ Canvas {
         delegate: MouseArea {
             id: delegate
             required property var modelData
-            x: modelData.at[0]
-            y: modelData.at[1]
+            x: modelData.at[0] - root.monitor.x
+            y: modelData.at[1] - root.monitor.y
             width: modelData.size[0]
             height: modelData.size[1]
             hoverEnabled: true
@@ -61,7 +64,7 @@ Canvas {
                 root.selection = [x, y, width, height];
                 root.requestPaint();
             }
-            onClicked: root.save(x, y, width, height)
+            onClicked: root.save(root.monitor.x + x, root.monitor.y + y, width, height)
         }
     }
 }
