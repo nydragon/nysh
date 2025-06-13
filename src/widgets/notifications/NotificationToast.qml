@@ -57,8 +57,8 @@ MouseArea {
 
                 IconImage {
                     source: toast.appIcon ? Quickshell.iconPath(toast.appIcon) : ""
-                    height: parent.height
-                    width: height
+                    Layout.preferredHeight: parent.height
+                    Layout.preferredWidth: implicitWidth
                     visible: toast.appIcon ?? false
                 }
 
@@ -102,7 +102,8 @@ MouseArea {
                     id: text
                     anchors.topMargin: 5
                     text: toast.body ?? ""
-                    anchors.fill: parent
+                    width: parent.width
+                    height: parent.height
                     wrapMode: Text.Wrap
                     elide: Text.ElideRight
                     font.pointSize: 12.5

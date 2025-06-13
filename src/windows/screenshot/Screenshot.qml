@@ -29,6 +29,8 @@ PanelWindow {
         print("Saved screenshot to", filename);
     }
 
+    focusable: true
+
     anchors {
         left: true
         top: true
@@ -44,54 +46,61 @@ PanelWindow {
             isOnActiveMonitor = Hyprland.focusedMonitor.name === root.screen.name;
     })
 
-    ScreencopyView {
-        id: view
-        captureSource: root.screen
+    Item {
         anchors.fill: parent
-    }
+        focus: true
 
-    Process {
-        id: saver
-        command: []
-        stdout: SplitParser {
-            onRead: data => console.log(data)
+        Keys.onEscapePressed: NyshState.screenshot.setOpen(false)
+
+        ScreencopyView {
+            id: view
+            captureSource: root.screen
+            anchors.fill: parent
         }
-        stderr: SplitParser {
-            onRead: data => console.error(data)
+
+        Process {
+            id: saver
+            command: []
+            stdout: SplitParser {
+                onRead: data => console.log(data)
+            }
+            stderr: SplitParser {
+                onRead: data => console.error(data)
+            }
+            onStarted: root.showUI = false
+            onExited: {
+                root.showUI = true;
+                NyshState.screenshot.setOpen(false);
+            }
         }
-        onStarted: root.showUI = false
-        onExited: {
-            root.showUI = true;
-            NyshState.screenshot.setOpen(false);
+
+        ScreenshotWindow {
+            visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Window
+            anchors.fill: parent
+            monitor: Hyprland.monitorFor(root.screen)
+            onSave: (a, b, c, d) => root.save(a, b, c, d)
         }
-    }
 
-    ScreenshotWindow {
-        visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Window
-        anchors.fill: parent
-        monitor: Hyprland.monitorFor(root.screen)
-        onSave: (a, b, c, d) => root.save(a, b, c, d)
-    }
+        ScreenshotMonitor {
+            visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Monitor
+            anchors.fill: parent
+            active: Hyprland.monitorFor(root.screen).focused
+            onClicked: () => root.save(root.hyprlandMonitor.x, root.hyprlandMonitor.y, root.hyprlandMonitor.width, root.hyprlandMonitor.height)
+        }
 
-    ScreenshotMonitor {
-        visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Monitor
-        anchors.fill: parent
-        active: Hyprland.monitorFor(root.screen).focused
-        onClicked: () => root.save(root.hyprlandMonitor.x, root.hyprlandMonitor.y, root.hyprlandMonitor.width, root.hyprlandMonitor.height)
-    }
+        ScreenshotRegion {
+            id: region
+            visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Region
+            active: Hyprland.monitorFor(root.screen).focused
+            onSave: (a, b, c, d) => root.save(a, b, c, d)
+        }
 
-    ScreenshotRegion {
-        id: region
-        visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Region
-        active: Hyprland.monitorFor(root.screen).focused
-        onSave: (a, b, c, d) => root.save(a, b, c, d)
-    }
-
-    ScreenshotUI {
-        id: ui
-        visible: root.showUI && root.isOnActiveMonitor
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: 10
+        ScreenshotUI {
+            id: ui
+            visible: root.showUI && root.isOnActiveMonitor
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.margins: 10
+        }
     }
 }

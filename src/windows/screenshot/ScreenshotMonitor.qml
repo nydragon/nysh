@@ -1,6 +1,4 @@
 import QtQuick
-import Quickshell
-import Quickshell.Hyprland
 
 MouseArea {
     id: root

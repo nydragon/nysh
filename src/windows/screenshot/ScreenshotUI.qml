@@ -1,5 +1,7 @@
 import QtQuick
 import QtQuick.Effects
+import Quickshell
+import Quickshell.Widgets
 import "../../provider"
 import "../../provider/state"
 import "../../base"
@@ -25,28 +27,41 @@ BRectangle {
     Row {
         anchors.verticalCenter: parent.verticalCenter
 
-        BMButton {
-            height: 40
-            width: 40
-            text: "win"
-            onClicked: NyshState.screenshot.mode = Screenshot.Mode.Window
-            anchors.verticalCenter: parent.verticalCenter
+        ModeButton {
+            activeOn: Screenshot.Mode.Window
+            iconSource: "root:assets/window-symbolic.svg"
         }
 
-        BMButton {
-            height: 40
-            width: 40
-            text: "reg"
-            onClicked: NyshState.screenshot.mode = Screenshot.Mode.Region
-            anchors.verticalCenter: parent.verticalCenter
+        ModeButton {
+            activeOn: Screenshot.Mode.Region
+            iconSource: "root:assets/selection-symbolic.svg"
         }
 
-        BMButton {
-            height: 40
-            width: 40
-            text: "mon"
-            onClicked: NyshState.screenshot.mode = Screenshot.Mode.Monitor
-            anchors.verticalCenter: parent.verticalCenter
+        ModeButton {
+            activeOn: Screenshot.Mode.Monitor
+            iconSource: "root:assets/display-symbolic.svg"
+        }
+    }
+
+    component ModeButton: BMButton {
+        id: button
+        required property int activeOn
+        required property string iconSource
+        readonly property bool matchingMode: NyshState.screenshot.mode === activeOn
+
+        onMatchingModeChanged: active = matchingMode
+
+        height: 50
+        width: 50
+        text: ""
+        onClicked: NyshState.screenshot.mode = activeOn
+        anchors.verticalCenter: parent.verticalCenter
+        toggleable: true
+
+        IconImage {
+            anchors.fill: parent
+            anchors.margins: 5
+            source: button.iconSource
         }
     }
 
