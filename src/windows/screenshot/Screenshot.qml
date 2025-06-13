@@ -59,7 +59,7 @@ PanelWindow {
             onRead: data => console.log(data)
         }
         stderr: SplitParser {
-            onRead: data => console.log(data)
+            onRead: data => console.error(data)
         }
         onStarted: root.showUI = false
         onExited: {

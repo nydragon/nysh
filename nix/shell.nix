@@ -1,11 +1,19 @@
 {
   pkgs,
   quickshell,
+  wl-clipboard,
+  cliphist,
+  grim,
+  libnotify,
   ...
 }:
 pkgs.mkShell {
   packages = [
     quickshell
+    cliphist
+    wl-clipboard
+    grim
+    libnotify
     pkgs.kdePackages.qtdeclarative
     pkgs.pre-commit
     pkgs.typos

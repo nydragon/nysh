@@ -37,6 +37,7 @@
     devShells = forAllSystems (pkgs: {
       default = pkgs.callPackage ./nix/shell.nix {
         inherit (inputs.quickshell.packages.${pkgs.system}) quickshell;
+        inherit (self.packages.${pkgs.system}) get-image copy-to-clip screenshot;
       };
     });
 

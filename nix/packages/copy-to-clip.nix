@@ -15,4 +15,4 @@ writers.writeBashBin
     "${lib.makeBinPath [cliphist wl-clipboard]}"
   ];
 }
-./../../scripts/copy-to-clip.sh
+(builtins.readFile ./../../scripts/copy-to-clip.sh)

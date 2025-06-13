@@ -14,4 +14,4 @@ writers.writeBashBin
     "${lib.makeBinPath [cliphist]}"
   ];
 }
-./../../scripts/get-image.sh
+(builtins.readFile ./../../scripts/get-image.sh)

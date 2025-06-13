@@ -102,8 +102,7 @@ MouseArea {
                     id: text
                     anchors.topMargin: 5
                     text: toast.body ?? ""
-                    width: parent.width
-                    height: parent.height
+                    anchors.fill: parent
                     wrapMode: Text.Wrap
                     elide: Text.ElideRight
                     font.pointSize: 12.5

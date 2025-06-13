@@ -3,16 +3,17 @@
   writers,
   wl-clipboard,
   grim,
+  libnotify,
   ...
 }:
-writers.writeBash
+writers.writeBashBin
 "screenshot.sh"
 {
   makeWrapperArgs = [
     "--prefix"
     "PATH"
     ":"
-    "${lib.makeBinPath [grim wl-clipboard]}"
+    "${lib.makeBinPath [grim wl-clipboard libnotify]}"
   ];
 }
-./../../scripts/screenshot.sh
+(builtins.readFile ./../../scripts/screenshot.sh)
