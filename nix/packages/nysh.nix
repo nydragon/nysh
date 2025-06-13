@@ -8,6 +8,7 @@
   cliphist,
   get-image,
   copy-to-clip,
+  screenshot,
   ...
 }:
 stdenv.mkDerivation {
@@ -23,6 +24,6 @@ stdenv.mkDerivation {
 
     wrapProgram $out/bin/nysh \
        --add-flags "-p ${./../..}/src" \
-       --prefix PATH : "${lib.makeBinPath [coreutils get-image copy-to-clip grim cliphist]}"
+       --prefix PATH : "${lib.makeBinPath [coreutils get-image copy-to-clip screenshot grim cliphist]}"
   '';
 }
