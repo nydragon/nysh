@@ -1,16 +1,17 @@
 {
-  writeTextFile,
-  runtimeShell,
+  lib,
+  writers,
   cliphist,
   ...
 }:
-writeTextFile {
-  name = "get-image";
-  text = ''
-    #! ${runtimeShell}
-    ${./../../scripts/get-image.sh}
-  '';
-  destination = "/bin/get-image.sh";
-  executable = true;
-  derivationArgs = {nativeBuildInputs = [cliphist];};
+writers.writeBashBin
+"get-image.sh"
+{
+  makeWrapperArgs = [
+    "--prefix"
+    "PATH"
+    ":"
+    "${lib.makeBinPath [cliphist]}"
+  ];
 }
+./../../scripts/get-image.sh

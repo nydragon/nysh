@@ -26,11 +26,12 @@
       default = self.packages.${pkgs.system}.nysh;
       nysh = pkgs.callPackage ./nix/packages/nysh.nix {
         inherit (inputs.quickshell.packages.${pkgs.system}) quickshell;
-        inherit (self.packages.${pkgs.system}) copy-to-clip get-image;
+        inherit (self.packages.${pkgs.system}) copy-to-clip get-image screenshot;
       };
 
       copy-to-clip = pkgs.callPackage ./nix/packages/copy-to-clip.nix {};
       get-image = pkgs.callPackage ./nix/packages/get-image.nix {};
+      screenshot = pkgs.callPackage ./nix/packages/screenshot.nix {};
     });
 
     devShells = forAllSystems (pkgs: {

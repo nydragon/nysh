@@ -1,17 +1,18 @@
 {
-  writeTextFile,
-  runtimeShell,
+  lib,
+  writers,
   wl-clipboard,
   cliphist,
   ...
 }:
-writeTextFile {
-  name = "copy-to-clip";
-  text = ''
-    #! ${runtimeShell}
-    ${./../../scripts/copy-to-clip.sh}
-  '';
-  destination = "/bin/copy-to-clip.sh";
-  executable = true;
-  derivationArgs = {nativeBuildInputs = [cliphist wl-clipboard];};
+writers.writeBashBin
+"copy-to-clip.sh"
+{
+  makeWrapperArgs = [
+    "--prefix"
+    "PATH"
+    ":"
+    "${lib.makeBinPath [cliphist wl-clipboard]}"
+  ];
 }
+./../../scripts/copy-to-clip.sh
