@@ -1,57 +1,49 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import Quickshell.Io
 import Quickshell.Hyprland
+import "../../provider"
 
 Canvas {
     id: root
 
-    property var workspaceId: monitor.activeWorkspace?.id
+    property var workspaceId: this.monitor.activeWorkspace?.id
     property var selection: null
     required property HyprlandMonitor monitor
+    property bool active: this.monitor.focused
+    required property color unfocusedColor
 
     signal save(x: int, y: int, width: int, height: int)
 
+    onActiveChanged: this.requestPaint()
+
     anchors.fill: parent
-    onVisibleChanged: (getter.running = true)
+
+    Component.onCompleted: NyshState.screenshot.modeChanged.connect(() => this.requestPaint())
 
     onPaint: {
         const ctx = getContext("2d");
-        ctx.fillStyle = Qt.rgba(0, 0, 0, 0.2);
+        ctx.fillStyle = this.unfocusedColor;
         ctx.globalCompositeOperation = "copy";
 
         ctx.clearRect(0, 0, width, height);
         ctx.beginPath();
         ctx.fillRect(0, 0, width, height);
-        ctx.fill();
 
-        if (selection) {
+        if (selection && this.active) {
             ctx.clearRect(...selection);
-        }
-    }
-
-    Process {
-        id: getter
-
-        property string rawData: ""
-        property var data: []
-
-        command: ["hyprctl", "clients", "-j"]
-        onStarted: rawData = ""
-        stdout: SplitParser {
-            onRead: data => getter.rawData += data
-        }
-        onExited: {
-            data = JSON.parse(rawData);
         }
     }
 
     Repeater {
         id: rep
 
-        model: getter.data.filter(w => w.workspace.id === root.workspaceId)
+        model: Hyprctl.clients?.filter(w => w.workspace.id === root.workspaceId) ?? []
 
+        onVisibleChanged: {
+            if (this.visible)
+                Hyprctl.get(Hyprctl.Type.Clients);
+        }
         delegate: MouseArea {
             id: delegate
             required property var modelData

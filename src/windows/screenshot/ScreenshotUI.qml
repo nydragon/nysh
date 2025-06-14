@@ -25,44 +25,34 @@ BRectangle {
     }
 
     Row {
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.centerIn: parent
 
         ModeButton {
             activeOn: Screenshot.Mode.Window
-            iconSource: "root:assets/window-symbolic.svg"
+            source: "root:assets/window-symbolic.svg"
         }
 
         ModeButton {
             activeOn: Screenshot.Mode.Region
-            iconSource: "root:assets/selection-symbolic.svg"
+            source: "root:assets/selection-symbolic.svg"
         }
 
         ModeButton {
             activeOn: Screenshot.Mode.Monitor
-            iconSource: "root:assets/display-symbolic.svg"
+            source: "root:assets/display-symbolic.svg"
         }
     }
 
-    component ModeButton: BMButton {
-        id: button
+    component ModeButton: BIconButton {
         required property int activeOn
-        required property string iconSource
         readonly property bool matchingMode: NyshState.screenshot.mode === activeOn
 
         onMatchingModeChanged: active = matchingMode
-
         height: 50
         width: 50
-        text: ""
         onClicked: NyshState.screenshot.mode = activeOn
         anchors.verticalCenter: parent.verticalCenter
         toggleable: true
-
-        IconImage {
-            anchors.fill: parent
-            anchors.margins: 5
-            source: button.iconSource
-        }
     }
 
     BMButton {

@@ -3,10 +3,11 @@ import QtQuick
 MouseArea {
     id: root
     property bool active
+    required property color unfocusedColor
 
     Rectangle {
         anchors.fill: parent
-        color: "black"
-        opacity: root.active ? 0 : 0.3
+        color: root.unfocusedColor
+        opacity: root.active ? 0 : 1
     }
 }

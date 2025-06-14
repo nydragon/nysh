@@ -26,7 +26,7 @@ BRectangle {
     }
 
     BlurredImage {
-        visible: card.albumArt?.length > 0
+        visible: card.albumArt
         source: card.albumArt
         anchors.fill: parent
         anchors.margins: 3

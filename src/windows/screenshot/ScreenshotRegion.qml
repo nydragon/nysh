@@ -9,6 +9,7 @@ Canvas {
     property bool active
     property var workspaceId
     property color handleColor: Colors.data.colors.dark.primary
+    required property color unfocusedColor
 
     signal save(x: int, y: int, width: int, height: int)
 
@@ -32,7 +33,7 @@ Canvas {
     anchors.fill: parent
     onPaint: {
         const ctx = getContext("2d");
-        ctx.fillStyle = Qt.rgba(0, 0, 0, 0.3);
+        ctx.fillStyle = this.unfocusedColor;
         ctx.globalCompositeOperation = "copy";
 
         ctx.clearRect(0, 0, width, height);

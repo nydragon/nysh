@@ -24,6 +24,7 @@ Singleton {
                     property string secondary
                     property string on_secondary_container
                     property string on_surface_variant
+                    property string on_surface_container
                     property string on_surface
                     property string shadow
                     property string surface_container_high

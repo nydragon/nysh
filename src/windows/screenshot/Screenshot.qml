@@ -12,6 +12,7 @@ PanelWindow {
     property bool isOnActiveMonitor: true
     property bool showUI: true
     property HyprlandMonitor hyprlandMonitor: Hyprland.monitorFor(screen)
+    property color unfocusedColor: Qt.rgba(0, 0, 0, 0.3)
 
     function getFilename(): string {
         const timestamp = Qt.formatDateTime(new Date(), "yyyy-MM-dd-hh-mm-ss-zzz");
@@ -78,6 +79,7 @@ PanelWindow {
             visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Window
             anchors.fill: parent
             monitor: Hyprland.monitorFor(root.screen)
+            unfocusedColor: root.unfocusedColor
             onSave: (a, b, c, d) => root.save(a, b, c, d)
         }
 
@@ -85,6 +87,7 @@ PanelWindow {
             visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Monitor
             anchors.fill: parent
             active: Hyprland.monitorFor(root.screen).focused
+            unfocusedColor: root.unfocusedColor
             onClicked: () => root.save(root.hyprlandMonitor.x, root.hyprlandMonitor.y, root.hyprlandMonitor.width, root.hyprlandMonitor.height)
         }
 
@@ -92,6 +95,7 @@ PanelWindow {
             id: region
             visible: root.showUI && NyshState.screenshot.mode === Screenshot.Mode.Region
             active: Hyprland.monitorFor(root.screen).focused
+            unfocusedColor: root.unfocusedColor
             onSave: (a, b, c, d) => root.save(a, b, c, d)
         }
 
