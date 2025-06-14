@@ -1,8 +1,8 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import Quickshell.Io
 import Quickshell.Hyprland
+import "../../provider"
 
 Canvas {
     id: root
@@ -14,7 +14,7 @@ Canvas {
     signal save(x: int, y: int, width: int, height: int)
 
     anchors.fill: parent
-    onVisibleChanged: (getter.running = true)
+    onVisibleChanged: Hyprctl.get(Hyprctl.Type.Clients)
 
     onPaint: {
         const ctx = getContext("2d");
@@ -31,26 +31,17 @@ Canvas {
         }
     }
 
-    Process {
-        id: getter
-
-        property string rawData: ""
-        property var data: []
-
-        command: ["hyprctl", "clients", "-j"]
-        onStarted: rawData = ""
-        stdout: SplitParser {
-            onRead: data => getter.rawData += data
-        }
-        onExited: {
-            data = JSON.parse(rawData);
-        }
-    }
-
     Repeater {
         id: rep
 
-        model: getter.data.filter(w => w.workspace.id === root.workspaceId)
+        Component.onCompleted: {
+            Hyprctl.reply.connect((type, data) => {
+                console.log(type, data);
+                if (type === Hyprctl.Type.Clients) {
+                    model = data.filter(w => w.workspace.id === root.workspaceId);
+                }
+            });
+        }
 
         delegate: MouseArea {
             id: delegate
