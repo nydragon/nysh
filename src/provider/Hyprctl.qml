@@ -2,53 +2,64 @@ pragma Singleton
 
 import Quickshell
 import Quickshell.Io
+import Quickshell.Hyprland
 
 Singleton {
     id: root
 
     enum Type {
-        Clients
+        Clients,
+        Unknown
     }
 
-    signal reply(type: Hyprctl.Type, data: var)
-
-    property var proxyReply: () => {}
+    signal reply(type: int, data: var)
 
     function get(type: int) {
-        let msg = "";
-
-        console.log(type === Hyprctl.Type.Clients, type, Hyprctl.Type.Clients);
-        switch (type) {
-        case Hyprctl.Type.Clients:
-            msg = "clients";
-            break;
+        if (socket.connected) {
+            console.log("d");
+            return;
         }
 
-        if (msg === "")
-            return;
+        socket.command = type;
         socket.connected = true;
-        console.log("is", socket.connected);
-        root.proxyReply = data => root.reply(type, data);
-        socket.write(`j/${msg}`);
-        socket.flush();
     }
+
     onReply: (type, data) => console.log(type, data)
 
     Socket {
         id: socket
-        path: `${Quickshell.env("XDG_RUNTIME_DIR")}/hypr/${Quickshell.env("HYPRLAND_INSTANCE_SIGNATURE")}/.socket.sock`
-        //connected: true
-        onConnectionStateChanged: console.log("Connected to ", connected)
 
-        parser: SplitParser {
-            id: parser
-            //splitMarker: "\0"
-            onRead: data => {
-                socket.connected = false;
-                console.log(data);
-                root.proxyReply(data);
+        property int command: Hyprctl.Type.Unknown
+
+        path: Hyprland.requestSocketPath
+        onConnectionStateChanged: {
+            if (connected) {
+                console.log("Sending message");
+                let msg = "";
+                switch (this.command) {
+                case Hyprctl.Type.Clients:
+                    msg = "clients";
+                    break;
+                }
+                if (msg === "") {
+                    this.connected = false;
+                    return;
+                }
+                this.write(`j/${msg}`);
+                this.flush();
+            } else {
+                const data = JSON.parse(parser.rawData);
+                root.reply(this.command, data);
             }
         }
-        onError: error => console.error(error)
+        parser: SplitParser {
+            id: parser
+            property string rawData: ""
+            splitMarker: ""
+            onRead: data => {
+                rawData += data;
+            }
+        }
+        onError: error => console.error("Socket error: ", error)
     }
 }

@@ -14,7 +14,6 @@ Canvas {
     signal save(x: int, y: int, width: int, height: int)
 
     anchors.fill: parent
-    onVisibleChanged: Hyprctl.get(Hyprctl.Type.Clients)
 
     onPaint: {
         const ctx = getContext("2d");
@@ -24,7 +23,6 @@ Canvas {
         ctx.clearRect(0, 0, width, height);
         ctx.beginPath();
         ctx.fillRect(0, 0, width, height);
-        ctx.fill();
 
         if (selection) {
             ctx.clearRect(...selection);
@@ -43,6 +41,10 @@ Canvas {
             });
         }
 
+        onVisibleChanged: {
+            if (this.visible)
+                Hyprctl.get(Hyprctl.Type.Clients);
+        }
         delegate: MouseArea {
             id: delegate
             required property var modelData
