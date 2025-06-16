@@ -5,7 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
     quickshell = {
-      url = "git+https://github.com/nydragon/quickshell";
+      url = "git+https://github.com/quickshell-mirror/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
