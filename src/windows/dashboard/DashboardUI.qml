@@ -66,9 +66,22 @@ BRectangle {
             }
         }
 
-        NotificationInbox {
-            Layout.preferredHeight: 1000
+        BSection {
             Layout.fillWidth: true
+            text: "Notifications"
+
+            NotificationInbox {
+                Layout.leftMargin: 10
+                Layout.rightMargin: 10
+                Layout.preferredHeight: 1000
+                Layout.fillWidth: true
+                visible: parent.open
+            }
+        }
+
+        Item {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
         }
     }
 }
