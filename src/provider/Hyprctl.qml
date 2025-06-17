@@ -67,6 +67,5 @@ Singleton {
                 rawData += data;
             }
         }
-        onError: error => console.error("Socket error: ", error)
     }
 }

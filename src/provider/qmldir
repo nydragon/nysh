@@ -10,3 +10,4 @@ singleton Brightness 0.1 Brightness.qml
 singleton Weather 0.1 Weather.qml
 singleton Colors 0.1 Colors.qml
 singleton Hyprctl 0.1 Hyprctl.qml
+singleton Audio 0.1 Audio.qml

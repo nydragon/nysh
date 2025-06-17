@@ -11,9 +11,9 @@ MouseArea {
     hoverEnabled: true
     onContainsMouseChanged: {
         if (containsMouse) {
-            rect.color = "#14" + Colors.data.colors.dark.on_secondary_container.replace("#", "");
+            highlight.color = "#14" + Colors.data.colors.dark.on_secondary_container.replace("#", "");
         } else {
-            rect.color = "transparent";
+            highlight.color = "transparent";
         }
     }
 
@@ -22,6 +22,17 @@ MouseArea {
         anchors.centerIn: parent
         width: parent.width
         height: parent.height
+
+        BRectangle {
+            id: highlight
+            anchors.fill: parent
+
+            Behavior on color {
+                ColorAnimation {
+                    duration: 100
+                }
+            }
+        }
 
         BText {
             visible: mouse.text?.length > 0

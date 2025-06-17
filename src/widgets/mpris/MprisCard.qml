@@ -88,7 +88,7 @@ BRectangle {
             }
 
             BText {
-                text: card.player?.trackAlbumArtist ?? "Unknown Artist"
+                text: (card.player?.trackArtists || card.player?.trackArtist || card.player?.trackAlbumArtist) ?? "Unknown Artist"
                 Layout.alignment: Qt.AlignCenter
                 Layout.maximumWidth: parent.width
                 elide: Text.ElideRight
