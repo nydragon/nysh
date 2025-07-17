@@ -105,7 +105,7 @@ Scope {
                     delegate: NotificationToast {
                         id: toast
 
-                        property int countdownTime: Config.data.notifications.toastDuration
+                        property int countdownTime: Config.data.notifications.timeout
                         required property int index
 
                         width: ListView.view.width

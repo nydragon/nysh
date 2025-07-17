@@ -5,7 +5,8 @@ import Quickshell
 import Quickshell.Io
 
 Singleton {
-    property alias data: file.adapter
+    property alias data: adapter
+    property alias notifications: adapter.notifications
 
     FileView {
         id: file
@@ -14,10 +15,11 @@ Singleton {
         onFileChanged: reload()
         onAdapterUpdated: writeAdapter()
 
-        adapter: JsonAdapter {
+        JsonAdapter {
+            id: adapter
             property int colourFadeSpeed: 1000
             property JsonObject notifications: JsonObject {
-                property int toastDuration: 5000
+                property int timeout: 5000
             }
             property JsonObject sizes: JsonObject {
                 property int barWidth: 35

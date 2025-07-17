@@ -5,6 +5,7 @@ import Quickshell.Io
 
 Singleton {
     property alias data: file.adapter
+    property alias colors: colorJSON
 
     FileView {
         id: file
@@ -15,6 +16,7 @@ Singleton {
         adapter: JsonAdapter {
             property JsonObject colors: JsonObject {
                 property JsonObject dark: JsonObject {
+                    id: colorJSON
                     property string on_primary
                     property string primary
                     property string primary_container

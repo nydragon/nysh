@@ -188,7 +188,7 @@ MouseArea {
 
             NumberAnimation on width {
                 to: 0
-                duration: Config.data.notifications.toastDuration
+                duration: Config.data.notifications.timeout
                 paused: toast.containsMouse && timeBar.visible
                 running: timeBar.visible
             }
