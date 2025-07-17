@@ -2,11 +2,11 @@
   "nodes": {
     "nixpkgs": {
       "locked": {
-        "lastModified": 1749794982,
-        "narHash": "sha256-Kh9K4taXbVuaLC0IL+9HcfvxsSUx8dPB5s5weJcc9pc=",
+        "lastModified": 1752480373,
+        "narHash": "sha256-JHQbm+OcGp32wAsXTE/FLYGNpb+4GLi5oTvCxwSoBOA=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "ee930f9755f58096ac6e8ca94a1887e0534e2d81",
+        "rev": "62e0f05ede1da0d54515d4ea8ce9c733f12d9f08",
         "type": "github"
       },
       "original": {
@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1750053656,
-        "narHash": "sha256-RLICfwDvIEFtLc3GrVsPu46sdGLlPe3ULGz4gSgLxCA=",
+        "lastModified": 1752780466,
+        "narHash": "sha256-o3uaEPW7Q9IN+iGNbm3iIFzZd3eQje+HYNwnZdpxvW4=",
         "ref": "refs/heads/master",
-        "rev": "9a3033340529881ae5e564d1aedf6884f53e3ea1",
-        "revCount": 582,
+        "rev": "115d6717a85d1b2246f82479d1aacca181893014",
+        "revCount": 643,
         "type": "git",
         "url": "https://github.com/quickshell-mirror/quickshell"
       },
